@@ -1,7 +1,8 @@
 import { Middleware } from "redux";
 import {updateUsersList, wsConnected, wsDisconnected} from "./slice";
 
-const WEBSOCKET_URL = "ws://127.0.0.1:8000/api/v1/auth/ws";
+const WEBSOCKET_URL = "ws://212.74.224.210/api/v1/auth/ws";
+//const WEBSOCKET_URL = "ws://supplyserver2-production.up.railway.app/api/v1/auth/ws";
 
 export const usersWebsocketMiddleware: Middleware = (store) => {
     let socket: WebSocket | null = null;

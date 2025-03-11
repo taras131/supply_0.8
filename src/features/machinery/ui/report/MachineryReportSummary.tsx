@@ -11,7 +11,7 @@ const MachineryReportSummary = () => {
     const upcomingMaintenance = useAppSelector(getUpcomingMaintenance);
     const lastMaintenance = useAppSelector(getLastMaintenance);
     const problems = useAppSelector(getCurrentMachineryProblems);
-    const lastProblemList = problems.slice(0,3).map(problem => (<ProblemReportItem key={problem.id} problem={problem}/>))
+    const lastProblemList = problems.slice(0,3).map(problem => (<ProblemReportItem key={problem.id} problem={problem}/>));
     return (
         <Card sx={{padding: "24px"}}>
             <Typography variant="h6" color="primary">Последние проблемы:</Typography>

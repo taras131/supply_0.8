@@ -1,7 +1,7 @@
 import { Middleware } from "redux";
 import {updateMachineryList, wsConnected, wsDisconnected} from "./slice";
 
-const WEBSOCKET_URL = "ws://mylittleserver.ru/api/v1/machinery/ws";
+const WEBSOCKET_URL = "wss://mylittleserver.ru/api/v1/machinery/ws";
 
 export const machineryWebsocketMiddleware: Middleware = (store) => {
     let socket: WebSocket | null = null;

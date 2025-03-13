@@ -7,7 +7,7 @@ import { INewComment } from "models/iComents";
 import {IFileData} from "features/invoices/model/actions";
 import axios from "axios";
 
-export const basePath ="https://212.74.224.210/api/v1";
+export const basePath ="https://mylittleserver.ru/api/v1";
 //export const basePath ="https://supplyserver2-production.up.railway.app/api/v1";
 
 class Api {

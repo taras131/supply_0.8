@@ -1,8 +1,7 @@
 import { Middleware } from "redux";
 import {updateMachineryList, wsConnected, wsDisconnected} from "./slice";
 
-const WEBSOCKET_URL = "wss://mylittleserver.ru/api/v1/machinery/ws";
-//const WEBSOCKET_URL = "ws://supplyserver2-production.up.railway.app/api/v1/machinery/ws";
+const WEBSOCKET_URL = "ws://mylittleserver.ru/api/v1/machinery/ws";
 
 export const machineryWebsocketMiddleware: Middleware = (store) => {
     let socket: WebSocket | null = null;
@@ -12,10 +11,13 @@ export const machineryWebsocketMiddleware: Middleware = (store) => {
 
         socket.onopen = () => {
             store.dispatch(wsConnected());
+            console.log("WebSocket Connected");
         };
+
         socket.onmessage = (event) => {
             const machinery = JSON.parse(event.data);
-
+            console.log(machinery);
+            // Игнорируем сообщения "ping"
             if (machinery.length) {
                 store.dispatch(updateMachineryList(machinery));
             }

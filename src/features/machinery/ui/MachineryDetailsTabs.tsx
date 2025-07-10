@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { Tab, Tabs } from "@mui/material";
-import MachineryDetailsDocs from "./docs/MachineryDetailsDocs";
+import MachineryDocs from "../../machinery_docs/ui/MachineryDocs";
 import Comments from "../../../components/common/comments/Comments";
 import { useAppSelector } from "../../../hooks/redux";
 import {selectCurrentMachinery} from "../model/selectors";
@@ -44,7 +44,7 @@ const MachineryDetailsTabs: FC = () => {
         <MachineryReport />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <MachineryDetailsDocs />
+        <MachineryDocs />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <Problems problems={machinery?.problems || null} />

@@ -49,10 +49,6 @@ export const getCurrentMachinery = (state: RootState): ICurrentMachinery | null 
     return state.machinery.current;
 };
 
-export const getCurrentMachineryDocs = (state: RootState): IMachineryDoc[] | null => {
-    return state.machinery.current?.docs || null;
-};
-
 export const getCurrentMachineryTitle = (state: RootState): string => {
     const currentMachinery = getCurrentMachinery(state);
     if (currentMachinery) {

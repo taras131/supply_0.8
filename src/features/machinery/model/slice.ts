@@ -1,9 +1,8 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {ICurrentMachinery, IMachinery, IMachineryDoc} from "../../../models/iMachinery";
+import {ICurrentMachinery, IMachinery} from "../../../models/iMachinery";
 import {
     fetchAddMachinery,
     fetchAddMachineryComment,
-    fetchAddMachineryDoc,
     fetchAddMachineryProblem,
     fetchAddMachineryTask,
     fetchDeleteMachineryComment,
@@ -118,7 +117,7 @@ export const MachinerySlice = createSlice({
             .addCase(fetchUpdateMachineryComment.fulfilled, (state, action: PayloadAction<IComment>) => {
                 state.isLoading = false;
                 if (state.current && state.current.comments) {
-                    state.currentMachinery = {
+                    state.current = {
                         ...state.current,
                         comments: [
                             ...state.current.comments.map((comment) => {
@@ -140,15 +139,6 @@ export const MachinerySlice = createSlice({
                 state.isLoading = false;
                 state.current = action.payload;
             })
-            .addCase(fetchAddMachineryDoc.fulfilled, (state, action: PayloadAction<IMachineryDoc>) => {
-                if (state.current && state.current.docs) {
-                    state.current = {
-                        ...state.current,
-                        docs: [...state.current.docs, action.payload],
-                    };
-                }
-                state.isLoading = false;
-            })
             .addCase(fetchAddMachineryTask.fulfilled, (state, action: PayloadAction<ITask>) => {
                 if (state.current && action.payload.machinery_id) {
                     state.current = {
@@ -163,7 +153,7 @@ export const MachinerySlice = createSlice({
                     state.current = {
                         ...state.current,
                         tasks: [
-                            ...state.currentMachinery.tasks.map((task) => (task.id === action.payload.id ? action.payload : task)),
+                            ...state.current.tasks.map((task) => (task.id === action.payload.id ? action.payload : task)),
                         ],
                     };
                 }

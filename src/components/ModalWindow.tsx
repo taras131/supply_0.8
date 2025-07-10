@@ -8,7 +8,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 interface IProps {
     isOpenModal: boolean;
     title: string;
-    handleToggleOpen: () => void;
+    handleToggleOpen: (e: React.MouseEvent) => void;
     children: React.ReactNode;
 }
 

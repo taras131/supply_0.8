@@ -8,6 +8,7 @@ import commentsReducer from "./reducers/coments";
 import shipmentsReducer from "features/shipments/model/slice";
 import ordersReducer from "features/orders/model/slice";
 import machineryReducer from "../features/machinery/model/slice";
+import machineryDocsReducer from "../features/machinery_docs/model/slice";
 import usersReducer from "../features/users/model/slice";
 import filesReducer from "../features/files/model/slice";
 import companiesReducer from "../features/companies/model/slice";
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   shipments: shipmentsReducer,
   orders: ordersReducer,
   machinery: machineryReducer,
+  machineryDocs: machineryDocsReducer,
   users: usersReducer,
   files: filesReducer,
   companies: companiesReducer,

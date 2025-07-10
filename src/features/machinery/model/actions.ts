@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {handlerError} from "../../../store/actionsCreators/handleError";
-import {ICurrentMachinery, IMachinery, INewMachinery, INewMachineryDoc} from "../../../models/iMachinery";
+import {ICurrentMachinery, IMachinery, INewMachinery} from "../../../models/iMachinery";
 import {machineryAPI} from "../api";
 import {MESSAGE_SEVERITY} from "../../../utils/const";
 import {IComment, INewComment} from "../../../models/iComents";
@@ -11,7 +11,7 @@ import {thunkHandlers} from "../../../store/thunkHandlers";
 import {AppDispatch, RootState} from "../../../store";
 import {getProblemById, selectCurrentMachinery} from "./selectors";
 import {setMessage} from "../../messages/model/slice";
-import {logger} from "../../../lib/default-logger";
+import {setDocs} from "../../machinery_docs/model/slice";
 
 const messages = {
     addMachinery: {error: "Не удалось добавить машину.", success: "Машина добавлена"},
@@ -78,9 +78,11 @@ export const fetchGetAllMachinery = createAsyncThunk(
 
 export const fetchGetMachineryById = createAsyncThunk(
     "fetch_get_machinery_by_id",
-    async (machinery_id: string, {rejectWithValue}) => {
+    async (machinery_id: string, {rejectWithValue, dispatch}) => {
         try {
-            return await machineryAPI.getById(machinery_id);
+            const {docs, ...machinery} = await machineryAPI.getById(machinery_id);
+            dispatch(setDocs(docs));
+            return machinery;
         } catch (e) {
             return rejectWithValue(handlerError(e));
         }

@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IMachineryDoc} from "../../../models/IMachineryDoc";
-import {fetchAddMachineryDoc} from "../../machinery/model/actions";
+import {fetchAddMachineryDoc, fetchDeleteMachineryDoc} from "./actions";
 
 interface IMachineryDocsState {
     list: IMachineryDoc[];
@@ -23,7 +23,7 @@ const initialState: IMachineryDocsState = {
 };
 
 export const MachineryDocsSlice = createSlice({
-    name: "machinery_docs",
+    name: "machinery_docs_slice",
     initialState,
     reducers: {
         setDocs: (state, action: PayloadAction<IMachineryDoc[]>) => {
@@ -32,13 +32,18 @@ export const MachineryDocsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchAddMachineryDoc.fulfilled, (state, action: PayloadAction<IMachineryDoc[]>) => {
-                state.list = action.payload;
+            .addCase(fetchAddMachineryDoc.fulfilled, (state, action: PayloadAction<IMachineryDoc>) => {
+                state.list = [...state.list, action.payload];
                 state.isLoading = false;
             })
-
+            .addCase(fetchDeleteMachineryDoc.fulfilled, (state, action: PayloadAction<IMachineryDoc>) => {
+                state.list = [...state.list.filter(doc => doc.id !== action.payload.id)];
+                state.isLoading = false;
+            })
             .addCase(fetchAddMachineryDoc.pending, handlePending)
-            .addCase(fetchAddMachineryDoc.rejected, handleRejected);
+            .addCase(fetchAddMachineryDoc.rejected, handleRejected)
+            .addCase(fetchDeleteMachineryDoc.pending, handlePending)
+            .addCase(fetchDeleteMachineryDoc.rejected, handleRejected);
     },
 });
 

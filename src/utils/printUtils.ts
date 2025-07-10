@@ -25,13 +25,19 @@ export const printImage = (imageUrl: string, title: string) => {
           </style>
         </head>
         <body>
-          <img src="${imageUrl}" alt="Printed Image">
+          <img id="to-print" src="${imageUrl}" alt="Printed Image">
+          <script>
+            const img = document.getElementById('to-print');
+            // Когда картинка загрузилась — печатаем и закрываем окно
+            img.onload = function() {
+              window.print();
+              setTimeout(() => window.close(), 100); // задержка для стабильности
+            };
+          </script>
         </body>
       </html>
     `);
     printWindow.document.close();
     printWindow.focus();
-    printWindow.print();
-    printWindow.close();
   }
 };

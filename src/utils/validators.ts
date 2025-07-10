@@ -1,9 +1,10 @@
-import {ICurrentMachinery, IDoc, INewMachinery} from "../models/iMachinery";
+import {ICurrentMachinery, INewMachinery} from "../models/iMachinery";
 import {INewProblem, IProblem} from "../models/IProblems";
 import {INewTask} from "../models/ITasks";
 import {ILoginData, IRegisterData} from "../models/iAuth";
 import {INewCompany} from "../models/iCompanies";
 import {IUser} from "../models/IUser";
+import {INewMachineryDoc} from "../models/IMachineryDoc";
 
 export type ValidationErrors = { [key: string]: string | null };
 
@@ -38,10 +39,10 @@ export const machineryValidate = (machinery: ICurrentMachinery | INewMachinery) 
     return errors;
 };
 
-export const docValidate = (doc: IDoc) => {
+export const docValidate = (doc: INewMachineryDoc) => {
     const errors: ValidationErrors = {};
-    if (doc.docTitle.length < 3) errors.docTitle = "Название должно быть не менее 2 символов";
-    if (doc.docTitle.length > 32) errors.docTitle = "Название должно быть не длиннее 32 символов";
+    if (doc.title.length < 2) errors.title = "Название должно быть не менее 2 символов";
+    if (doc.title.length > 32) errors.title = "Название должно быть не длиннее 32 символов";
     return errors;
 };
 

@@ -4,7 +4,7 @@ import { TableCell, TableRow, useMediaQuery } from "@mui/material";
 import { useAppSelector } from "hooks/redux";
 import { useNavigate } from "react-router-dom";
 import { routes } from "utils/routes";
-import {getAmountBySupplierId} from "features/invoices/model/selectors";
+import { getAmountBySupplierId } from "features/invoices/model/selectors";
 
 const Supplier: FC<ISupplier> = ({ id, name, INN }) => {
   const matches_500 = useMediaQuery("(min-width:500px)");

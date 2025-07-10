@@ -2,7 +2,7 @@ import React from "react";
 import { Stack, Typography, useMediaQuery } from "@mui/material";
 import { useAppSelector } from "hooks/redux";
 import { CENTER, COLUMN, ROW, START } from "styles/const";
-import {getCurrentAnnualOrders, getNumberAnnualOrders} from "features/orders/model/selectors";
+import { getCurrentAnnualOrders, getNumberAnnualOrders } from "features/orders/model/selectors";
 
 const OrdersInfo = () => {
   const matches_500 = useMediaQuery("(min-width:500px)");

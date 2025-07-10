@@ -4,13 +4,13 @@ import { LABEL, LOADING_BUTTON_BORDER_RADIUS, SIZE_SMALL } from "styles/const";
 import DoDisturbAltIcon from "@mui/icons-material/DoDisturbAlt";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { CANCEL_TEXT, FILE_TYPE, UPLOAD_TEXT } from "utils/const";
-import MessageWindowWithChoiceOption from "components/MessageWindowWithChoiceOption";
 import { useUploadFile } from "hooks/useUploadFile";
 import { getDateInMilliseconds } from "utils/services";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
 import { IInvoice } from "models/iInvoices";
-import { getUser } from "features/auth/model/selectors";
-import {fetchUpdateInvoice, fetchUploadFile} from "features/invoices/model/actions";
+import { fetchUpdateInvoice, fetchUploadFile } from "features/invoices/model/actions";
+import MessageWindowWithChoiceOption from "../../messages/ui/MessageWindowWithChoiceOption";
+import {selectCurrentUser} from "../../users/model/selectors";
 
 interface IProps {
   invoice: IInvoice;
@@ -19,7 +19,7 @@ interface IProps {
 
 const UploadPayment: FC<IProps> = ({ invoice, forDetailsMode = false }) => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => getUser(state));
+  const user = useAppSelector(selectCurrentUser);
   const { file, onFileChange, paymentErrorMessage, amount, isLoading, setIsLoading } = useUploadFile();
   const [openModal, setOpenModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");

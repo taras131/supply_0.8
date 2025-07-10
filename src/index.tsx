@@ -12,17 +12,17 @@ import { CustomThemeProvider } from "./components/ThemeProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <Provider store={setupStore()}>
-                <CustomThemeProvider>
-                    <Box sx={{ backgroundColor: "whitesmoke", minHeight: "100vh" }}>
-                        <App />
-                    </Box>
-                </CustomThemeProvider>
-            </Provider>
-        </BrowserRouter>
-    </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={setupStore()}>
+        <CustomThemeProvider>
+          <Box sx={{ backgroundColor: "whitesmoke", minHeight: "100vh" }}>
+            <App />
+          </Box>
+        </CustomThemeProvider>
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>,
 );
 
 reportWebVitals();

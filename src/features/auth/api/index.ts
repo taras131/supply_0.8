@@ -1,74 +1,41 @@
-import {IAuthData, IRegisterData} from "../../../models/iAuth";
-import {appAPI, basePath} from "../../../api";
+import {ILoginData, IRegisterData} from "../../../models/iAuth";
+import {appAPI, nestServerPath} from "../../../api";
 
-const registerPath = `${basePath}/auth/register`;
-const loginPath = `${basePath}/auth/login`;
-const checkPath = `${basePath}/auth/check`;
-
-const parseJwt = (token: string) => {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-        atob(base64)
-            .split("")
-            .map((c) => `%${("00" + c.charCodeAt(0).toString(16)).slice(-2)}`)
-            .join("")
-    );
-
-    return JSON.parse(jsonPayload);
-};
+const registerPath = `${nestServerPath}/auth/register`;
+const loginPath = `${nestServerPath}/auth/login`;
+const mePath = `${nestServerPath}/auth/me`;
+const logoutPath = `${nestServerPath}/auth/logout`;
 
 export const authAPI = {
-    login: async (authData: IAuthData) => {
-        const res = await fetch(loginPath, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-            body: JSON.stringify(authData),
-        });
-        if (!res.ok) {
-            const errorDetails = await res.json();
-            throw new Error(errorDetails.message || `Ошибка сервера: ${res.status} ${res.statusText}`);
+    login: async (authData: ILoginData) => {
+        try {
+            const res = await appAPI.post(loginPath, authData);
+            return res.data;
+        } catch (error: any) {
+            throw new Error(error.response?.data?.message
+                || `Ошибка сервера: ${error.response?.status} ${error.response?.statusText}`);
         }
-        const { access_token } = await res.json();
-        localStorage.setItem("token", access_token);
-        // Расшифровка токена
-        return parseJwt(access_token);
     },
     register: async (registerData: IRegisterData) => {
-        const res = await fetch(registerPath, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(registerData),
-        });
-        if (!res.ok) {
-            const errorDetails = await res.json();
-            throw new Error(errorDetails.message || `Ошибка сервера: ${res.status} ${res.statusText}`);
+        try {
+            const res = await appAPI.post(registerPath, registerData);
+            return res.data;
+        } catch (error: any) {
+            throw new Error(error.response?.data?.message
+                || `Ошибка сервера: ${error.response?.status} ${error.response?.statusText}`);
         }
-        const result = await res.json();
-        if(result.access_token) {
-            localStorage.setItem("token", result.access_token);
+    },
+    me: async () => {
+        try {
+            const res = await appAPI.get(mePath);
+            return res.data;
+        } catch (error: any) {
+            throw new Error(error.response?.data?.message
+                || `Ошибка сервера: ${error.response?.status} ${error.response?.statusText}`);
         }
-        return result;
     },
     out: async () => {
-      /*  const res = await signOut(this.auth);
-        return res;*/
+        return await appAPI.post(logoutPath);
     },
-    check: async () => {
-        try {
-            const res = await appAPI.get(checkPath);
-            const { access_token } = res.data;
-            return parseJwt(access_token);
-        } catch (e: any) {
-            if (e.response?.status === 401) {
-                localStorage.removeItem("token");
-            }
-            throw e;
-        }
-    },
+
 };

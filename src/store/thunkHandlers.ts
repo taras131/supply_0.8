@@ -1,6 +1,6 @@
 import {AppDispatch} from "./index";
 import {MESSAGE_SEVERITY} from "../utils/const";
-import {setMessage} from "./reducers/message";
+import {setMessage, setModalMessage} from "../features/messages/model/slice";
 
 export const handlerError = (e: unknown): string => {
     if (e instanceof Error) return e.message;
@@ -9,14 +9,9 @@ export const handlerError = (e: unknown): string => {
 };
 
 export const thunkHandlers = {
-    error: (e: unknown, defaultMessage: string, dispatch: AppDispatch) => {
+    error: (e: unknown, dispatch: any) => {
         const errorMessage = e instanceof Error ? e.message : "Неизвестная ошибка";
-        dispatch(
-            setMessage({
-                severity: MESSAGE_SEVERITY.error,
-                text: errorMessage || defaultMessage,
-            })
-        );
+        dispatch(setModalMessage(errorMessage));
         return handlerError(e);
     },
     success: (message: string, dispatch: AppDispatch) => {
@@ -24,9 +19,7 @@ export const thunkHandlers = {
             setMessage({
                 severity: MESSAGE_SEVERITY.success,
                 text: message,
-            })
+            }),
         );
     },
 };
-
-

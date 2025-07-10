@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import ModalWindow from "./ModalWindow";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { ROW, SPACE_AROUND } from "../styles/const";
+import ModalWindow from "../../../components/ModalWindow";
+import {ROW, SPACE_AROUND} from "../../../styles/const";
 
 interface IProps {
   isOpenModal: boolean;

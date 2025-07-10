@@ -8,7 +8,7 @@ import { IInvoice } from "models/iInvoices";
 import { ALL } from "utils/const";
 import { useSearchParams } from "react-router-dom";
 import { useAppSelector } from "hooks/redux";
-import {selectInvoices} from "features/invoices/model/slice";
+import { selectInvoices } from "features/invoices/model/slice";
 
 const Invoices = () => {
   const [isShowCanceledInvoice, setIsShowCanceledInvoice] = useState(false);

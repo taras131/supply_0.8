@@ -3,14 +3,12 @@ import {fetchCheckAuth, fetchLogin, fetchOut, fetchRegister} from "./actions";
 import {IUser} from "../../../models/IUser";
 
 export interface IAuthState {
-    errorMessage: string;
     isLoading: boolean;
     isAuth: boolean;
     currentUser: IUser | null;
 }
 
 const initialState: IAuthState = {
-    errorMessage: "",
     isLoading: false,
     isAuth: false,
     currentUser: null,
@@ -18,14 +16,11 @@ const initialState: IAuthState = {
 
 const handlePending = (state: IAuthState) => {
     state.isLoading = true;
-    state.errorMessage = "";
 };
 
-const handleRejected = (state: IAuthState, action: any) => {
+const handleRejected = (state: IAuthState) => {
     state.isLoading = false;
-    state.errorMessage = action.payload as string;
 };
-
 
 export const AuthSlice = createSlice({
     name: "auth",
@@ -34,41 +29,30 @@ export const AuthSlice = createSlice({
         setIsAuth: (state, action: PayloadAction<boolean>) => {
             state.isAuth = action.payload;
         },
-        cleanErrorMessage: (state) => {
-            state.errorMessage = "";
-        },
-
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchLogin.fulfilled, (state, action: PayloadAction<IUser>) => {
-                state.currentUser = action.payload;
+            .addCase(fetchLogin.fulfilled, (state) => {
                 state.isAuth = true;
                 state.isLoading = false;
             })
-            .addCase(fetchCheckAuth.fulfilled, (state, action: PayloadAction<IUser>) => {
-                state.currentUser = action.payload;
+            .addCase(fetchCheckAuth.fulfilled, (state) => {
                 state.isAuth = true;
                 state.isLoading = false;
             })
-            .addCase(fetchRegister.fulfilled, (state, action: PayloadAction<IUser>) => {
+            .addCase(fetchRegister.fulfilled, (state) => {
                 state.isAuth = true;
-                state.currentUser = action.payload;
                 state.isLoading = false;
             })
             .addCase(fetchOut.fulfilled, (state) => {
                 state.isAuth = false;
-                state.currentUser = null;
                 state.isLoading = false;
             })
-            .addMatcher(
-                (action) => action.type.endsWith("/pending"),
-                handlePending
-            )
-            .addMatcher(
-                (action) => action.type.endsWith("/rejected"),
-                handleRejected
-            );
+
+            .addCase(fetchOut.pending, handlePending)
+            .addCase(fetchCheckAuth.pending, handlePending)
+            .addCase(fetchOut.rejected, handleRejected)
+            .addCase(fetchCheckAuth.rejected, handleRejected);
     },
 });
 

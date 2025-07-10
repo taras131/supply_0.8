@@ -4,11 +4,7 @@ import { CENTER, COLUMN, ROW, SPACE_BETWEEN } from "styles/const";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, useMediaQuery } from "@mui/material";
 import { ALL, shipmentTypes, transporters } from "utils/const";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
-import {
-  setShipmentSearch,
-  setShipmentTypeFilter,
-  setTransporterFilter,
-} from "features/shipments/model/slice";
+import { setShipmentSearch, setShipmentTypeFilter, setTransporterFilter } from "features/shipments/model/slice";
 import { Transporter, TShipmentsType } from "models/iShipments";
 import {
   selectShipmentSearch,

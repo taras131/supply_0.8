@@ -10,12 +10,14 @@ const MachineryDetailsPage = () => {
     const dispatch = useAppDispatch();
     const machineryId = useParams().machineryId || "0";
     useEffect(() => {
-        dispatch(fetchGetMachineryById(+machineryId));
+        if (machineryId) {
+            dispatch(fetchGetMachineryById(machineryId));
+        }
     }, [dispatch, machineryId]);
     return (
         <Stack sx={{maxWidth: "1350px", width: "100%", marginLeft: "auto", marginRight: "auto"}} spacing={4}>
-            <MachineryDetailsHeader />
-            <MachineryDetailsTabs />
+            <MachineryDetailsHeader/>
+            <MachineryDetailsTabs/>
         </Stack>
     );
 };

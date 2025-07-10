@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import ShipmentsListItem from "features/shipments/ui/ShipmentsListItem";
-import {Shipments} from "models/iShipments";
+import { Shipments } from "models/iShipments";
 
 interface IProps {
   shipments: Shipments[];

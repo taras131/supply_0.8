@@ -7,7 +7,6 @@ import {db} from "../firebase";
 import {ISupplier} from "models/iSuppliers";
 import {setSuppliers} from "store/reducers/suppliers";
 import {IInvoice} from "models/iInvoices";
-import Message from "./Message";
 import {setComments, setCommentsLoading} from "store/reducers/coments";
 import {IComment} from "models/iComents";
 import {setShipments, setShipmentsLoading} from "features/shipments/model/slice";
@@ -20,6 +19,8 @@ import {fetchCheckAuth} from "../features/auth/model/actions";
 import Layout from "./Layout";
 import {routesConfig} from "../config/routes";
 import {IShipments} from "../models/iShipments";
+import MessageWindow from "../features/messages/ui/MessageWindow";
+import Message from "../features/messages/ui/Message";
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
@@ -120,11 +121,12 @@ function App() {
     return (
         <Layout>
             <Routes>
-                {routesConfig.map(({ path, element }) => (
-                    <Route key={path} path={path} element={element} />
+                {routesConfig.map(({path, element}) => (
+                    <Route key={path} path={path} element={element}/>
                 ))}
             </Routes>
-            <Message />
+            <Message/>
+            <MessageWindow/>
         </Layout>
     );
 }

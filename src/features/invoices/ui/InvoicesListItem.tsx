@@ -7,7 +7,6 @@ import { getSupplierINNById, getSupplierNameById } from "store/selectors/supplie
 import DownloadIcon from "@mui/icons-material/Download";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { setMessage } from "store/reducers/message";
 import {
   AMOUNT_COPY_TEXT,
   CANCEL_TEXT,
@@ -40,7 +39,8 @@ import {
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import UploadPayment from "features/invoices/ui/UploadPayment";
 import { selectCommentsByInvoiceId } from "store/reducers/coments";
-import {selectIsShipmentByInvoiceId} from "features/shipments/model/selectors";
+import { selectIsShipmentByInvoiceId } from "features/shipments/model/selectors";
+import {setMessage} from "../../messages/model/slice";
 
 interface IProps {
   invoice: IInvoice;

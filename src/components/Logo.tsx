@@ -1,6 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import {FC} from "react";
+import { FC } from "react";
 import logoEmblem from "../assets/logo/logo-emblem.svg";
 import logoEmblemDark from "../assets/logo/logo-emblem--dark.svg";
 import logo from "../assets/logo/logo.svg";
@@ -18,10 +18,7 @@ export interface LogoProps {
   width?: number;
 }
 
-export const Logo:FC<LogoProps> = ({ color = "dark",
-                                     emblem,
-                                     height = HEIGHT,
-                                     width = WIDTH }: LogoProps) => {
+export const Logo: FC<LogoProps> = ({ color = "dark", emblem, height = HEIGHT, width = WIDTH }: LogoProps) => {
   let url: string;
 
   if (emblem) {
@@ -40,4 +37,3 @@ export interface DynamicLogoProps {
   height?: number;
   width?: number;
 }
-

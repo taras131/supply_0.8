@@ -4,8 +4,8 @@ import { convertMillisecondsToDate } from "utils/services";
 import { IInvoice } from "models/iInvoices";
 import { useAppSelector } from "hooks/redux";
 import Box from "@mui/material/Box";
-import {getUserFullNameById} from "../../users/model/selectors";
-import {IShipments} from "../../../models/iShipments";
+import { getUserFullNameById } from "../../users/model/selectors";
+import { IShipments } from "../../../models/iShipments";
 
 interface IProps {
   invoice: IInvoice;

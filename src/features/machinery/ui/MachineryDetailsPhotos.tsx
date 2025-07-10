@@ -1,35 +1,43 @@
-import React, {FC} from "react";
+import React, {FC, useState} from "react";
 import {fetchDeleteMachineryPhoto, fetchUploadMachineryPhoto} from "../model/actions";
-import {ICurrentMachinery} from "../../../models/iMachinery";
-import {useAppDispatch} from "../../../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import PhotosManager from "../../../components/common/PhotosManager";
-import {basePath} from "../../../api";
-import Card from "@mui/material/Card";
+import {nestServerPath} from "../../../api";
+import {selectCurrentMachineryPhotos} from "../model/selectors";
+import ButtonsEditCancel from "../../../components/common/ButtonsEditCancel";
+import ViewCardPattern from "../../../components/common/ViewCardPattern";
 
-interface IProps {
-    machinery: ICurrentMachinery;
-    isEditMode: boolean;
-}
-
-const MachineryDetailsPhotos: FC<IProps> = ({machinery, isEditMode}) => {
+const MachineryDetailsPhotos: FC = () => {
     const dispatch = useAppDispatch();
-    const onAddPhoto = (newFile: File) => {
-        dispatch(fetchUploadMachineryPhoto({machinery, file: newFile}));
+    const [isEditMode, setIsEditMode] = useState(false);
+    const photos = useAppSelector(selectCurrentMachineryPhotos);
+    if (!photos) return null;
+    const toggleIsEditMode = () => {
+        setIsEditMode(prev => !prev);
+    };
+    const onAddPhoto = (file: File) => {
+        dispatch(fetchUploadMachineryPhoto(file));
     };
     const onDeletePhoto = (deletedFileIndex: number) => {
-        dispatch(fetchDeleteMachineryPhoto({
-            machinery
-            , deletePhotoName: machinery.photos[deletedFileIndex],
-        }));
+        dispatch(
+            fetchDeleteMachineryPhoto(photos[deletedFileIndex]),
+        );
     };
-    const photosPaths = machinery.photos.map(photo => `${basePath}/files/${photo}`);
+    const photosPaths = photos.map(photo => `${nestServerPath}/static/${photo}`);
     return (
-        <Card sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-            <PhotosManager photosPaths={photosPaths}
-                           onAddPhoto={onAddPhoto}
-                           onDeletePhoto={onDeletePhoto}
-                           isViewingOnly={!isEditMode}/>
-        </Card>
+        <ViewCardPattern title={"Фото:"}>
+            <PhotosManager
+                photosPaths={photosPaths}
+                onAddPhoto={onAddPhoto}
+                onDeletePhoto={onDeletePhoto}
+                isViewingOnly={!isEditMode}
+            />
+            <ButtonsEditCancel
+                isEditMode={isEditMode}
+                toggleIsEditMode={toggleIsEditMode}
+                cancelUpdateHandler={toggleIsEditMode}
+            />
+        </ViewCardPattern>
     );
 };
 

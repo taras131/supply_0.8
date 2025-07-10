@@ -3,7 +3,7 @@ import { Stack, Typography, useMediaQuery } from "@mui/material";
 import { useAppSelector } from "hooks/redux";
 import { CENTER, COLUMN, ROW, START } from "styles/const";
 import { getSuppliersCount } from "store/selectors/suppliers";
-import {getTotalTurnover} from "features/invoices/model/selectors";
+import { getTotalTurnover } from "features/invoices/model/selectors";
 
 const SuppliersInfo = () => {
   const matches_500 = useMediaQuery("(min-width:500px)");

@@ -49,14 +49,14 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 export const StyledTextField = styled(TextField)(() => ({
   "& input[type=number]": {
-    "MozAppearance": "textField",
+    MozAppearance: "textField",
   },
   "& input[type=number]::-webkit-outer-spin-button": {
-    "WebkitAppearance": "none",
+    WebkitAppearance: "none",
     margin: 0,
   },
   "& input[type=number]::-webkit-inner-spin-button": {
-    "WebkitAppearance": "none",
+    WebkitAppearance: "none",
     margin: 0,
   },
 }));

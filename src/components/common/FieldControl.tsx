@@ -14,12 +14,12 @@ import {
 
 const StyledInput = styled(TextField, {
     shouldForwardProp: (prop) => prop !== "isError",
-})<{ isError?: boolean }>(({ theme, isError }) => ({
+})<{ isError?: boolean }>(({theme, isError}) => ({
     "label + &": {
         marginTop: theme.spacing(2),
     },
     "& .MuiInputBase-input": {
-        borderRadius: 4,
+        borderRadius: 10,
         position: "relative",
         backgroundColor: isError ? "#FFFBE6" : "#E8F5E9",
         border: "1px solid",
@@ -36,12 +36,12 @@ const StyledInput = styled(TextField, {
 
 const StyledSelect = styled(Select, {
     shouldForwardProp: (prop) => prop !== "isError",
-})<{ isError?: boolean }>(({ theme, isError }) => ({
+})<{ isError?: boolean }>(({theme, isError}) => ({
     "label + &": {
         marginTop: theme.spacing(2),
     },
     "& .MuiInputBase-input": {
-        borderRadius: 4,
+        borderRadius: 10,
         position: "relative",
         backgroundColor: isError ? "#FFFBE6" : "#E8F5E9",
         border: "1px solid",
@@ -65,6 +65,7 @@ const StyledTypography = styled(Typography)(({theme}) => ({
 const StyledLabel = styled(InputLabel)(() => ({
     fontSize: "18px",
     fontWeight: 500,
+    marginLeft: "-10px",
 }));
 
 interface IProps {
@@ -73,7 +74,7 @@ interface IProps {
     id: string;
     value: string | number;
     error?: string | null | undefined;
-    isEditMode: boolean;
+    isEditMode?: boolean;
     onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string | unknown>) => void;
     options?: Array<{ id: number | string; title: string | number }>;
     isRequired?: boolean;
@@ -88,7 +89,7 @@ const FieldControl: FC<IProps> = ({
                                       id,
                                       value,
                                       error = null,
-                                      isEditMode,
+                                      isEditMode = true,
                                       onChange,
                                       options,
                                       isRequired = false,
@@ -112,7 +113,7 @@ const FieldControl: FC<IProps> = ({
                     isError={!!error}
                 >
                     <MenuItem value={-1}>Не выбрано</MenuItem>
-                    {options.map(option => (
+                    {options.map((option) => (
                         <MenuItem key={option.id} value={option.id}>
                             {option.title}
                         </MenuItem>
@@ -133,11 +134,13 @@ const FieldControl: FC<IProps> = ({
         ) : (
             <StyledTypography>
                 {options
-                    ? options.find(option => option.id === value)?.title || "-------"
+                    ? options.find((option) => option.id === value)?.title || "-------"
                     : value || "-------"}
             </StyledTypography>
         )}
-        {isEditMode && (<FormHelperText sx={{minHeight: "20px"}}>{error}</FormHelperText>)}
+        {isEditMode && <FormHelperText sx={{minHeight: "20px", textAlign: "right"}}>
+            {error}
+        </FormHelperText>}
     </FormControl>
 );
 

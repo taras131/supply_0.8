@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import SuppliersReducer from "./reducers/suppliers";
-import MessageReducer from "./reducers/message";
+import MessageReducer from "features/messages/model/slice";
 import InvoicesReducer from "features/invoices/model/slice";
 import authReducer from "../features/auth/model/slice";
 import commentsReducer from "./reducers/coments";
@@ -10,8 +10,7 @@ import ordersReducer from "features/orders/model/slice";
 import machineryReducer from "../features/machinery/model/slice";
 import usersReducer from "../features/users/model/slice";
 import filesReducer from "../features/files/model/slice";
-import {machineryWebsocketMiddleware} from "../features/machinery/model/websocketMiddleware";
-import {usersWebsocketMiddleware} from "../features/users/model/websocketMiddleware";
+import companiesReducer from "../features/companies/model/slice";
 
 const rootReducer = combineReducers({
   invoices: InvoicesReducer,
@@ -24,12 +23,13 @@ const rootReducer = combineReducers({
   machinery: machineryReducer,
   users: usersReducer,
   files: filesReducer,
+  companies: companiesReducer,
 });
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(machineryWebsocketMiddleware, usersWebsocketMiddleware),
+/*    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(machineryWebsocketMiddleware),*/
   });
 };
 export type RootState = ReturnType<typeof rootReducer>;

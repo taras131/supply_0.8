@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import { ICancel, IPaid } from "models/iInvoices";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
-import { getUser } from "features/auth/model/selectors";
 import { getDateInMilliseconds } from "utils/services";
-import {fetchUpdateInvoiceApproved, fetchUpdateInvoiceCancel} from "features/invoices/model/actions";
+import { fetchUpdateInvoiceApproved, fetchUpdateInvoiceCancel } from "features/invoices/model/actions";
+import {selectCurrentUser} from "../../users/model/selectors";
 
 interface IProps {
   id: string;
@@ -14,7 +14,7 @@ interface IProps {
 
 const InvoiceDetailsCancel: FC<IProps> = ({ id, cancel, paid }) => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => getUser(state));
+  const user = useAppSelector(selectCurrentUser);
   const handleCancelClick = () => {
     if (cancel && cancel.isCancel) {
       dispatch(

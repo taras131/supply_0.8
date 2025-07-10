@@ -1,29 +1,29 @@
-import {basePath} from "../../../api";
+import {appAPI, nestServerPath} from "../../../api";
+import {transliterate} from "../../../utils/services";
 
-export const filesPath = `${basePath}/files`;
+export const filesPath = `${nestServerPath}/file`;
 
 export const filesAPI = {
-    upload: async (formData: FormData) => {
-        const response = await fetch(filesPath, {
-            method: "POST",
-            body: formData,
+    upload: async (file: File) => {
+        const ext = file.name.split(".").pop();
+        const baseNameRaw = file.name.replace(/\.[^/.]+$/, "");
+        const baseNameTranslit = transliterate(baseNameRaw)
+            .replace(/[^a-zA-Z0-9]/g, "_");
+        const uniqueName = `${baseNameTranslit}_${Date.now()}.${ext}`;
+        const renamedFile = new File([file], uniqueName, {type: file.type});
+        const formData = new FormData();
+        formData.append("file", renamedFile);
+        const response = await appAPI.post("/file", formData, {
+            headers: {"Content-Type": "multipart/form-data"},
         });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return await response.json();
+        return response.data.name;
     },
     delete: async (filename: string) => {
-        const response = await fetch(`${filesPath}/${filename}`, {
-            method: "DELETE",
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+        try {
+            const response = await appAPI.delete(`/file/${filename}`);
+            return response.data;
+        } catch (e) {
+            console.log(e);
         }
-        const data = await response.json();
-        console.log(data);
-        return data;
     },
 };

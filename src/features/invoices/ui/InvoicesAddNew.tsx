@@ -4,17 +4,17 @@ import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/material";
 import { emptyInvoice } from "models/iInvoices";
 import { getDateInMilliseconds } from "utils/services";
-import { getUser } from "features/auth/model/selectors";
 import PageHeaderWithTitleAndTwoButtons from "components/PageHeaderWithTitleAndTwoButtons";
 import { routes } from "utils/routes";
 import { useNavigate } from "react-router-dom";
 import OrdersList from "features/orders/ui/OrdersList";
 import PageLayout from "components/PageLayout";
 import InvoicesAddNewInputFields from "features/invoices/ui/InvoicesAddNewInputFields";
-import {getOrders} from "features/orders/model/selectors";
-import {getSelectedOrderPosition} from "features/invoices/model/selectors";
-import {resetSelectedOrderPosition} from "features/invoices/model/slice";
-import {fetchAddInvoice, fetchRemoveFile, fetchUploadFile} from "features/invoices/model/actions";
+import { getOrders } from "features/orders/model/selectors";
+import { getSelectedOrderPosition } from "features/invoices/model/selectors";
+import { resetSelectedOrderPosition } from "features/invoices/model/slice";
+import { fetchAddInvoice, fetchRemoveFile, fetchUploadFile } from "features/invoices/model/actions";
+import {selectCurrentUser} from "../../users/model/selectors";
 
 const InvoicesAddNew: FC = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +26,7 @@ const InvoicesAddNew: FC = () => {
   const allOrders = useAppSelector((state) => getOrders(state, false));
   const navigate = useNavigate();
   const [isWithVAT, setIsWithVAT] = useState(true);
-  const user = useAppSelector((state) => getUser(state));
+  const user = useAppSelector(selectCurrentUser);
   const [selectedSupplierId, setSelectedSupplierId] = useState("");
   const [isUploadFileLoading, setIsUploadFileLoading] = useState(false);
   const selectedPosition = useAppSelector(getSelectedOrderPosition);

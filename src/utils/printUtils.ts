@@ -1,8 +1,8 @@
 export const printImage = (imageUrl: string, title: string) => {
-    const printWindow = window.open("", "_blank");
-    if (printWindow) {
-        printWindow.document.open();
-        printWindow.document.write(`
+  const printWindow = window.open("", "_blank");
+  if (printWindow) {
+    printWindow.document.open();
+    printWindow.document.write(`
       <!DOCTYPE html>
       <html lang="en">
         <head>
@@ -29,9 +29,9 @@ export const printImage = (imageUrl: string, title: string) => {
         </body>
       </html>
     `);
-        printWindow.document.close();
-        printWindow.focus();
-        printWindow.print();
-        printWindow.close();
-    }
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+  }
 };

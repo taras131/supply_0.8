@@ -9,7 +9,7 @@ import { useAppSelector } from "hooks/redux";
 import { IComment } from "models/iComents";
 import { convertMillisecondsToDate } from "utils/services";
 import { CENTER, SECONDARY_TEXT_COLOR, SPACE_BETWEEN, START } from "styles/const";
-import {getUserById} from "../../users/model/selectors";
+import { getUserById } from "../../users/model/selectors";
 
 interface IProps extends IComment {
   userId: string;

@@ -5,18 +5,18 @@ import { createTheme } from "../styles/theme/create-theme";
 import EmotionCache from "./EmotionCache";
 
 interface ThemeProviderProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export function CustomThemeProvider({ children }: ThemeProviderProps): React.JSX.Element {
-    const theme = createTheme();
+  const theme = createTheme();
 
-    return (
-        <EmotionCache options={{ key: "mui" }}>
-            <CssVarsProvider theme={theme} defaultMode="light">
-                <CssBaseline />
-                {children}
-            </CssVarsProvider>
-        </EmotionCache>
-    );
+  return (
+    <EmotionCache options={{ key: "mui" }}>
+      <CssVarsProvider theme={theme} defaultMode="light">
+        <CssBaseline />
+        {children}
+      </CssVarsProvider>
+    </EmotionCache>
+  );
 }

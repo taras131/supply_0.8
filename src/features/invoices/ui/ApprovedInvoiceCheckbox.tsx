@@ -3,10 +3,10 @@ import { Checkbox, useMediaQuery } from "@mui/material";
 import { IInvoice } from "models/iInvoices";
 import { getDateInMilliseconds } from "utils/services";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
-import { getUser } from "features/auth/model/selectors";
-import MessageWindow from "components/MessageWindow";
+import MessageWindow from "features/messages/ui/MessageWindow";
 import { userRoles } from "utils/const";
-import {fetchUpdateInvoiceApproved} from "features/invoices/model/actions";
+import { fetchUpdateInvoiceApproved } from "features/invoices/model/actions";
+import {selectCurrentUser} from "../../users/model/selectors";
 
 interface IProps {
   invoice: IInvoice;
@@ -19,7 +19,7 @@ const ApprovedInvoiceCheckbox: FC<IProps> = ({ invoice }) => {
   const dispatch = useAppDispatch();
   const [isOpenErrorMessageWindow, setIsOpenErrorMessageWindow] = useState(false);
   const matches_470 = useMediaQuery("(min-width:470px)");
-  const user = useAppSelector((state) => getUser(state));
+  const user = useAppSelector(selectCurrentUser);
   const toggleIsOpenErrorMessageWindow = () => {
     setIsOpenErrorMessageWindow((prev) => !prev);
   };

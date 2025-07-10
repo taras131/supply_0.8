@@ -3,8 +3,6 @@ import { Button, ButtonGroup, Stack, Typography, useMediaQuery } from "@mui/mate
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { getDateInMilliseconds } from "utils/services";
-import { getUser } from "features/auth/model/selectors";
-import { setMessage } from "store/reducers/message";
 import { MESSAGE_SEVERITY } from "utils/const";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +11,10 @@ import { CENTER, SPACE_BETWEEN } from "styles/const";
 import InvoicesInfo from "features/invoices/ui/InvoicesInfo";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
 import { useUploadFile } from "hooks/useUploadFile";
-import {selectInvoices} from "features/invoices/model/slice";
-import {fetchUpdateInvoice, fetchUploadFile} from "features/invoices/model/actions";
+import { selectInvoices } from "features/invoices/model/slice";
+import { fetchUpdateInvoice, fetchUploadFile } from "features/invoices/model/actions";
+import {setMessage} from "../../messages/model/slice";
+import {selectCurrentUser} from "../../users/model/selectors";
 
 const InvoicesHeader: FC = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +23,7 @@ const InvoicesHeader: FC = () => {
   const matches_1050 = useMediaQuery("(min-width:1050px)");
   const matches_700 = useMediaQuery("(min-width:700px)");
   const { file, onFileChange, paymentErrorMessage, amount, isLoading } = useUploadFile();
-  const user = useAppSelector((state) => getUser(state));
+  const user = useAppSelector(selectCurrentUser);
   const invoices = useAppSelector(selectInvoices);
   const handleAddInvoiceClick = () => {
     navigate(routes.invoices + "/add_new");
@@ -35,7 +35,7 @@ const InvoicesHeader: FC = () => {
         const onLoadingPaymentOrderFile = (name: string, filePatch: string) => {
           const newPaid = {
             isPaid: true,
-            userId: user.id,
+            userId: user?.id,
             date: getDateInMilliseconds(),
             paymentOrderFileLink: filePatch,
           };

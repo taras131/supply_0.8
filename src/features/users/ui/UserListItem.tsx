@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import { TableCell, TableRow, useMediaQuery } from "@mui/material";
-import {IUser} from "../../../models/IUser";
-import {userRoles} from "../model/slice";
+import { IUser } from "../../../models/IUser";
+import { userRoles } from "../model/slice";
 
 interface IProps {
-    user: IUser;
+  user: IUser;
 }
 
-const UserListItem: FC<IProps> = ({user }) => {
+const UserListItem: FC<IProps> = ({ user }) => {
   const matches_650 = useMediaQuery("(min-width:500px)");
   const matches_550 = useMediaQuery("(min-width:550px)");
   return (

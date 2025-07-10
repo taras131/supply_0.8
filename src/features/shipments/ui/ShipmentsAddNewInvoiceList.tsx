@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { IShipmentsInvoice, TShipmentInvoiceValue } from "models/iShipments";
 import { useAppSelector } from "hooks/redux";
-import {selectInvoices} from "features/invoices/model/slice";
+import { selectInvoices } from "features/invoices/model/slice";
 
 interface IProps {
   selectedInvoices: IShipmentsInvoice[];

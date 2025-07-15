@@ -39,7 +39,10 @@ const UserDetails: FC<IProps> = ({user}) => {
         setEditedValue(user);
     };
     return (
-        <ViewCardPattern isEditMode={isEditMode}>
+        <ViewCardPattern isEditMode={isEditMode}
+                         footer={isEditMode
+                             ? ""
+                             : "Вы можете отредактировать свои данные"}>
             <UserView
                 editedUser={editedValue}
                 isEditMode={isEditMode}
@@ -53,11 +56,6 @@ const UserDetails: FC<IProps> = ({user}) => {
                 updateHandler={updateUserHandler}
                 cancelUpdateHandler={cancelUpdateUserHandler}
             />
-            {!isEditMode && (
-                <Typography variant={"subtitle2"} textAlign={"center"}>
-                    Вы можете отредактировать свои данные
-                </Typography>
-            )}
         </ViewCardPattern>
     );
 };

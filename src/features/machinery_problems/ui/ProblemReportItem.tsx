@@ -4,8 +4,8 @@ import { Chip, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import BuildIcon from "@mui/icons-material/Build";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { convertMillisecondsToDate } from "../../../../utils/services";
-import { getPriorityChipColor, getPriorityTitleById } from "../../utils/services";
+import { convertMillisecondsToDate } from "../../../utils/services";
+import { getPriorityChipColor, getPriorityTitleById } from "../../machinery/utils/services";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 
 interface IProps {

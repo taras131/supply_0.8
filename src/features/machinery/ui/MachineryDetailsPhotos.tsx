@@ -5,7 +5,7 @@ import PhotosManager from "../../../components/common/PhotosManager";
 import {nestServerPath} from "../../../api";
 import {selectCurrentMachineryPhotos} from "../model/selectors";
 import ButtonsEditCancel from "../../../components/common/ButtonsEditCancel";
-import ViewCardPattern from "../../../components/common/ViewCardPattern";
+import Card from "@mui/material/Card";
 
 const MachineryDetailsPhotos: FC = () => {
     const dispatch = useAppDispatch();
@@ -25,7 +25,14 @@ const MachineryDetailsPhotos: FC = () => {
     };
     const photosPaths = photos.map(photo => `${nestServerPath}/static/${photo}`);
     return (
-        <ViewCardPattern title={"Фото:"}>
+        <Card sx={{
+            position: "relative",
+            padding: "24px",
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+        }}>
             <PhotosManager
                 photosPaths={photosPaths}
                 onAddPhoto={onAddPhoto}
@@ -37,7 +44,7 @@ const MachineryDetailsPhotos: FC = () => {
                 toggleIsEditMode={toggleIsEditMode}
                 cancelUpdateHandler={toggleIsEditMode}
             />
-        </ViewCardPattern>
+        </Card>
     );
 };
 

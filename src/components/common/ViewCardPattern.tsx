@@ -7,10 +7,9 @@ export const STYLES = {
     stack: (isEditMode: boolean) => ({
         width: "100%",
         display: "grid",
-        gridTemplateColumns: `repeat(auto-fit, minmax(${isEditMode ? 280 : 200}px, 1fr))`,
+        gridTemplateColumns: `repeat(auto-fit, minmax(${isEditMode ? 240 : 200}px, 1fr))`,
         gap: isEditMode ? "14px" : "34px",
         justifyItems: "center",
-
         "& > *": {
             minWidth: isEditMode ? "280px" : "180px",
             width: "100%",
@@ -23,12 +22,10 @@ interface IProps {
     children: React.ReactNode;
     isEditMode?: boolean;
     title?: string;
+    footer?: string;
 }
 
-const ViewCardPattern: FC<IProps> = ({title, children, isEditMode = true}) => {
-    const childrenArray = React.Children.toArray(children);
-    const footer = childrenArray.slice(-1);
-    const main = childrenArray.slice(0, -1);
+const ViewCardPattern: FC<IProps> = ({title, footer, children, isEditMode = true}) => {
     return (
         <Card sx={{
             position: "relative",
@@ -43,12 +40,17 @@ const ViewCardPattern: FC<IProps> = ({title, children, isEditMode = true}) => {
                     {title}
                 </Typography>
             )}
-            <Stack spacing={2} sx={{...STYLES.stack(isEditMode), flexGrow: 1}}>
-                {main}
+            <Stack spacing={2}
+                   sx={{...STYLES.stack(isEditMode), flexGrow: 1}}>
+                {children}
             </Stack>
-            <Box mt="auto" width="100%">
-                {footer}
-            </Box>
+            {footer && (
+                <Box mt="auto" width="100%">
+                    <Typography variant={"subtitle2"} textAlign={"center"}>
+                        {footer}
+                    </Typography>
+                </Box>
+            )}
         </Card>
     );
 };

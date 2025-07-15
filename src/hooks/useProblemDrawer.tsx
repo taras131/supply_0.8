@@ -1,27 +1,28 @@
 import { useState } from "react";
+import {IMachineryProblem} from "../models/IMachineryProblems";
 
 export type DrawerMode = "view" | "create";
 
 export interface IDrawerState {
   isOpen: boolean;
   mode: DrawerMode;
-  problemId: number | null;
+  problem: IMachineryProblem | null;
 }
 
 const initialState: IDrawerState = {
   isOpen: false,
   mode: "create",
-  problemId: null,
+  problem: null,
 };
 
 export const useProblemDrawer = (initial = initialState) => {
   const [drawerState, setDrawerState] = useState<IDrawerState>(initial);
 
-  const openDrawer = (mode: DrawerMode, problemId: number | null = null) => {
+  const openDrawer = (mode: DrawerMode, problem: IMachineryProblem | null = null) => {
     setDrawerState({
       isOpen: true,
       mode,
-      problemId,
+      problem,
     });
   };
 

@@ -13,7 +13,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
-import ProblemCard from "../problems/ProblemCard";
+import ProblemDetails from "../../../machinery_problems/ui/ProblemDetails";
 import { useProblemDrawer } from "../../../../hooks/useProblemDrawer";
 
 interface IProps {
@@ -164,7 +164,7 @@ const TaskIssueView: FC<IProps> = ({ task, errors, isEditMode = false, fieldChan
         />
       </Stack>
       {task.problem_id && (
-        <ProblemCard currentProblemId={task.problem_id} isOpen={drawerState.isOpen} onClose={closeDrawer} />
+        <ProblemDetails currentProblemId={task.problem_id} isOpen={drawerState.isOpen} onClose={closeDrawer} />
       )}
     </Stack>
   );

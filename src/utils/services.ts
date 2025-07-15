@@ -189,3 +189,8 @@ export const isTask = (task: ITask | INewTask): task is ITask => {
     "spent_resources" in task
   );
 };
+
+export const formatDateDDMMYYYY = (input: string)  =>{
+  const date = new Date(input);
+  return date.toLocaleDateString("ru-RU");
+};

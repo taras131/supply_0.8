@@ -85,10 +85,6 @@ export const getCurrentMachineryTasks = (state: RootState): ITask[] | [] => {
     return state.machinery.current?.tasks || [];
 };
 
-export const getCurrentMachineryProblems = (state: RootState): IProblem[] | [] => {
-    return state.machinery.current?.problems || [];
-};
-
 export const getTaskById = (state: RootState, taskId: number): ITask | null => {
     return state.machinery.current?.tasks.find((task) => task.id === taskId) || null;
 };

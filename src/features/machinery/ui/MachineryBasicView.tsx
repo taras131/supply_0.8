@@ -3,7 +3,7 @@ import {IMachinery, INewMachinery} from "../../../models/iMachinery";
 import {ValidationErrors} from "../../../utils/validators";
 import {SelectChangeEvent} from "@mui/material";
 import FieldControl from "../../../components/common/FieldControl";
-import {engineTypes, machineryTypes, operatingTypes} from "../utils/const";
+import {engineTypes, machineryTypes} from "../utils/const";
 import {yearsManufacture} from "../../../utils/const";
 
 interface IProps {
@@ -58,7 +58,7 @@ const MachineryBasicView: FC<IProps> = ({
                 options={yearOptions}
                 isRequired
             />
-            <FieldControl
+            {/*      <FieldControl
                 label="Ед. измерения наработки"
                 name="operating_type_id"
                 id="operating_type_id"
@@ -68,7 +68,7 @@ const MachineryBasicView: FC<IProps> = ({
                 onChange={machineryFieldChangeHandler}
                 options={operatingTypes}
                 isRequired
-            />
+            />*/}
             <FieldControl
                 label="Марка"
                 name="brand"

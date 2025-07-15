@@ -20,7 +20,7 @@ export const machineryValidate = (machinery: ICurrentMachinery | INewMachinery) 
         if (machinery.type_id < 0) errors.type_id = "Выберите тип техники";
         if (machinery.engine_type_id < 0) errors.engine_type_id = "Выберите тип двигателя";
         if (machinery.year_manufacture < 0) errors.year_manufacture = "Выберите год производства";
-        if (machinery.operating_type_id < 0) errors.operating_type_id = "Выберите еденицы измерения";
+        // if (machinery.operating_type_id < 0) errors.operating_type_id = "Выберите еденицы измерения";
         if (machinery.vin.trim().length > 32) errors.vin = "VIN должен быть не длиннее 32 символов";
         if (machinery.state_number.trim().length > 32)
             errors.state_number = "Гос. номер должен быть не длиннее 32 символов";

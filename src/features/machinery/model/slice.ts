@@ -3,20 +3,16 @@ import {ICurrentMachinery, IMachinery} from "../../../models/iMachinery";
 import {
     fetchAddMachinery,
     fetchAddMachineryComment,
-    fetchAddMachineryProblem,
     fetchAddMachineryTask,
     fetchDeleteMachineryComment,
     fetchDeleteMachineryPhoto, fetchGetAllMachinery,
     fetchGetMachineryById,
     fetchUpdateMachinery,
     fetchUpdateMachineryComment,
-    fetchUpdateMachineryProblem,
     fetchUpdateMachineryTask,
-    fetchUploadMachineryPhoto,
 } from "./actions";
 import {IComment} from "../../../models/iComents";
 import {ITask} from "../../../models/ITasks";
-import {IProblem} from "../../../models/IProblems";
 
 interface IMachineryState {
     list: IMachinery[];
@@ -131,14 +127,6 @@ export const MachinerySlice = createSlice({
                     };
                 }
             })
-            .addCase(fetchUploadMachineryPhoto.fulfilled, (state, action: PayloadAction<ICurrentMachinery>) => {
-                state.isLoading = false;
-                state.current = action.payload;
-            })
-            .addCase(fetchDeleteMachineryPhoto.fulfilled, (state, action: PayloadAction<ICurrentMachinery>) => {
-                state.isLoading = false;
-                state.current = action.payload;
-            })
             .addCase(fetchAddMachineryTask.fulfilled, (state, action: PayloadAction<ITask>) => {
                 if (state.current && action.payload.machinery_id) {
                     state.current = {
@@ -154,28 +142,6 @@ export const MachinerySlice = createSlice({
                         ...state.current,
                         tasks: [
                             ...state.current.tasks.map((task) => (task.id === action.payload.id ? action.payload : task)),
-                        ],
-                    };
-                }
-                state.isLoading = false;
-            })
-            .addCase(fetchAddMachineryProblem.fulfilled, (state, action: PayloadAction<IProblem>) => {
-                if (state.current && action.payload.machinery_id) {
-                    state.current = {
-                        ...state.current,
-                        problems: [...state.current.problems, action.payload],
-                    };
-                }
-                state.isLoading = false;
-            })
-            .addCase(fetchUpdateMachineryProblem.fulfilled, (state, action: PayloadAction<IProblem>) => {
-                if (state.current && state.current.problems) {
-                    state.current = {
-                        ...state.current,
-                        problems: [
-                            ...state.current.problems.map((problem) =>
-                                problem.id === action.payload.id ? action.payload : problem,
-                            ),
                         ],
                     };
                 }

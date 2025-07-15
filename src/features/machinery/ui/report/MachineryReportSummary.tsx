@@ -1,27 +1,27 @@
 import React from "react";
 import {
   getCurrentMachineryId,
-  getCurrentMachineryProblems,
   getLastMaintenance,
   getUpcomingMaintenance,
 } from "../../model/selectors";
 import { useAppSelector } from "../../../../hooks/redux";
-import ProblemReportItem from "../problems/ProblemReportItem";
+import ProblemReportItem from "../../../machinery_problems/ui/ProblemReportItem";
 import Card from "@mui/material/Card";
-import { IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import TaskReportItem from "../tasks/TaskReportItem";
-import ProblemCard from "../problems/ProblemCard";
+import ProblemDetails from "../../../machinery_problems/ui/ProblemDetails";
 import { useProblemDrawer } from "../../../../hooks/useProblemDrawer";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { useNavigate } from "react-router-dom";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import {selectAllMachineryProblems} from "../../../machinery_problems/model/selectors";
 
 const MachineryReportSummary = () => {
   const navigate = useNavigate();
   const upcomingMaintenance = useAppSelector(getUpcomingMaintenance);
   const lastMaintenance = useAppSelector(getLastMaintenance);
   const currentMachineryId = useAppSelector(getCurrentMachineryId);
-  const problems = useAppSelector(getCurrentMachineryProblems);
+  const problems = useAppSelector(selectAllMachineryProblems);
   const { drawerState, openDrawer, closeDrawer } = useProblemDrawer();
   const handleProblemClick = (problemId: number) => () => {
     openDrawer("view", problemId);
@@ -68,7 +68,7 @@ const MachineryReportSummary = () => {
         )}
       </List>
       {drawerState.isOpen && drawerState.problemId && drawerState.mode === "view" && (
-        <ProblemCard isOpen={drawerState.isOpen} onClose={closeDrawer} currentProblemId={drawerState.problemId} />
+        <ProblemDetails isOpen={drawerState.isOpen} onClose={closeDrawer} currentProblemId={drawerState.problemId} />
       )}
     </Card>
   );

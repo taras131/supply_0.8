@@ -9,7 +9,6 @@ export const machineryDocsAPI = {
         return res.data;
     },
     delete: async (id: string) => {
-        console.log(id);
         const res = await appAPI.delete(`${machineryDocsPath}/${id}`);
         return res.data;
     },

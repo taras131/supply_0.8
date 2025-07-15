@@ -1,4 +1,5 @@
-import { problemCategories, problemPriority, problemStatus } from "./const";
+import { problemCategories} from "./const";
+import {problemPriority, problemStatus} from "../../../models/IMachineryProblems";
 
 export const getCategoryTitleById = (id: number): string | undefined => {
   return problemCategories.find((category) => category.id === id)?.title;

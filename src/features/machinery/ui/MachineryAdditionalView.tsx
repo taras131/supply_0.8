@@ -1,10 +1,11 @@
 import React, {ChangeEvent, FC} from "react";
 import {IMachinery, INewMachinery} from "../../../models/iMachinery";
-import {SelectChangeEvent} from "@mui/material";
+import {SelectChangeEvent, Stack} from "@mui/material";
 import {tractionTypes, transmissionTypes} from "../utils/const";
 import FieldControl from "../../../components/common/FieldControl";
 import {ValidationErrors} from "../../../utils/validators";
-import {convertMillisecondsToDate} from "../../../utils/services";
+import CreateUpdateUserInfo from "../../../components/common/CreateUpdateUserInfo";
+import Box from "@mui/material/Box";
 
 interface IProps {
     editedMachinery: IMachinery | INewMachinery | null;
@@ -89,33 +90,20 @@ const MachineryAdditionalView: FC<IProps> = ({
                 isEditMode={isEditMode}
                 onChange={machineryFieldChangeHandler}
             />
-            {"created_date" in editedMachinery && "updated_date" in editedMachinery && !isEditMode && (
-                <>
-                    <FieldControl
-                        label="Статус"
-                        name="status"
-                        id="status"
-                        value={editedMachinery.status}
-                        isEditMode={isEditMode}
-                        onChange={machineryFieldChangeHandler}
+            {!isEditMode && "author" in editedMachinery && (
+                <Box sx={{
+                    gridColumn: "1 / -1",    // занять всю ширину grid
+                    width: "100%",
+                    minWidth: "unset",
+                    maxWidth: "none",
+                }}>
+                    <CreateUpdateUserInfo
+                        author={editedMachinery.author}
+                        updatedAuthor={editedMachinery.updated_author || null}
+                        createdAT={editedMachinery.created_at}
+                        updatedAt={editedMachinery.updated_at || null}
                     />
-                    <FieldControl
-                        label="Добавлена"
-                        name="created_date"
-                        id="created_date"
-                        value={convertMillisecondsToDate(editedMachinery.created_date)}
-                        isEditMode={isEditMode}
-                        onChange={machineryFieldChangeHandler}
-                    />
-                    <FieldControl
-                        label="Обновлена"
-                        name="updated_date"
-                        id="updated_date"
-                        value={convertMillisecondsToDate(editedMachinery.updated_date)}
-                        isEditMode={isEditMode}
-                        onChange={machineryFieldChangeHandler}
-                    />
-                </>
+                </Box>
             )}
         </>
     );

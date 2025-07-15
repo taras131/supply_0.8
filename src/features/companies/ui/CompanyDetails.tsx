@@ -55,17 +55,14 @@ const CompanyDetails: FC<IProps> = ({company}) => {
                 />
             )}
             {!isEditMode && (
-                <Box>
+                <>
                     <Typography variant={"subtitle2"} mt={2}>
                         Вы можете отредактировать данные компании если являетесь её создателем.
                     </Typography>
                     <Typography variant={"subtitle2"} mt={1}>
-                        Ключ для регистрации сотрудников:
+                        Ключ для регистрации сотрудников: {company.id}
                     </Typography>
-                    <Typography variant={"subtitle1"} textAlign={"center"} mt={1} color={"primary"}>
-                        {company.id}
-                    </Typography>
-                </Box>
+                </>
             )}
         </ViewCardPattern>
     );

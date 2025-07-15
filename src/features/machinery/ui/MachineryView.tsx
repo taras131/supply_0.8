@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from "react";
 import MachineryAdditionalView from "./MachineryAdditionalView";
 import MachineryBasicView from "./MachineryBasicView";
 import {useEditor} from "../../../hooks/useEditor";

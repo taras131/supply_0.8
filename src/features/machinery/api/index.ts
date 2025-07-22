@@ -1,11 +1,9 @@
 import { IMachinery, INewMachinery } from "../../../models/iMachinery";
 import { IComment, INewComment } from "../../../models/iComents";
 import {appAPI, nestServerPath} from "../../../api";
-import { INewTask, ITask } from "../../../models/ITasks";
 
 const machineryPath = `${nestServerPath}/machinery`;
 const noticePath = "comment";
-const tasksPath = "tasks";
 
 export const machineryAPI = {
   add: async (machinery: INewMachinery) => {
@@ -75,35 +73,6 @@ export const machineryAPI = {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(comment),
-    });
-    if (!res.ok) {
-      const errorDetails = await res.json();
-      throw new Error(errorDetails.detail || `Ошибка сервера: ${res.status} ${res.statusText}`);
-    }
-    return await res.json();
-  },
-  addNewTask: async (newTask: INewTask) => {
-    const res = await fetch(`${machineryPath}/${tasksPath}`, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTask),
-    });
-    if (!res.ok) {
-      const errorDetails = await res.json();
-      throw new Error(errorDetails.message || `Ошибка сервера: ${res.status} ${res.statusText}`);
-    }
-    return await res.json();
-  },
-  updateTask: async (task: ITask) => {
-    const res = await fetch(`${machineryPath}/${tasksPath}/${task.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(task),
     });
     if (!res.ok) {
       const errorDetails = await res.json();

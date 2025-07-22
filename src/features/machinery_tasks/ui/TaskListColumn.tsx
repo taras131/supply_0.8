@@ -1,6 +1,6 @@
 import React from "react";
 import { useDrop } from "react-dnd";
-import { ITask } from "../../../../models/ITasks";
+import { ITask } from "../../../models/IMachineryTasks";
 import TaskCard from "./TaskCard";
 import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";

@@ -24,6 +24,11 @@ export const selectAllUsers = createSelector(
     (usersState) => usersState.list,
 );
 
+export const selectUsersFromOptions = createSelector(
+    [selectUsersState],
+    (usersState) => usersState.list.map(user => ({id: user.id, title: `${user.first_name} ${user.middle_name}`})),
+);
+
 export const selectIsUsersLoading = createSelector(
     [selectUsersState],
     (usersState) => usersState.isLoading,

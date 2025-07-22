@@ -1,6 +1,6 @@
 import {MachineryStatus} from "utils/const";
 import {IComment} from "./iComents";
-import {ITask} from "./ITasks";
+import {ITask} from "./IMachineryTasks";
 import {IProblem} from "./IProblems";
 import {IMachineryDoc} from "./IMachineryDoc";
 import {IUser} from "./IUser";

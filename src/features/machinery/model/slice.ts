@@ -3,16 +3,13 @@ import {ICurrentMachinery, IMachinery} from "../../../models/iMachinery";
 import {
     fetchAddMachinery,
     fetchAddMachineryComment,
-    fetchAddMachineryTask,
     fetchDeleteMachineryComment,
     fetchDeleteMachineryPhoto, fetchGetAllMachinery,
     fetchGetMachineryById,
     fetchUpdateMachinery,
     fetchUpdateMachineryComment,
-    fetchUpdateMachineryTask,
 } from "./actions";
 import {IComment} from "../../../models/iComents";
-import {ITask} from "../../../models/ITasks";
 
 interface IMachineryState {
     list: IMachinery[];
@@ -126,26 +123,6 @@ export const MachinerySlice = createSlice({
                         ],
                     };
                 }
-            })
-            .addCase(fetchAddMachineryTask.fulfilled, (state, action: PayloadAction<ITask>) => {
-                if (state.current && action.payload.machinery_id) {
-                    state.current = {
-                        ...state.current,
-                        tasks: [...state.current.tasks, action.payload],
-                    };
-                }
-                state.isLoading = false;
-            })
-            .addCase(fetchUpdateMachineryTask.fulfilled, (state, action: PayloadAction<ITask>) => {
-                if (state.current) {
-                    state.current = {
-                        ...state.current,
-                        tasks: [
-                            ...state.current.tasks.map((task) => (task.id === action.payload.id ? action.payload : task)),
-                        ],
-                    };
-                }
-                state.isLoading = false;
             })
             .addCase(fetchDeleteMachineryPhoto.rejected, handleRejected)
             .addMatcher((action) => action.type.endsWith("/pending"), handlePending)

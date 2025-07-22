@@ -3,10 +3,10 @@ import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import BuildIcon from "@mui/icons-material/Build";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { convertMillisecondsToDate } from "../../../../utils/services";
-import { useAppSelector } from "../../../../hooks/redux";
-import { getTaskById } from "../../model/selectors";
-import { getUserFullNameById } from "../../../users/model/selectors";
+import { convertMillisecondsToDate } from "../../../utils/services";
+import { useAppSelector } from "../../../hooks/redux";
+import { getTaskById } from "../../machinery/model/selectors";
+import { getUserFullNameById } from "../../users/model/selectors";
 import { useNavigate } from "react-router-dom";
 
 interface IProps {

@@ -14,17 +14,12 @@ import {
 import UserList from "./UserList";
 import {selectAllUsers, selectIsUsersLoading} from "../model/selectors";
 import Preloader from "../../../components/Preloader";
-import {fetchGetAllUsers} from "../model/actions";
 
 const UsersPage = () => {
-    const dispatch = useAppDispatch();
     const matches_650 = useMediaQuery("(min-width:500px)");
     const matches_550 = useMediaQuery("(min-width:550px)");
     const users = useAppSelector(selectAllUsers);
-    const isLoading = useAppSelector(selectIsUsersLoading)
-    useEffect(() => {
-        dispatch(fetchGetAllUsers());
-    }, []);
+    const isLoading = useAppSelector(selectIsUsersLoading);
     if (isLoading) {
         return (<Preloader/>);
     }

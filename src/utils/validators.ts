@@ -1,6 +1,6 @@
 import {ICurrentMachinery, INewMachinery} from "../models/iMachinery";
 import {INewProblem, IProblem} from "../models/IProblems";
-import {INewTask} from "../models/ITasks";
+import {INewTask} from "../models/IMachineryTasks";
 import {ILoginData, IRegisterData} from "../models/iAuth";
 import {INewCompany} from "../models/iCompanies";
 import {IUser} from "../models/IUser";

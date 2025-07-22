@@ -81,6 +81,7 @@ interface IProps {
     isMultiline?: boolean; // Новый пропс для многострочного режима
     rows?: number;
     sx?: SxProps;
+    disabled?: boolean;
 }
 
 const FieldControl: FC<IProps> = ({
@@ -96,6 +97,7 @@ const FieldControl: FC<IProps> = ({
                                       isMultiline = false,
                                       rows = 3,
                                       sx,
+                                      disabled = false,
                                   }) => (
     <FormControl fullWidth sx={sx}>
         <StyledLabel required={isRequired} shrink htmlFor={id}>
@@ -111,6 +113,7 @@ const FieldControl: FC<IProps> = ({
                     name={name}
                     id={id}
                     isError={!!error}
+                    disabled={disabled}
                 >
                     <MenuItem value={-1}>Не выбрано</MenuItem>
                     {options.map((option) => (
@@ -129,6 +132,7 @@ const FieldControl: FC<IProps> = ({
                     isError={!!error}
                     multiline={isMultiline}
                     rows={isMultiline ? rows : undefined}
+                    disabled={disabled}
                 />
             )
         ) : (

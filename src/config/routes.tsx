@@ -15,8 +15,8 @@ import Profile from "../features/auth/ui/Profile";
 import MachineryPage from "../features/machinery/ui/MachineryPage";
 import MachineryDetailsPage from "../features/machinery/ui/MachineryDetailsPage";
 import MachineryAddNewPage from "../features/machinery/ui/MachineryAddNewPage";
-import TaskAddNewPage from "../features/machinery/ui/tasks/TaskAddNewPage";
-import TaskDetailsPage from "../features/machinery/ui/tasks/TaskDetailsPage";
+import TaskAddNewPage from "../features/machinery_tasks/ui/TaskAddNewPage";
+import TaskDetailsPage from "../features/machinery_tasks/ui/TaskDetailsPage";
 import LoginForm from "../features/auth/ui/LoginForm";
 import RegisterForm from "../features/auth/ui/RegisterForm";
 

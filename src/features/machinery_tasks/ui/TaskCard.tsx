@@ -1,16 +1,16 @@
 import React, { FC } from "react";
 import { Card, CardContent, CardActions, Stack, Typography, Button, Chip } from "@mui/material";
-import { ITask } from "../../../../models/ITasks";
+import { ITask } from "../../../models/IMachineryTasks";
 import dayjs from "dayjs";
 import { useDrag } from "react-dnd";
 import Box from "@mui/material/Box";
-import PrioritiesChip from "../common/PrioritiesChip";
-import { routes } from "../../../../utils/routes";
+import PrioritiesChip from "../../machinery/ui/common/PrioritiesChip";
+import { routes } from "../../../utils/routes";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../../../hooks/redux";
-import { getUserFullNameById } from "../../../users/model/selectors";
+import { useAppSelector } from "../../../hooks/redux";
+import { getUserFullNameById } from "../../users/model/selectors";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { PRIORITIES } from "../../utils/const";
+import { PRIORITIES } from "../../machinery/utils/const";
 
 interface IProps {
   task: ITask;

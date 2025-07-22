@@ -9,7 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import {useAppSelector} from "../../../hooks/redux";
 import {getUserFullNameById} from "../../users/model/selectors";
 import {useNavigate} from "react-router-dom";
-import TaskReportItem from "../../machinery/ui/tasks/TaskReportItem";
+import TaskReportItem from "../../machinery_tasks/ui/TaskReportItem";
 import {IMachineryProblem, INewMachineryProblem} from "../../../models/IMachineryProblems";
 
 interface IProps {

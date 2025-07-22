@@ -5,7 +5,7 @@ import MachineryDocs from "../../machinery_docs/ui/MachineryDocs";
 import Comments from "../../../components/common/comments/Comments";
 import {useAppSelector} from "../../../hooks/redux";
 import {selectCurrentMachinery} from "../model/selectors";
-import {TaskList} from "./tasks/TasksList";
+import {TaskList} from "../../machinery_tasks/ui/TasksList";
 import Problems from "../../machinery_problems/ui/Problems";
 import MachineryReport from "./report/MachineryReport";
 import {useLocation, useNavigate} from "react-router-dom";

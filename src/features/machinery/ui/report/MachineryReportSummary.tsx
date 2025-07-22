@@ -8,7 +8,7 @@ import { useAppSelector } from "../../../../hooks/redux";
 import ProblemReportItem from "../../../machinery_problems/ui/ProblemReportItem";
 import Card from "@mui/material/Card";
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
-import TaskReportItem from "../tasks/TaskReportItem";
+import TaskReportItem from "../../../machinery_tasks/ui/TaskReportItem";
 import ProblemDetails from "../../../machinery_problems/ui/ProblemDetails";
 import { useProblemDrawer } from "../../../../hooks/useProblemDrawer";
 import AddBoxIcon from "@mui/icons-material/AddBox";

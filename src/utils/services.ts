@@ -1,6 +1,6 @@
 import { TShipmentsType } from "../models/iShipments";
 import { IOrderItem } from "../models/iOrders";
-import { INewTask, ITask } from "../models/ITasks";
+import { INewTask, ITask } from "../models/IMachineryTasks";
 
 const padTo2Digits = (num: number) => {
   return num.toString().padStart(2, "0");

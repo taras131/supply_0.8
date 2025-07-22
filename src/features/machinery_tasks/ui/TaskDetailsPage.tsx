@@ -3,21 +3,21 @@ import { Accordion, AccordionDetails, AccordionSummary, Stack } from "@mui/mater
 import Button from "@mui/material/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import { useAppSelector } from "../../../../hooks/redux";
-import { getTaskById } from "../../model/selectors";
-import { useEditor } from "../../../../hooks/useEditor";
-import { defaultTask } from "../../utils/const";
-import { ITask } from "../../../../models/ITasks";
-import { taskValidate } from "../../../../utils/validators";
+import { useAppSelector } from "../../../hooks/redux";
+import { getTaskById } from "../../machinery/model/selectors";
+import { useEditor } from "../../../hooks/useEditor";
+import {defaultTask, ITask} from "../../../models/IMachineryTasks";
+import { taskValidate } from "../../../utils/validators";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TaskDetails from "./TaskDetails";
+import {selectCurrentTask} from "../model/selectors";
 
 const TaskDetailsPage = () => {
   const { taskId } = useParams();
   const navigate = useNavigate();
   const [expandedIssuePanel, setExpandedIssuePanel] = useState(true);
   const [expandedResultPanel, setExpandedResultPanel] = useState(false);
-  const currentTask = useAppSelector((state) => getTaskById(state, +taskId));
+  const currentTask = useAppSelector(selectCurrentTask);
   const { editedValue, errors, handleFieldChange, setEditedValue, validateValue } = useEditor<ITask>({
     initialValue: JSON.parse(JSON.stringify(defaultTask)),
     validate: taskValidate,

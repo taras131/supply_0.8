@@ -2,7 +2,7 @@ import {RootState} from "../../../store";
 import {ICurrentMachinery, IMachinery, IMachineryDoc} from "../../../models/iMachinery";
 import {useAppSelector} from "../../../hooks/redux";
 import {IOrder} from "../../../models/iOrders";
-import {ITask} from "../../../models/ITasks";
+import {ITask} from "../../../models/IMachineryTasks";
 import {IProblem} from "../../../models/IProblems";
 import {createSelector} from "@reduxjs/toolkit";
 
@@ -65,7 +65,7 @@ export const getProblemById = (state: RootState, problemId: number): IProblem | 
     return state.machinery.current?.problems.find((problem) => problem.id === problemId) || null;
 };
 
-export const getActiveProblems = (state: RootState, problemId: number | undefined) => {
+export const getActiveProblems = (state: RootState, problemId: string | undefined) => {
     return (
         state.machinery.current?.problems.filter(
             (problem) => problem.status_id !== 4 || problem.id === problemId,
@@ -73,7 +73,7 @@ export const getActiveProblems = (state: RootState, problemId: number | undefine
     );
 };
 
-export const getProblemTitleById = (state: RootState, problemId: number | undefined) => {
+export const getProblemTitleById = (state: RootState, problemId: string | undefined) => {
     return state.machinery.current?.problems.find((problem) => problem.id === problemId)?.title || "";
 };
 

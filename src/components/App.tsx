@@ -21,6 +21,7 @@ import {routesConfig} from "../config/routes";
 import {IShipments} from "../models/iShipments";
 import MessageWindow from "../features/messages/ui/MessageWindow";
 import Message from "../features/messages/ui/Message";
+import {fetchGetAllUsers} from "../features/users/model/actions";
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +29,9 @@ function App() {
     const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch(fetchCheckAuth());
+        dispatch(fetchGetAllUsers());
     }, []);
+
     useEffect(() => {
         const q = query(collection(db, "invoices"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {

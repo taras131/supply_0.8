@@ -25,6 +25,7 @@ export const fetchAddMachineryProblem = createAsyncThunk<
     "machinery_problems/add",
     async (addProblemData: IAddProblem, {rejectWithValue, getState}) => {
         try {
+            console.log(addProblemData.newProblem);
             const {newProblem, files} = addProblemData;
             const problem_in = {...newProblem};
             const currentMachineryId = selectCurrentMachineryId(getState());

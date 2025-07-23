@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {Chip} from "@mui/material";
-import {convertMillisecondsToDate, formatDateDDMMYYYY} from "../../../utils/services";
+import {formatDateDDMMYYYY} from "../../../utils/services";
 import {
     getCategoryTitleById,
     getPriorityChipColor,

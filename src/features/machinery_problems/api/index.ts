@@ -10,10 +10,7 @@ export const machineryProblemsAPI = {
         return await res.data;
     },
     update: async (problem: INewMachineryProblem) => {
-        console.log(problem);
         const res = await appAPI.put(machineryProblemsPath, problem);
-        console.log(res);
-        console.log(res.data);
         return await res.data;
     },
     delete: async (problemId: string) => {

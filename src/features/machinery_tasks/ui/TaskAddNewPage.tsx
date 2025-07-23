@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import TaskIssueView from "./TaskIssueView";
 import {useEditor} from "../../../hooks/useEditor";
 import {newTaskValidate} from "../../../utils/validators";
@@ -13,7 +13,7 @@ import usePhotoManager from "../../../hooks/usePhotoManager";
 import {useAppDispatch} from "../../../hooks/redux";
 import Card from "@mui/material/Card";
 import {fetchAddMachineryTask} from "../model/actions";
-import ViewCardPattern from "../../../components/common/ViewCardPattern";
+import {fetchGetMachineryById} from "../../machinery/model/actions";
 
 const TaskAddNewPage = () => {
     const dispatch = useAppDispatch();
@@ -22,7 +22,8 @@ const TaskAddNewPage = () => {
     const location = useLocation();
     const problemId = location.state?.problemId;
     const taskTypeId = location.state?.taskTypeId;
-    const {editedValue, errors, handleFieldChange, setEditedValue, resetValue, validateValue} = useEditor<INewTask>({
+    const machineryId = useParams()?.machineryId;
+    const {editedValue, errors, handleFieldChange, setEditedValue, resetValue} = useEditor<INewTask>({
         initialValue: JSON.parse(JSON.stringify(emptyTask)),
         validate: newTaskValidate,
     });
@@ -36,6 +37,11 @@ const TaskAddNewPage = () => {
             setEditedValue((prev) => ({...prev, type_id: taskTypeId}));
         }
     }, [taskTypeId]);
+    useEffect(() => {
+        if(machineryId) {
+            dispatch(fetchGetMachineryById(machineryId));
+        }
+    }, [machineryId]);
     useEffect(() => {
         const today = new Date();
         setEditedValue((prev) => ({

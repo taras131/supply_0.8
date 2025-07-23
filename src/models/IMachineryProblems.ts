@@ -1,6 +1,7 @@
 import {defaultUser, IUser} from "./IUser";
 import {IMachinery} from "./iMachinery";
 import {emptyUser} from "../features/auth/utils/const";
+import {ITask} from "./IMachineryTasks";
 
 export interface ISubCategory {
     id: number;
@@ -35,6 +36,7 @@ export interface IMachineryProblem extends INewMachineryProblem {
     updated_at: string | null;
     machinery_id: string;
     company_id: string;
+    tasks?: ITask[];
     tasks_id?: string [];
 }
 

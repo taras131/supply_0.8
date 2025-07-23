@@ -118,7 +118,7 @@ export const fetchUploadTaskPhoto = createAsyncThunk<
             const currentTask = selectCurrentTask(getState());
             if (!currentTask) return;
             const res = await filesAPI.upload(file);
-            const updatedTask = {...currentTask, [type]: [...currentTask[type], res.filename]};
+            const updatedTask = {...currentTask, [type]: [...currentTask[type], res]};
             return dispatch(fetchUpdateMachineryTask(updatedTask)).unwrap();
         } catch (e) {
             const errorMessage = e instanceof Error ? e.message : "Неизвестная ошибка";
@@ -152,7 +152,7 @@ export const fetchDeleteTaskPhoto = createAsyncThunk<
             const res = await filesAPI.delete(deletePhotoName);
             const updatedTask = {
                 ...currentTask,
-                [type]: [...currentTask[type].filter(photo => photo !== res.filename)],
+                [type]: [...currentTask[type].filter(photo => photo !== res.name)],
             };
             return dispatch(fetchUpdateMachineryTask(updatedTask)).unwrap();
         } catch (e) {

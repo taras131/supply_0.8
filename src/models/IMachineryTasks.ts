@@ -14,6 +14,7 @@ export interface INewTask {
   status_id: number;
   priority_id: number;
   due_date: number;
+  event_location: string;
   assigned_to_id?: string;
   machinery_id?: string;
   issue_photos: string[];
@@ -26,13 +27,14 @@ export interface INewTask {
 export interface ITask extends INewTask {
   id: string;
   author_id: string;
-  created_date: number;
-  updated_date: number;
+  result_date: number;
   result_photos: string[];
   result_description: string;
   result_operating: number;
   result_odometer: number;
-  spent_resources: string;
+  result_spent_resources: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 
@@ -59,6 +61,7 @@ export const emptyTask: INewTask = {
   status_id: 1,
   priority_id: -1,
   due_date: 0,
+  event_location: "",
   assigned_to_id: "-1",
   machinery_id: "-1",
   issue_photos: [],
@@ -72,11 +75,10 @@ export const defaultTask: ITask = {
   ...emptyTask,
   author_id: "-1",
   id: "0",
-  created_date: 0,
-  updated_date: 0,
+  result_date: 0,
   result_photos: [],
   result_description: "",
   result_operating: 0,
   result_odometer: 0,
-  spent_resources: "",
+  result_spent_resources: "",
 };

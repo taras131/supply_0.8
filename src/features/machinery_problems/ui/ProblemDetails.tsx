@@ -12,6 +12,7 @@ import ProblemView from "./ProblemView";
 import ButtonsEditCancelSave from "../../../components/common/ButtonsEditCancelSave";
 import ProblemDetailsPhotos from "./ProblemDetailsPhotos";
 import CreateUpdateUserInfo from "../../../components/common/CreateUpdateUserInfo";
+import RelatedTasks from "../../machinery_tasks/ui/RelatedTasks";
 
 const ProblemDetails: FC = () => {
     const dispatch = useAppDispatch();
@@ -52,6 +53,10 @@ const ProblemDetails: FC = () => {
                 }}
             >
                 <Typography variant={"h5"} sx={{marginBottom: "16px"}}>Детали проблемы:</Typography>
+                {!isEditMode && (
+                    <ProblemDetailsPhotos currentProblemPhotos={currentProblem.photos}/>
+
+                )}
                 <ProblemView
                     problem={editedValue}
                     errors={errors}
@@ -67,11 +72,16 @@ const ProblemDetails: FC = () => {
                 />
                 {!isEditMode && (
                     <>
-                        <ProblemDetailsPhotos currentProblemPhotos={currentProblem.photos}/>
-                        <CreateUpdateUserInfo author={currentProblem.author}
-                                              updatedAuthor={currentProblem.updated_author || null}
-                                              createdAT={currentProblem.created_at}
-                                              updatedAt={currentProblem.updated_at || null}
+                        {currentProblem.tasks && (<RelatedTasks
+                            machineryId={currentProblem.machinery_id}
+                            tasks={currentProblem.tasks}
+                            problemId={currentProblem.id}
+                        />)}
+                        <CreateUpdateUserInfo
+                            author={currentProblem.author}
+                            updatedAuthor={currentProblem.updated_author || null}
+                            createdAT={currentProblem.created_at}
+                            updatedAt={currentProblem.updated_at || null}
                         />
                     </>
 

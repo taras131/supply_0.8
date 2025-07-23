@@ -44,7 +44,7 @@ export const routesConfig: IRouteConfig[] = [
   { path: routes.machinery, element: <MachineryPage />, label: "Техника", showInMenu: true },
   { path: routes.machineryDetails, element: <MachineryDetailsPage />, label: "Подробности", showInMenu: false },
   { path: routes.addNewMachinery, element: <MachineryAddNewPage />, label: "Новая техника", showInMenu: false },
-  { path: routes.machineryAddProblem, element: <TaskAddNewPage />, label: "Новая проблема", showInMenu: false },
+  { path: routes.machineryAddTask, element: <TaskAddNewPage />, label: "Новая проблема", showInMenu: false },
   { path: routes.machineryTaskDetails, element: <TaskDetailsPage />, label: "Подробности задачи", showInMenu: false },
   { path: "*", element: <Navigate to={routes.main} />, label: "Not found", showInMenu: false },
 ];

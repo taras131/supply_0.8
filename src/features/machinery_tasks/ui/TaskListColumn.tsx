@@ -6,6 +6,7 @@ import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Link, useParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
+import {routes} from "../../../utils/routes";
 
 interface TasksColumnProps {
   status: { id: number; title: string };
@@ -37,7 +38,7 @@ const TasksColumn: React.FC<TasksColumnProps> = ({ status, tasks, moveTask }) =>
         {status.id === 1 && (
           <Button
             component={Link}
-            to={`/machinery/add_problem/${machineryId}`}
+            to={routes.machineryAddTask.replace(":machineryId", machineryId)}
             startIcon={<AddIcon sx={{ fontSize: "var(--icon-fontSize-md)" }} />}
             variant="contained"
             size="small"

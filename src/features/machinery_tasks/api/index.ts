@@ -13,9 +13,7 @@ const prepareTaskDto = (dto: INewTask) => {
 export const machineryTasksAPI = {
     add: async (newTask: INewTask) => {
         const prepareTask = prepareTaskDto(newTask);
-        console.log(prepareTask);
         const res = await appAPI.post(machineryTasksPath, prepareTask);
-        console.log(res);
         return res.data;
     },
     getAll: async () => {
@@ -27,7 +25,14 @@ export const machineryTasksAPI = {
         return res.data;
     },
     update: async (task: ITask) => {
-        const res = await appAPI.put(`${machineryTasksPath}/${task.id}/`, task);
+        const payload = {
+            ...task,
+            due_date: Number(task.due_date),
+            result_date: Number(task.result_date),
+            result_operating: Number(task.result_operating),
+            result_odometer: Number(task.result_odometer),
+        };
+        const res = await appAPI.put(`${machineryTasksPath}/${task.id}/`, payload);
         return res.data;
     },
     delete: async (task_id: string) => {

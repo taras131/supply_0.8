@@ -1,15 +1,14 @@
 import React, {ChangeEvent, FC, useState} from "react";
 import Box from "@mui/material/Box";
 import TaskIssueView from "./TaskIssueView";
-import PhotosManager from "../../../components/common/PhotosManager";
-import Button from "@mui/material/Button";
 import {ITask} from "../../../models/IMachineryTasks";
 import {SelectChangeEvent, Stack} from "@mui/material";
 import {ValidationErrors} from "../../../utils/validators";
-import {basePath} from "../../../api";
 import {useAppDispatch} from "../../../hooks/redux";
 import TaskResultView from "./TaskResultView";
-import {fetchDeleteTaskPhoto, fetchUpdateMachineryTask, fetchUploadTaskPhoto} from "../model/actions";
+import {fetchUpdateMachineryTask} from "../model/actions";
+import ButtonsEditCancelSave from "../../../components/common/ButtonsEditCancelSave";
+import TaskDetailsPhotos from "./TaskDetailsPhotos";
 
 interface IProps {
     editedValue: ITask | null;
@@ -23,89 +22,64 @@ interface IProps {
 
 const TaskDetails: FC<IProps> = ({editedValue, errors, fieldChangeHandler, handleDateChange, viewType}) => {
     const dispatch = useAppDispatch();
-    const [isEditMode, setIsEditMode] = useState(false);
+    const [isEditModeIssue, setIsEditModeIssue] = useState(false);
+    const [isEditResult, setIsEditResult] = useState(false);
     if (!editedValue) return null;
-    const toggleIsEditMode = () => {
-        setIsEditMode((prev) => !prev);
+    const toggleIsEditIssue = () => {
+        setIsEditModeIssue(prev => !prev);
     };
-    const onAddPhoto = (newFile: File) => {
-        const type = viewType === "issue" ? "issue_photos" : "result_photos";
-        dispatch(fetchUploadTaskPhoto({file: newFile, type}));
-        toggleIsEditMode();
-    };
-    const onDeletePhoto = (deletedFileIndex: number) => {
-        const type = viewType === "issue" ? "issue_photos" : "result_photos";
-        const deletePhotoName =
-            viewType === "issue" ? editedValue.issue_photos[deletedFileIndex] : editedValue.result_photos?.[deletedFileIndex];
-        dispatch(
-            fetchDeleteTaskPhoto({deletePhotoName: deletePhotoName, type}),
-        );
-        toggleIsEditMode();
+    const toggleIsEditResult = () => {
+        setIsEditResult(prev => !prev);
     };
     const saveTaskClickHandler = () => {
         const updatedTask = viewType === "result" ? {...editedValue, status_id: 3} : editedValue;
         dispatch(fetchUpdateMachineryTask(updatedTask));
-        toggleIsEditMode();
+        setIsEditModeIssue(false);
+        setIsEditResult(false);
     };
-    const photosPaths = (viewType === "issue" ? editedValue.issue_photos : editedValue.result_photos || []).map(
-        (photo) => `${basePath}/files/${photo}`,
-    );
     return (
-        <>
+        <Stack direction="row" alignItems="center" justifyContent={"center"} spacing={2}>
             <Box
                 sx={{
                     width: "100%",
                     display: "grid",
                     gridTemplateColumns: "repeat(auto-fill, minmax(min(500px, 100%), 1fr))",
-                    gap: "16px",
+                    gap: "26px",
+                    placeItems: "center",
                 }}
             >
-                {viewType === "issue" ? (
-                    <TaskIssueView
-                        isEditMode={isEditMode}
-                        task={editedValue}
-                        fieldChangeHandler={fieldChangeHandler}
-                        handleDateChange={handleDateChange}
-                        errors={errors}
+                <Stack sx={{position: "relative", width: "100%"}} spacing={isEditModeIssue ? 1 : 3}>
+                    {viewType === "issue" ? (
+                        <TaskIssueView
+                            isEditMode={isEditModeIssue}
+                            task={editedValue}
+                            fieldChangeHandler={fieldChangeHandler}
+                            handleDateChange={handleDateChange}
+                            errors={errors}
+                        />
+                    ) : (
+                        <TaskResultView
+                            isEditMode={isEditResult}
+                            task={editedValue}
+                            fieldChangeHandler={fieldChangeHandler}
+                            errors={errors}
+                        />
+                    )}
+                    <ButtonsEditCancelSave
+                        isEditMode={viewType === "issue" ? isEditModeIssue : isEditResult}
+                        isValid={!Object.keys(errors).length}
+                        toggleIsEditMode={viewType === "issue" ? toggleIsEditIssue : toggleIsEditResult}
+                        updateHandler={saveTaskClickHandler}
+                        cancelUpdateHandler={viewType === "issue" ? toggleIsEditIssue : toggleIsEditResult}
                     />
-                ) : (
-                    <TaskResultView
-                        isEditMode={isEditMode}
-                        task={editedValue}
-                        fieldChangeHandler={fieldChangeHandler}
-                        errors={errors}
-                    />
-                )}
-                <PhotosManager
-                    photosPaths={photosPaths}
-                    onAddPhoto={onAddPhoto}
-                    onDeletePhoto={onDeletePhoto}
-                    isViewingOnly={!isEditMode}
-                />
+                </Stack>
+                <TaskDetailsPhotos
+                    viewType={viewType}
+                    photos={viewType === "issue"
+                        ? editedValue.issue_photos
+                        : editedValue.result_photos}/>
             </Box>
-            <Stack direction="row" alignItems="center" justifyContent="end" spacing={2}>
-                {isEditMode ? (
-                    <>
-                        <Button variant="outlined" onClick={toggleIsEditMode} size="small">
-                            Отменить
-                        </Button>
-                        <Button
-                            onClick={saveTaskClickHandler}
-                            variant={"contained"}
-                            color={"success"}
-                            size="small"
-                            disabled={errors && !!Object.keys(errors).length}
-                        >
-                            Сохранить
-                        </Button>
-                    </>
-                ) : (
-                    <Button onClick={toggleIsEditMode} variant={"contained"} color={"primary"} size="small">
-                        Редактировать
-                    </Button>
-                )}
-            </Stack>
-        </>
+        </Stack>
     );
 };
 

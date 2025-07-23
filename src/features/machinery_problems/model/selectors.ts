@@ -1,5 +1,6 @@
 import {RootState} from "../../../store";
 import {createSelector} from "@reduxjs/toolkit";
+import {formatDateDDMMYYYY} from "../../../utils/services";
 
 const selectMachineryProblemsState = (state: RootState) => state.machineryProblems;
 
@@ -24,6 +25,7 @@ export const selectActiveProblemsFromOptions = createSelector(
         .filter(problem => problem.status_id !== 4)
         .map(problem => ({
             id: problem.id,
-            title: `${problem.created_at} ${problem.title}`,
+            title: `${formatDateDDMMYYYY(problem.created_at)} ${problem.title}`,
         })),
 );
+

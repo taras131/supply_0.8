@@ -30,6 +30,13 @@ export const selectCurrentMachineryPhotos = createSelector(
     (machineryState) => machineryState.current?.photos,
 );
 
+export const selectCurrentMachineryTitle = createSelector(
+    [selectMachineryState],
+    (machineryState) => machineryState.current
+        ? `${machineryState.current.brand} ${machineryState.current.model}`
+        : "",
+);
+
 export const getMachineryIsLoading = (state: RootState): boolean => {
     return state.machinery.isLoading;
 };
@@ -59,22 +66,6 @@ export const getCurrentMachineryTitle = (state: RootState): string => {
 };
 export const getCurrentMachineryOperatingTypeId = (state: RootState): number | null => {
     return state.machinery.current?.operating_type_id || null;
-};
-
-export const getProblemById = (state: RootState, problemId: number): IProblem | null => {
-    return state.machinery.current?.problems.find((problem) => problem.id === problemId) || null;
-};
-
-export const getActiveProblems = (state: RootState, problemId: string | undefined) => {
-    return (
-        state.machinery.current?.problems.filter(
-            (problem) => problem.status_id !== 4 || problem.id === problemId,
-        ) || []
-    );
-};
-
-export const getProblemTitleById = (state: RootState, problemId: string | undefined) => {
-    return state.machinery.current?.problems.find((problem) => problem.id === problemId)?.title || "";
 };
 
 export const getCurrentMachineryId = (state: RootState): number | null => {

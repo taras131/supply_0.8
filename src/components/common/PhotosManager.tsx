@@ -19,6 +19,7 @@ const ImageContainer = styled(Box)(({theme}) => ({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+    minHeight: "300px",
     backgroundColor: theme.palette.background.default,
     borderRadius: theme.shape.borderRadius,
     overflow: "hidden",

@@ -10,7 +10,6 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
-import {useProblemDrawer} from "../../../hooks/useProblemDrawer";
 import {selectActiveProblemsFromOptions} from "../../machinery_problems/model/selectors";
 
 interface IProps {
@@ -32,10 +31,6 @@ const TaskIssueView: FC<IProps> = ({
                                        fieldChangeHandler,
                                        handleDateChange,
                                    }) => {
-    const {drawerState, openDrawer, closeDrawer} = useProblemDrawer();
-    /*  const handleProblemClick = () => {
-        if (task && task.problem_id) openDrawer("view", task.problem_id);
-      };*/
     const usersList = useAppSelector(selectUsersFromOptions);
     const activeProblemList = useAppSelector(selectActiveProblemsFromOptions);
     if (!task) return null;
@@ -96,67 +91,7 @@ const TaskIssueView: FC<IProps> = ({
                     options={taskTypes}
                 />
             </Stack>
-            <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-                {isEditMode ? (
-                    <>
-
-
-                    </>
-                ) : (
-                    <>
-                        {/*<Typography ml={2} variant="subtitle2" sx={{width: "100%"}}>
-                            Срок до:
-                            <span style={{
-                                display: "block",
-                                marginTop: "2px",
-                            }}>{convertMillisecondsToDate(task.due_date)}</span>
-                        </Typography>
-                        <Typography ml={2} variant="subtitle2" sx={{width: "100%"}}>
-                            Основание:
-                            <span style={{display: "block", marginTop: "2px", cursor: "pointer"}}
-                                  onClick={handleProblemClick}>
-                                {problemTitle}
-                            </span>
-                        </Typography>*/}
-                    </>
-                )}
-            </Stack>
-            <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-                <FieldControl
-                    label="Заголовок"
-                    name="title"
-                    id="title"
-                    value={task.title}
-                    error={errors?.title}
-                    isEditMode={isEditMode}
-                    onChange={fieldChangeHandler}
-                    isRequired
-                />
-
-            </Stack>
-            <FieldControl
-                label="Описание"
-                name="description"
-                id="description"
-                value={task.description}
-                error={errors?.description}
-                isEditMode={isEditMode}
-                onChange={fieldChangeHandler}
-                isRequired
-                isMultiline
-            />
-
             <Stack direction="row" spacing={2}>
-                {/*    <FieldControl
-          label="Автор"
-          name="author_id"
-          id="author_id"
-          value={task.author_id}
-          error={errors?.author_id}
-          isEditMode={isEditMode}
-          onChange={fieldChangeHandler}
-          options={usersList}
-        />*/}
                 <FieldControl
                     label="Основание"
                     name="problem_id"
@@ -178,9 +113,27 @@ const TaskIssueView: FC<IProps> = ({
                     options={usersList}
                 />
             </Stack>
-            {/*{task.problem_id && (
-        <ProblemDetails currentProblemId={task.problem_id} isOpen={drawerState.isOpen} onClose={closeDrawer} />
-      )}*/}
+            <FieldControl
+                label="Заголовок"
+                name="title"
+                id="title"
+                value={task.title}
+                error={errors?.title}
+                isEditMode={isEditMode}
+                onChange={fieldChangeHandler}
+                isRequired
+            />
+            <FieldControl
+                label="Описание"
+                name="description"
+                id="description"
+                value={task.description}
+                error={errors?.description}
+                isEditMode={isEditMode}
+                onChange={fieldChangeHandler}
+                isRequired
+                isMultiline
+            />
         </>
     );
 };

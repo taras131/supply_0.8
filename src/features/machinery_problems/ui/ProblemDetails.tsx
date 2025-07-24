@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from "react";
-import {Drawer, Typography} from "@mui/material";
+import {Drawer, Stack, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {useEditor} from "../../../hooks/useEditor";
 import {problemValidate} from "../../../utils/validators";
@@ -57,19 +57,21 @@ const ProblemDetails: FC = () => {
                     <ProblemDetailsPhotos currentProblemPhotos={currentProblem.photos}/>
 
                 )}
-                <ProblemView
-                    problem={editedValue}
-                    errors={errors}
-                    fieldChangeHandler={handleFieldChange}
-                    isEditMode={isEditMode}
-                />
-                <ButtonsEditCancelSave
-                    isEditMode={isEditMode}
-                    isValid={!Object.keys(errors).length}
-                    toggleIsEditMode={toggleIsEditMode}
-                    updateHandler={saveClickHandler}
-                    cancelUpdateHandler={toggleIsEditMode}
-                />
+                <Stack spacing={3} sx={{position: "relative", paddingTop: "32px"}}>
+                    <ProblemView
+                        problem={editedValue}
+                        errors={errors}
+                        fieldChangeHandler={handleFieldChange}
+                        isEditMode={isEditMode}
+                    />
+                    <ButtonsEditCancelSave
+                        isEditMode={isEditMode}
+                        isValid={!Object.keys(errors).length}
+                        toggleIsEditMode={toggleIsEditMode}
+                        updateHandler={saveClickHandler}
+                        cancelUpdateHandler={toggleIsEditMode}
+                    />
+                </Stack>
                 {!isEditMode && (
                     <>
                         {currentProblem.tasks && (<RelatedTasks
@@ -77,14 +79,15 @@ const ProblemDetails: FC = () => {
                             tasks={currentProblem.tasks}
                             problemId={currentProblem.id}
                         />)}
-                        <CreateUpdateUserInfo
-                            author={currentProblem.author}
-                            updatedAuthor={currentProblem.updated_author || null}
-                            createdAT={currentProblem.created_at}
-                            updatedAt={currentProblem.updated_at || null}
-                        />
+                        <Stack spacing={1}>
+                            <CreateUpdateUserInfo
+                                author={currentProblem.author}
+                                updatedAuthor={currentProblem.updated_author || null}
+                                createdAT={currentProblem.created_at}
+                                updatedAt={currentProblem.updated_at || null}
+                            />
+                        </Stack>
                     </>
-
                 )}
             </Box>
         </Drawer>

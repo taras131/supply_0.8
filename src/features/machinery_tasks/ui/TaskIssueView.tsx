@@ -11,6 +11,8 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import {selectActiveProblemsFromOptions} from "../../machinery_problems/model/selectors";
+import TitleWithValue from "../../../components/TitleWithValue";
+import {convertMillisecondsToDate} from "../../../utils/services";
 
 interface IProps {
     task: INewTask | ITask | null;
@@ -37,21 +39,22 @@ const TaskIssueView: FC<IProps> = ({
     return (
         <>
             <Stack direction="row" spacing={2} alignItems={"center"}>
-                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-                    <DatePicker
-                        label="Срок выполнения"
-                        value={dayjs(task.due_date)}
-                        onChange={handleDateChange}
-                        format="DD.MM.YYYY"
-                        slotProps={{
-                            textField: {
-                                fullWidth: true,
-                                variant: "outlined",
-                            },
-                        }}
-                    />
-                </LocalizationProvider>
-                {!isNewTask && (
+                {isEditMode
+                    && (<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+                        <DatePicker
+                            label="Срок выполнения"
+                            value={dayjs(task.due_date)}
+                            onChange={handleDateChange}
+                            format="DD.MM.YYYY"
+                            slotProps={{
+                                textField: {
+                                    fullWidth: true,
+                                    variant: "outlined",
+                                },
+                            }}
+                        />
+                    </LocalizationProvider>)}
+                {!isNewTask || !isEditMode && (
                     <FieldControl
                         label="Статус"
                         name="status_id"
@@ -135,7 +138,8 @@ const TaskIssueView: FC<IProps> = ({
                 isMultiline
             />
         </>
-    );
+    )
+        ;
 };
 
 export default TaskIssueView;

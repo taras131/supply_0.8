@@ -1,27 +1,28 @@
 import React, {useEffect, useState} from "react";
 import {Accordion, AccordionDetails, AccordionSummary, Stack} from "@mui/material";
-import Button from "@mui/material/Button";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {useEditor} from "../../../hooks/useEditor";
-import {defaultTask, ITask} from "../../../models/IMachineryTasks";
+import {defaultTask, getTaskStatusById, ITask} from "../../../models/IMachineryTasks";
 import {taskValidate} from "../../../utils/validators";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TaskDetails from "./TaskDetails";
 import {selectCurrentTask} from "../model/selectors";
 import {fetchGetMachineryTasksById} from "../model/actions";
 import {fetchGetMachineryById} from "../../machinery/model/actions";
-import {selectCurrentMachineryTitle} from "../../machinery/model/selectors";
+import {convertMillisecondsToDate, formatDateDDMMYYYY} from "../../../utils/services";
+import TitleWithValue from "../../../components/TitleWithValue";
+import Box from "@mui/material/Box";
+import TaskDetailsPageHeader from "./TaskDetailsPageHeader";
+import TaskReport from "./TaskReport";
 
 const TaskDetailsPage = () => {
     const dispatch = useAppDispatch();
     const {taskId} = useParams();
-    const navigate = useNavigate();
     const [expandedIssuePanel, setExpandedIssuePanel] = useState(true);
     const [expandedResultPanel, setExpandedResultPanel] = useState(false);
     const currentTask = useAppSelector(selectCurrentTask);
-    const currentMachineryTitle = useAppSelector(selectCurrentMachineryTitle);
     const {editedValue, errors, handleFieldChange, setEditedValue, validateValue} = useEditor<ITask>({
         initialValue: JSON.parse(JSON.stringify(defaultTask)),
         validate: taskValidate,
@@ -50,17 +51,38 @@ const TaskDetailsPage = () => {
     };
     return (
         <Stack spacing={2}>
-            <Stack direction="row" alignItems="center" justifyContent="space-between">
-                <Button variant="outlined" onClick={() => navigate(-1)}>
-                    Назад
-                </Button>
-                <Typography variant="h2" fontSize={"24px"} textAlign="center">
-                    {currentMachineryTitle}
-                </Typography>
-            </Stack>
-            <Accordion expanded={expandedIssuePanel} onChange={() => setExpandedIssuePanel((prev) => !prev)}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1-content" id="panel1-header">
-                    <Typography component="h3" fontWeight={600}>Постановка задачи</Typography>
+            <TaskDetailsPageHeader/>
+            <Box
+                sx={{
+                    width: "100%",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(min(500px, 100%), 1fr))",
+                    gap: "16px",
+                }}
+            >
+            <TaskReport  editedValue={editedValue}
+                              fieldChangeHandler={handleFieldChange}
+                              handleDateChange={handleDateChange}
+                              errors={errors}
+                              viewType="issue"/>
+
+            </Box>
+            <Accordion expanded={expandedIssuePanel}
+                       onChange={() => setExpandedIssuePanel((prev) => !prev)}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon/>}
+                                  aria-controls="panel1-content"
+                                  id="panel1-header">
+                    <Box sx={{display: "flex", justifyContent: "space-between", width: "100%", paddingRight: "24px"}}>
+                        <TitleWithValue title={"Создана:"}
+                                        width={"200px"}
+                                        value={formatDateDDMMYYYY(currentTask.created_at)}/>
+                        <TitleWithValue title={"Срок выполнения:"}
+                                        width={"250px"}
+                                        value={convertMillisecondsToDate(+currentTask.due_date)}/>
+                        <TitleWithValue title={"Статус:"}
+                                        width={"150px"}
+                                        value={getTaskStatusById(currentTask.status_id)}/>
+                    </Box>
                 </AccordionSummary>
                 <AccordionDetails>
                     <TaskDetails

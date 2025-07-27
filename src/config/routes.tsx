@@ -19,12 +19,15 @@ import TaskAddNewPage from "../features/machinery_tasks/ui/TaskAddNewPage";
 import TaskDetailsPage from "../features/machinery_tasks/ui/TaskDetailsPage";
 import LoginForm from "../features/auth/ui/LoginForm";
 import RegisterForm from "../features/auth/ui/RegisterForm";
+import ProblemsPage from "../features/machinery_problems/ui/ProblemsPage";
+import TasksPage from "../features/machinery_tasks/ui/TasksPage";
 
 export interface IRouteConfig {
   path: string;
   element: React.ReactNode;
   label: string; // Название для меню
   showInMenu?: boolean; // Показывать в меню или нет
+  children?: IRouteConfig[];
 }
 
 export const routesConfig: IRouteConfig[] = [
@@ -41,7 +44,32 @@ export const routesConfig: IRouteConfig[] = [
   { path: routes.login, element: <LoginForm />, label: "Вход", showInMenu: false },
   { path: routes.register, element: <RegisterForm />, label: "Регистрация", showInMenu: false },
   { path: routes.profile, element: <Profile />, label: "Профиль", showInMenu: false },
-  { path: routes.machinery, element: <MachineryPage />, label: "Техника", showInMenu: true },
+  {
+    path: routes.machinery,
+    element: <MachineryPage />,
+    label: "Техника",
+    showInMenu: true,
+    children: [
+      {
+        path: routes.machinery, // "/machinery"
+        element: <MachineryPage />,
+        label: "Список",
+        showInMenu: true,
+      },
+      {
+        path: routes.machineryProblems, // новый путь, типа "/machinery/problems"
+        element: <ProblemsPage/>,
+        label: "Проблемы",
+        showInMenu: true,
+      },
+      {
+        path: routes.machineryTasks, // новый путь, типа "/machinery/tasks"
+        element: <TasksPage />,
+        label: "Задачи",
+        showInMenu: true,
+      },
+    ],
+  },
   { path: routes.machineryDetails, element: <MachineryDetailsPage />, label: "Подробности", showInMenu: false },
   { path: routes.addNewMachinery, element: <MachineryAddNewPage />, label: "Новая техника", showInMenu: false },
   { path: routes.machineryAddTask, element: <TaskAddNewPage />, label: "Новая проблема", showInMenu: false },

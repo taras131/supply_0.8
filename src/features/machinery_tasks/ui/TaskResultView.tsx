@@ -13,10 +13,15 @@ interface IProps {
     ) => void;
 }
 
-const TaskResultView: FC<IProps> = ({task, errors, isEditMode = false, fieldChangeHandler}) => {
+const TaskResultView: FC<IProps> = ({
+                                        task,
+                                        errors,
+                                        isEditMode = false,
+                                        fieldChangeHandler,
+                                    }) => {
     if (!task || !("result_description" in task) || !("result_spent_resources" in task)) return null;
     return (
-        <>
+        <Stack direction="column" spacing={3}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
                 <FieldControl
                     label="Наработка (часы)"
@@ -59,7 +64,7 @@ const TaskResultView: FC<IProps> = ({task, errors, isEditMode = false, fieldChan
                 isRequired
                 isMultiline
             />
-        </>
+        </Stack>
     );
 };
 

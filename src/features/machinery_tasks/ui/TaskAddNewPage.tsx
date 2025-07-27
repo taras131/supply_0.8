@@ -63,6 +63,7 @@ const TaskAddNewPage = () => {
         await dispatch(fetchAddMachineryTask({newTask: editedValue, files: newFiles}));
         resetValue();
         clearPhotos();
+        navigate(-1);
     };
     return (
         <div>

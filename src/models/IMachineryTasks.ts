@@ -1,3 +1,6 @@
+import {IUser} from "./IUser";
+import {emptyUser} from "../features/auth/utils/const";
+
 export interface ITaskStatus {
     id: number;
     title: string;
@@ -27,6 +30,10 @@ export interface INewTask {
 export interface ITask extends INewTask {
     id: string;
     author_id: string;
+    author?: IUser;
+    updated_author_id?: string | null;
+    updated_author?: IUser | null;
+    problem?: IProblem;
     result_date: number;
     result_photos: string[];
     result_description: string;

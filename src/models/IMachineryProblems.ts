@@ -65,9 +65,8 @@ export const defaultProblem: IMachineryProblem = {
 
 export const problemStatus = [
     {id: 1, title: "Ожидает"},
-    {id: 2, title: "Задача создана"},
-    {id: 3, title: "Задача в работе"},
-    {id: 4, title: "Решена"},
+    {id: 2, title: "В работе"},
+    {id: 3, title: "Решена"},
 ];
 
 export const problemPriority = [

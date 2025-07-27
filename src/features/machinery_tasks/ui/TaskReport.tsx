@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useState} from "react";
+import React, {ChangeEvent, FC, useEffect, useState} from "react";
 import Card from "@mui/material/Card";
 import TaskDetailsPhotos from "./TaskDetailsPhotos";
 import TaskIssueView from "./TaskIssueView";
@@ -12,30 +12,38 @@ import {fetchUpdateMachineryTask} from "../model/actions";
 
 interface IProps {
     editedValue: ITask | null;
-    errors?: ValidationErrors;
     fieldChangeHandler: (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string | unknown>,
     ) => void;
     handleDateChange: (date: any) => void;
     viewType: "issue" | "result";
+    isOnEditMode?: boolean
+    errors?: ValidationErrors;
 }
 
-const TaskReport: FC<IProps> = ({editedValue, errors, fieldChangeHandler, handleDateChange, viewType}) => {
+const TaskReport: FC<IProps> = ({
+                                    editedValue,
+                                    errors,
+                                    fieldChangeHandler,
+                                    handleDateChange,
+                                    viewType,
+                                    isOnEditMode = false,
+                                }) => {
     const dispatch = useAppDispatch();
-    const [isEditModeIssue, setIsEditModeIssue] = useState(false);
-    const [isEditResult, setIsEditResult] = useState(false);
+    const [isEditMode, setIsEditMode] = useState(false);
+    useEffect(() => {
+        if (isOnEditMode) {
+            setIsEditMode(true);
+        }
+    }, [isOnEditMode]);
     if (!editedValue) return null;
-    const toggleIsEditIssue = () => {
-        setIsEditModeIssue(prev => !prev);
-    };
-    const toggleIsEditResult = () => {
-        setIsEditResult(prev => !prev);
+    const toggleIsEditMode = () => {
+        setIsEditMode(prev => !prev);
     };
     const saveTaskClickHandler = () => {
         const updatedTask = viewType === "result" ? {...editedValue, status_id: 3} : editedValue;
         dispatch(fetchUpdateMachineryTask(updatedTask));
-        setIsEditModeIssue(false);
-        setIsEditResult(false);
+        setIsEditMode(false);
     };
     return (
         <>
@@ -52,7 +60,7 @@ const TaskReport: FC<IProps> = ({editedValue, errors, fieldChangeHandler, handle
                 </Typography>
                 {viewType === "issue" ? (
                     <TaskIssueView
-                        isEditMode={isEditModeIssue}
+                        isEditMode={isEditMode}
                         task={editedValue}
                         fieldChangeHandler={fieldChangeHandler}
                         handleDateChange={handleDateChange}
@@ -60,18 +68,18 @@ const TaskReport: FC<IProps> = ({editedValue, errors, fieldChangeHandler, handle
                     />
                 ) : (
                     <TaskResultView
-                        isEditMode={isEditResult}
+                        isEditMode={isEditMode}
                         task={editedValue}
                         fieldChangeHandler={fieldChangeHandler}
                         errors={errors}
                     />
                 )}
                 <ButtonsEditCancelSave
-                    isEditMode={viewType === "issue" ? isEditModeIssue : isEditResult}
-                    isValid={!Object.keys(errors).length}
-                    toggleIsEditMode={viewType === "issue" ? toggleIsEditIssue : toggleIsEditResult}
+                    isEditMode={isEditMode}
+                    isValid={!errors || !Object.keys(errors).length}
+                    toggleIsEditMode={toggleIsEditMode}
                     updateHandler={saveTaskClickHandler}
-                    cancelUpdateHandler={viewType === "issue" ? toggleIsEditIssue : toggleIsEditResult}
+                    cancelUpdateHandler={toggleIsEditMode}
                 />
             </Card>
             <TaskDetailsPhotos

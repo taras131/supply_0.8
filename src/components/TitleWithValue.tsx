@@ -1,21 +1,21 @@
 import React, {FC} from "react";
-import {Stack, Typography} from "@mui/material";
+import {Stack, StackProps, Typography} from "@mui/material";
 import {ROW, SPACE_BETWEEN} from "../styles/const";
 
-interface IProps {
+interface IProps extends StackProps {
     title: string;
     value?: string | number;
     children?: React.ReactNode;
     width?: string;
 }
 
-const TitleWithValue: FC<IProps> = ({title, value, width = "100%", children}) => {
+const TitleWithValue: FC<IProps> = ({title, value, children, sx}) => {
     return (
-        <Stack sx={{width: width}}
-               direction={ROW}
+        <Stack direction={ROW}
                alignItems="center"
                justifyContent={SPACE_BETWEEN}
-               spacing={2}>
+               spacing={2}
+               sx={sx}>
             <Typography color="gray" fontWeight={600}>
                 {title}
             </Typography>

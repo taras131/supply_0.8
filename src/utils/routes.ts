@@ -14,6 +14,8 @@ export const routes = {
   users: "/users",
   profile: "/profile",
   machinery: "/machinery",
+  machineryProblems: "/machinery/problems",
+  machineryTasks: "/machinery/tasks",
   machineryDetails: "/machinery/:machineryId/",
   machineryAddProblem: "/machinery/add_problem/:machineryId/",
   addNewMachinery: "/machinery/add_new",

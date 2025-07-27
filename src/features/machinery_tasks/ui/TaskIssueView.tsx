@@ -11,8 +11,6 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import {selectActiveProblemsFromOptions} from "../../machinery_problems/model/selectors";
-import TitleWithValue from "../../../components/TitleWithValue";
-import {convertMillisecondsToDate} from "../../../utils/services";
 
 interface IProps {
     task: INewTask | ITask | null;
@@ -37,7 +35,7 @@ const TaskIssueView: FC<IProps> = ({
     const activeProblemList = useAppSelector(selectActiveProblemsFromOptions);
     if (!task) return null;
     return (
-        <>
+        <Stack direction="column" spacing={3}>
             <Stack direction="row" spacing={2} alignItems={"center"}>
                 {isEditMode
                     && (<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
@@ -95,21 +93,23 @@ const TaskIssueView: FC<IProps> = ({
                 />
             </Stack>
             <Stack direction="row" spacing={2}>
-                <FieldControl
-                    label="Основание"
-                    name="problem_id"
-                    id="problem_id"
-                    value={task.problem_id}
-                    error={errors?.problem_id}
-                    isEditMode={isEditMode}
-                    onChange={fieldChangeHandler}
-                    options={activeProblemList}
-                />
+                {isNewTask && (
+                    <FieldControl
+                        label="Основание"
+                        name="problem_id"
+                        id="problem_id"
+                        value={task.problem_id ?? "-1"}
+                        error={errors?.problem_id}
+                        isEditMode={isEditMode}
+                        onChange={fieldChangeHandler}
+                        options={activeProblemList}
+                    />
+                )}
                 <FieldControl
                     label="Исполнитель"
                     name="assigned_to_id"
                     id="assigned_to_id"
-                    value={task.assigned_to_id}
+                    value={task.assigned_to_id ?? "-1"}
                     error={errors?.assigned_to_id}
                     isEditMode={isEditMode}
                     onChange={fieldChangeHandler}
@@ -137,9 +137,8 @@ const TaskIssueView: FC<IProps> = ({
                 isRequired
                 isMultiline
             />
-        </>
-    )
-        ;
+        </Stack>
+    );
 };
 
 export default TaskIssueView;

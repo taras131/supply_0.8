@@ -2,9 +2,9 @@ import React, {FC, useState} from "react";
 import PhotosManager from "../../../components/common/PhotosManager";
 import {fetchDeleteTaskPhoto, fetchUploadTaskPhoto} from "../model/actions";
 import ButtonsEditCancel from "../../../components/common/ButtonsEditCancel";
-import Box from "@mui/material/Box";
 import {useAppDispatch} from "../../../hooks/redux";
 import {nestServerPath} from "../../../api";
+import Card from "@mui/material/Card";
 
 interface IProps {
     photos: string[];
@@ -28,7 +28,7 @@ const TaskDetailsPhotos: FC<IProps> = ({photos, viewType}) => {
     };
     const photosPaths = photos.map(photo => `${nestServerPath}/static/${photo}`,);
     return (
-        <Box sx={{
+        <Card sx={{
             position: "relative",
             padding: "24px",
             flexGrow: 1,
@@ -47,7 +47,7 @@ const TaskDetailsPhotos: FC<IProps> = ({photos, viewType}) => {
                 toggleIsEditMode={toggleIsEditMode}
                 cancelUpdateHandler={toggleIsEditMode}
             />
-        </Box>
+        </Card>
     );
 };
 

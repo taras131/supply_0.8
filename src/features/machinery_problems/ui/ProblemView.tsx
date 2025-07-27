@@ -50,17 +50,17 @@ const ProblemView: FC<IProps> = ({
                 />
             </Stack>
             <Stack direction={"row"} spacing={2}>
-                {"created_at" in problem && (
-                    <FieldControl
-                        label="Статус"
-                        name="status_id"
-                        id="status_id"
-                        value={problem.status_id}
-                        isEditMode={isEditMode}
-                        onChange={fieldChangeHandler}
-                        options={problemStatus}
-                    />
-                )}
+                <FieldControl
+                    label="Категория"
+                    name="category_id"
+                    id="category_id"
+                    value={problem.category_id}
+                    error={errors?.category_id}
+                    isEditMode={isEditMode}
+                    onChange={fieldChangeHandler}
+                    options={problemCategories}
+                    isRequired
+                />
                 <FieldControl
                     label="Приоритет"
                     name="priority_id"
@@ -71,17 +71,6 @@ const ProblemView: FC<IProps> = ({
                     options={problemPriority}
                 />
             </Stack>
-            <FieldControl
-                label="Категория"
-                name="category_id"
-                id="category_id"
-                value={problem.category_id}
-                error={errors?.category_id}
-                isEditMode={isEditMode}
-                onChange={fieldChangeHandler}
-                options={problemCategories}
-                isRequired
-            />
             <FieldControl
                 label="Заголовок"
                 name="title"

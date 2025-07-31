@@ -17,11 +17,25 @@ import Preloader from "./Preloader";
 import {setInvoices} from "features/invoices/model/slice";
 import {fetchCheckAuth} from "../features/auth/model/actions";
 import Layout from "./Layout";
-import {routesConfig} from "../config/routes";
+import {IRouteConfig, routesConfig} from "../config/routes";
 import {IShipments} from "../models/iShipments";
 import MessageWindow from "../features/messages/ui/MessageWindow";
 import Message from "../features/messages/ui/Message";
 import {fetchGetAllUsers} from "../features/users/model/actions";
+
+const renderRoute = (routes: IRouteConfig[]) => {
+    const routeArr: any = [];
+    routes.forEach(({path, element, children}) => {
+        if (children) {
+            children.forEach(({path, element}) => {
+                routeArr.push(<Route key={path} path={path} element={element}/>);
+            });
+        } else {
+            routeArr.push(<Route key={path} path={path} element={element}/>);
+        }
+    });
+    return routeArr;
+};
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
@@ -124,9 +138,7 @@ function App() {
     return (
         <Layout>
             <Routes>
-                {routesConfig.map(({path, element}) => (
-                    <Route key={path} path={path} element={element}/>
-                ))}
+                {renderRoute(routesConfig)}
             </Routes>
             <Message/>
             <MessageWindow/>

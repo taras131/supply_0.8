@@ -13,12 +13,13 @@ export const routes = {
   addNewOrders: "/orders/add_new",
   users: "/users",
   profile: "/profile",
-  machinery: "/machinery",
+  machinery: "/machinery/list",
+  addNewMachinery: "/machinery/list/add_new",
+  machineryDetails: "/machinery/list/:machineryId/",
   machineryProblems: "/machinery/problems",
   machineryTasks: "/machinery/tasks",
-  machineryDetails: "/machinery/:machineryId/",
   machineryAddProblem: "/machinery/add_problem/:machineryId/",
-  addNewMachinery: "/machinery/add_new",
   machineryTaskDetails: "/machinery/task/:taskId/",
   machineryAddTask: "/machinery/add_task/:machineryId/",
 };
+

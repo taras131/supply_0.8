@@ -3,7 +3,7 @@ import {addDoc, collection} from "firebase/firestore";
 import {ref, deleteObject, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {INewSupplier} from "models/iSuppliers";
 import {getDateInMilliseconds, transliterate} from "utils/services";
-import {INewComment} from "models/iComents";
+import {INewComment} from "models/iComent";
 import {IFileData} from "features/invoices/model/actions";
 import axios from "axios";
 

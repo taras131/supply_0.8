@@ -1,15 +1,15 @@
 import React, {FC} from "react";
-import {Card, CardContent, CardActions, Stack, Typography, Button, Chip} from "@mui/material";
+import {Card, CardContent, CardActions, Stack, Typography, IconButton} from "@mui/material";
 import {ITask} from "../../../models/IMachineryTasks";
-import dayjs from "dayjs";
 import {useDrag} from "react-dnd";
 import Box from "@mui/material/Box";
 import {routes} from "../../../utils/routes";
 import {useNavigate} from "react-router-dom";
-import {useAppSelector} from "../../../hooks/redux";
-import {getUserFullNameById} from "../../users/model/selectors";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import {PRIORITIES} from "../../machinery/utils/const";
+import PriorityChip from "./PriorityChip";
+import DueDateChip from "./DueDateChip";
+import PerformerChip from "../../users/ui/PerformerChip";
+import {nestServerPath} from "../../../api";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 interface IProps {
     task: ITask;
@@ -17,7 +17,6 @@ interface IProps {
 
 const TaskCard: FC<IProps> = ({task}) => {
     const navigate = useNavigate();
-    const assignedFullName = useAppSelector((state) => getUserFullNameById(state, task.assigned_to_id));
     const [{isDragging}, drag] = useDrag({
         type: "TASK",
         item: {id: task.id},
@@ -25,23 +24,10 @@ const TaskCard: FC<IProps> = ({task}) => {
             isDragging: monitor.isDragging(),
         }),
     });
+    const isITask = (t: any): t is ITask => "id" in t;
     const handleNavigateToDetails = () => {
         navigate(
             routes.machineryTaskDetails.replace(":taskId", task.id.toString()));
-    };
-    const getTextColor = (): "info" | "error" | "warning" | "primary" => {
-        if (!task.due_date) return "info"; // Если даты нет, цвет черный по умолчанию
-        const today = dayjs(); // Текущая дата
-        const dueDate = dayjs(task.due_date); // Дата исполнения задачи
-        const difference = dueDate.diff(today, "day"); // Разница в днях
-        if (difference < 0) return "error"; // Просроченная дата
-        if (difference === 0) return "warning"; // Сегодняшняя дата
-        if (difference === 1) return "primary"; // Завтра
-        return "info"; // Остальные дни
-    };
-    const getPriorityIcon = (priorityId: number) => {
-        const IconComponent = PRIORITIES.find((priority) => priority.id === priorityId);
-        return IconComponent ? <IconComponent.icon color={IconComponent.color}/> : null;
     };
     return (
         <Card
@@ -49,7 +35,6 @@ const TaskCard: FC<IProps> = ({task}) => {
             style={{
                 borderRadius: "4px",
                 backgroundColor: isDragging ? "#d3d3d3" : "white",
-
                 height: isDragging ? 0 : "auto",
                 cursor: "pointer",
                 boxShadow: "0 1px 3px rgba(0,0,0,0.12)",
@@ -57,28 +42,30 @@ const TaskCard: FC<IProps> = ({task}) => {
         >
             <CardContent sx={{p: 2}}>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
-                    <Chip
-                        label={`до: ${task.due_date ? dayjs(task.due_date).format("DD.MM.YY") : "нет даты"}`}
-                        color={getTextColor()}
-                    />
-                    {getPriorityIcon(task.priority_id)}
+                    <DueDateChip due_date={task.due_date} isCompleted={task.status_id === 3}/>
+                    <PriorityChip priorityId={task.priority_id}/>
                 </Stack>
-                <Typography variant="h5" component="div" mt={1}>
+                <Typography variant="h4" fontSize={"16px"} mt={1}>
                     {task.title}
                 </Typography>
                 <Box sx={{height: "60px", overflowY: "hidden", marginTop: 1}}>
-                    <Typography variant="body2">{task.description}</Typography>
+                    <Typography fontWeight={400} variant="body2">{task.description}</Typography>
                 </Box>
             </CardContent>
-            <CardActions sx={{p: 2}}>
-                <Stack sx={{width: "100%"}} direction="row" alignItems="center" justifyContent="space-between">
-                    <Typography variant="subtitle2">{assignedFullName}</Typography>
-                    <Button size="small"
-                            variant="outlined"
-                            onClick={handleNavigateToDetails}
-                            endIcon={<MoreHorizIcon/>}>
-                        Подробнее
-                    </Button>
+            <CardActions>
+                <Stack sx={{width: "100%"}}
+                       direction="row"
+                       alignItems="center"
+                       justifyContent="space-between">
+                    {isITask(task) && task.assigned_to && (
+                        <PerformerChip name={`${task.assigned_to.first_name} ${task.assigned_to.middle_name}`}
+                                       photo={`${nestServerPath}/static/${task.assigned_to.avatar_path}`}/>
+                    )}
+                    <IconButton onClick={handleNavigateToDetails}
+                                color="primary"
+                                aria-label="show more">
+                        <MoreVertIcon/>
+                    </IconButton>
                 </Stack>
             </CardActions>
         </Card>

@@ -11,14 +11,14 @@ import {routes} from "../../../utils/routes";
 interface TasksColumnProps {
   status: { id: number; title: string };
   tasks: ITask[];
-  moveTask: (taskId: number, newStatusId: number) => void;
+  moveTask: (taskId: string, newStatusId: number) => void;
 }
 
 const TasksColumn: React.FC<TasksColumnProps> = ({ status, tasks, moveTask }) => {
-  const machineryId = useParams().machineryId || "0";
+  const machineryId = useParams().machineryId || "-1";
   const [, drop] = useDrop({
     accept: "TASK",
-    drop: (item: { id: number }) => moveTask(item.id, status.id),
+    drop: (item: { id: string }) => moveTask(item.id, status.id),
   });
   return (
     <Stack

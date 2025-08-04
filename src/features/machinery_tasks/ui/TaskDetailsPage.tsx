@@ -12,8 +12,6 @@ import Box from "@mui/material/Box";
 import TaskDetailsPageHeader from "./TaskDetailsPageHeader";
 import TaskReport from "./TaskReport";
 import TaskStatusCard from "./TaskStatusCard";
-import Card from "@mui/material/Card";
-import CreateUpdateUserInfo from "../../../components/common/CreateUpdateUserInfo";
 
 const TaskDetailsPage = () => {
     const dispatch = useAppDispatch();

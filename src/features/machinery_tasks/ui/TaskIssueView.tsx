@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC} from "react";
 import {ValidationErrors} from "../../../utils/validators";
-import {SelectChangeEvent, Stack} from "@mui/material";
+import {SelectChangeEvent, Stack, Typography} from "@mui/material";
 import {INewTask, ITask, taskStatus, taskTypes} from "../../../models/IMachineryTasks";
 import FieldControl from "../../../components/common/FieldControl";
 import {PRIORITIES} from "../../machinery/utils/const";
@@ -11,6 +11,8 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import {selectActiveProblemsFromOptions} from "../../machinery_problems/model/selectors";
+import {selectAllMachineryForOptions} from "../../machinery/model/selectors";
+import RelatedProblemsItem from "../../machinery_problems/ui/RelatedProblemsItem";
 
 interface IProps {
     task: INewTask | ITask | null;
@@ -33,15 +35,28 @@ const TaskIssueView: FC<IProps> = ({
                                    }) => {
     const usersList = useAppSelector(selectUsersFromOptions);
     const activeProblemList = useAppSelector(selectActiveProblemsFromOptions);
+    const machineryOptions = useAppSelector(selectAllMachineryForOptions);
     if (!task) return null;
     return (
-        <Stack direction="column" spacing={3}>
+        <Stack direction="column" spacing={2.5}>
+            {isNewTask && (
+                <FieldControl
+                    label="Техника"
+                    name="machinery_id"
+                    id="machinery_id"
+                    value={task.machinery_id}
+                    error={errors?.machinery_id}
+                    isEditMode={isEditMode}
+                    onChange={fieldChangeHandler}
+                    options={machineryOptions}
+                />
+            )}
             <Stack direction="row" spacing={2} alignItems={"center"}>
                 {isEditMode
                     && (<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
                         <DatePicker
                             label="Срок выполнения"
-                            value={dayjs(task.due_date)}
+                            value={dayjs(+task.due_date)}
                             onChange={handleDateChange}
                             format="DD.MM.YYYY"
                             slotProps={{
@@ -116,6 +131,28 @@ const TaskIssueView: FC<IProps> = ({
                     options={usersList}
                 />
             </Stack>
+            {task.type_id === 1 && (
+                <Stack direction={"row"}>
+                    <FieldControl
+                        label="Провести ТО при наработке (час)"
+                        name="issue_operating"
+                        id="issue_operating"
+                        value={task.issue_operating}
+                        error={errors?.issue_operating}
+                        isEditMode={isEditMode}
+                        onChange={fieldChangeHandler}
+                    />
+                    <FieldControl
+                        label=" Провести ТО при пробеге (километры)"
+                        name="issue_odometer"
+                        id="issue_odometer"
+                        value={task.issue_odometer}
+                        error={errors?.issue_odometer}
+                        isEditMode={isEditMode}
+                        onChange={fieldChangeHandler}
+                    />
+                </Stack>
+            )}
             <FieldControl
                 label="Заголовок"
                 name="title"
@@ -137,6 +174,12 @@ const TaskIssueView: FC<IProps> = ({
                 isRequired
                 isMultiline
             />
+            {!isEditMode && "problem" in task && task.problem && (
+                <Stack>
+                    <Typography variant={"subtitle2"}>Основание:</Typography>
+                    <RelatedProblemsItem problem={task.problem}/>
+                </Stack>
+            )}
         </Stack>
     );
 };

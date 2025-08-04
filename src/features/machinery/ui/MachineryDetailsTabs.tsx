@@ -2,7 +2,6 @@ import React, {FC, useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import {Tab, Tabs} from "@mui/material";
 import MachineryDocs from "../../machinery_docs/ui/MachineryDocs";
-import Comments from "../../../components/common/comments/Comments";
 import {useAppSelector} from "../../../hooks/redux";
 import {selectCurrentMachinery} from "../model/selectors";
 import {TaskList} from "../../machinery_tasks/ui/TasksList";
@@ -10,6 +9,7 @@ import Problems from "../../machinery_problems/ui/Problems";
 import MachineryReport from "./report/MachineryReport";
 import {useLocation, useNavigate} from "react-router-dom";
 import {a11yProps, CustomTabPanel} from "../../../components/common/CustomTabPanel";
+import MachineryComments from "../../machinery_comments/ui/MachineryComments";
 
 const MachineryDetailsTabs: FC = () => {
     const machinery = useAppSelector(selectCurrentMachinery);
@@ -56,7 +56,7 @@ const MachineryDetailsTabs: FC = () => {
                 Заявки
             </CustomTabPanel>
             <CustomTabPanel value={value} index={5}>
-                <Comments comments={machinery?.comments || null}/>
+                <MachineryComments/>
             </CustomTabPanel>
         </Box>
     );

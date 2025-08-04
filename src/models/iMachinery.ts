@@ -1,9 +1,9 @@
 import {MachineryStatus} from "utils/const";
-import {IComment} from "./iComents";
 import {ITask} from "./IMachineryTasks";
-import {IProblem} from "./IProblems";
 import {IMachineryDoc} from "./IMachineryDoc";
 import {IUser} from "./IUser";
+import {IMachineryProblem} from "./IMachineryProblems";
+import {IMachineryComment} from "./IMachineryComment";
 
 export type MachineryStatusType = (typeof MachineryStatus)[keyof typeof MachineryStatus];
 
@@ -26,14 +26,15 @@ export interface INewMachinery {
     transmission_brand: string;
     transmission_model: string;
     frame_number: string;
+    firebase_id?: string;
 }
 
 export interface IMachinery extends INewMachinery {
     id: string;
-    comments?: IComment[];
-    author_id: number;
-    author: IUser;
-    updated_author: IUser;
+    comments?: IMachineryComment[];
+    author_id: string;
+    author?: IUser;
+    updated_author?: IUser;
     created_at: string;
     updated_at: string;
 }
@@ -41,7 +42,7 @@ export interface IMachinery extends INewMachinery {
 export interface ICurrentMachinery extends IMachinery {
     docs: IMachineryDoc[];
     tasks: ITask[];
-    problems: IProblem[];
+    problems: IMachineryProblem[];
 }
 
 export interface IDoc {
@@ -73,9 +74,10 @@ export const emptyMachinery: INewMachinery = {
 export const defaultMachinery: ICurrentMachinery = {
     ...emptyMachinery,
     id: "",
-    created_date: Date.now(),
-    updated_date: Date.now(),
+    created_at: "",
+    updated_at: "",
     docs: [],
     tasks: [],
     problems: [],
+    author_id: "",
 };

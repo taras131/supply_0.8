@@ -1,5 +1,5 @@
 import { RootState } from "../index";
-import { IComment } from "../../models/iComents";
+import { IComment } from "../../models/iComent";
 
 export const getComments = (state: RootState): IComment[] => {
   return state.comments.list;

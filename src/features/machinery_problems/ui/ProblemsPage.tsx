@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useEffect} from "react";
+import {useAppDispatch} from "../../../hooks/redux";
+import {fetchGetAllMachineryProblem} from "../model/actions";
+import Problems from "./Problems";
 
 const ProblemsPage = () => {
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        dispatch(fetchGetAllMachineryProblem());
+    }, []);
     return (
-        <div>
-            ProblemsPage
-        </div>
+        <Problems isShowMachineryInfo/>
     );
 };
 

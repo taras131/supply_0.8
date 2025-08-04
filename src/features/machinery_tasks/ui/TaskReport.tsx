@@ -50,12 +50,10 @@ const TaskReport: FC<IProps> = ({
             <Card sx={{
                 position: "relative",
                 padding: "24px",
-                flexGrow: 1,
                 display: "flex",
                 flexDirection: "column",
-                height: "100%",
             }}>
-                <Typography sx={{marginBottom: "36px"}} variant="h5" color="primary">
+                <Typography sx={{marginBottom: "16px"}} variant="h5" color="primary">
                     {viewType === "issue" ? "Задача:" : "Результат:"}
                 </Typography>
                 {viewType === "issue" ? (
@@ -88,8 +86,7 @@ const TaskReport: FC<IProps> = ({
                     ? editedValue.issue_photos
                     : editedValue.result_photos}/>
         </>
-    )
-        ;
+    );
 };
 
 export default TaskReport;

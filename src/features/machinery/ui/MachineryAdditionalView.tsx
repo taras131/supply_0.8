@@ -92,10 +92,13 @@ const MachineryAdditionalView: FC<IProps> = ({
             />
             {!isEditMode && "author" in editedMachinery && (
                 <Box sx={{
-                    gridColumn: "1 / -1",    // занять всю ширину grid
+                    display: "grid",
+                    gridColumn: "1 / -1",
                     width: "100%",
                     minWidth: "unset",
                     maxWidth: "none",
+                    gap: "24px",
+                    gridTemplateColumns: `repeat(auto-fit, minmax(${isEditMode ? 240 : 200}px, 1fr))`,
                 }}>
                     <CreateUpdateUserInfo
                         author={editedMachinery.author}

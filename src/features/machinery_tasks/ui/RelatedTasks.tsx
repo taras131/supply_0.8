@@ -1,46 +1,61 @@
 import React, {FC} from "react";
 import {ITask} from "../../../models/IMachineryTasks";
-import {IconButton, List, ListItem, ListItemButton, ListItemText, Stack, Typography} from "@mui/material";
-import {formatDateDDMMYYYY} from "../../../utils/services";
+import {
+    IconButton,
+    List,
+    Stack,
+    Typography,
+} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {routes} from "../../../utils/routes";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import {useAppDispatch} from "../../../hooks/redux";
+import {setCurrentProblem} from "../../machinery_problems/model/slice";
+import RelatedTasksItem from "./RelatedTasksItem";
 
 interface IProps {
     machineryId: string;
-    problemId: string;
-    tasks: ITask[];
+    problemId?: string;
+    tasks: ITask[] | null;
+    title?: string
+    isMaintenanceMode?: boolean;
 }
 
-const RelatedTasks: FC<IProps> = ({tasks, machineryId, problemId}) => {
+const RelatedTasks: FC<IProps> = ({tasks, machineryId, problemId, title, isMaintenanceMode = false}) => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const taskClickHandler = (taskId: string) => () => {
-        navigate(
-            routes.machineryTaskDetails.replace(":taskId", taskId));
+        navigate(routes.machineryTaskDetails.replace(":taskId", taskId));
+        dispatch(setCurrentProblem(null));
     };
     const addTaskClickHandler = () => {
         navigate(routes.machineryAddTask.replace(":machineryId", machineryId), {
-            state: {problemId: problemId},
+            state: {problemId: problemId ?? "-1", taskTypeId: isMaintenanceMode ? 1 : "-1"},
         });
     };
-    const tasksList = tasks.map(task => <ListItem key={task.id} disablePadding>
-        <ListItemButton onClick={taskClickHandler(task.id)}>
-            <ListItemText primary={`${formatDateDDMMYYYY(task.created_at ?? "")} - ${task.title}`}/>
-        </ListItemButton>
-    </ListItem>);
+    const tasksList = tasks?.map(task => <RelatedTasksItem key={task.id}
+                                                           task={task}
+                                                           isMaintenanceMode={isMaintenanceMode}
+                                                           taskClickHandler={taskClickHandler(task.id)}/>);
     return (
         <Stack>
             <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-                <Typography component={"h4"} fontWeight={500}>Связанные задачи:</Typography>
+                <Typography component={"h4"} fontWeight={500} color="primary">
+                    {title ?? "Связанные задачи:"}
+                </Typography>
                 <IconButton onClick={addTaskClickHandler}
                             aria-label="add_task"
                             color="primary">
                     <AddBoxIcon fontSize="inherit"/>
                 </IconButton>
             </Stack>
-            <List>
-                {tasksList}
-            </List>
+            {tasksList && tasksList.length > 0
+                ? (<List> {tasksList} </List>)
+                : (<Typography variant={"subtitle2"}>
+                    {isMaintenanceMode
+                        ? " Нет связанных ТО."
+                        : "Нет связанных задач."}
+                </Typography>)}
         </Stack>
     );
 };

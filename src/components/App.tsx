@@ -7,8 +7,7 @@ import {db} from "../firebase";
 import {ISupplier} from "models/iSuppliers";
 import {setSuppliers} from "store/reducers/suppliers";
 import {IInvoice} from "models/iInvoices";
-import {setComments, setCommentsLoading} from "store/reducers/coments";
-import {IComment} from "models/iComents";
+import {IComment} from "models/iComent";
 import {setShipments, setShipmentsLoading} from "features/shipments/model/slice";
 import {setOrders, setOrdersLoading} from "features/orders/model/slice";
 import {IOrder} from "models/iOrders";
@@ -78,7 +77,7 @@ function App() {
             return () => unsubscribe();
         });
     }, []);
-    useEffect(() => {
+  /*  useEffect(() => {
         const q = query(collection(db, "comments"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             try {
@@ -95,7 +94,7 @@ function App() {
             }
             return () => unsubscribe();
         });
-    }, []);
+    }, []);*/
     useEffect(() => {
         const q = query(collection(db, "shipments"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {

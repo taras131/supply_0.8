@@ -46,7 +46,9 @@ export const MachineryTasksSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(fetchGetAllMachineryTasks.fulfilled, (state, action: PayloadAction<ITask[]>) => {
-                state.list = action.payload;
+                state.list = action.payload.sort(
+                    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+                );
                 state.isLoading = false;
             })
             .addCase(fetchGetMachineryTasksById.fulfilled, (state, action: PayloadAction<ITask>) => {

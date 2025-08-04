@@ -8,6 +8,16 @@ export const selectAllMachineryTasks = createSelector(
     (machineryTasksState) => machineryTasksState.list,
 );
 
+export const selectLastMachineryRepairTasks = createSelector(
+    [selectMachineryTasksState],
+    (machineryTasksState) => machineryTasksState.list.filter(task => task.type_id === 2).slice(0,3),
+);
+
+export const selectMachineryMaintenanceTasks = createSelector(
+    [selectMachineryTasksState],
+    (machineryTasksState) => machineryTasksState.list.filter(task => task.type_id === 1),
+);
+
 export const selectMachineryTasksIsLoading = createSelector(
     [selectMachineryTasksState],
     (machineryTasksState) => machineryTasksState.isLoading,

@@ -13,8 +13,20 @@ const formatDate = (date: Date) => {
 export const getDateInMilliseconds = () => {
   return Date.now();
 };
+
 export const convertMillisecondsToDate = (milliseconds: number) => {
   return formatDate(new Date(milliseconds));
+};
+
+const MONTHS_RU_SHORT = [
+  "Янв", "Фев", "Мар", "Апр", "Май", "Июн",
+  "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек",
+];
+export const convertMillisecondsToDateWithTextMonths = (milliseconds: number) => {
+  const date = new Date(milliseconds);
+  const day = date.getDate();
+  const month = MONTHS_RU_SHORT[date.getMonth()];
+  return `${day} ${month}`;
 };
 
 export const validateEmail = (email: string) => {

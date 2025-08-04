@@ -23,6 +23,7 @@ export interface INewMachineryProblem {
     status_id: number;
     operating: number;
     odometer: number;
+    machinery_id: string;
 }
 
 export interface IMachineryProblem extends INewMachineryProblem {
@@ -34,7 +35,6 @@ export interface IMachineryProblem extends INewMachineryProblem {
     machinery?: IMachinery;
     created_at: string;
     updated_at: string | null;
-    machinery_id: string;
     company_id: string;
     tasks?: ITask[];
     tasks_id?: string [];
@@ -49,13 +49,13 @@ export const emptyProblem: INewMachineryProblem = {
     operating: 0,
     odometer: 0,
     status_id: 1,
+    machinery_id: "-1",
 };
 
 export const defaultProblem: IMachineryProblem = {
     ...emptyProblem,
     id: "0",
     author_id: "0",
-    machinery_id: "0",
     created_at: "0",
     updated_at: null,
     tasks_id: [],

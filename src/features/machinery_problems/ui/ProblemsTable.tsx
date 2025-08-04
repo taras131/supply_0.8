@@ -1,29 +1,30 @@
 import React, {FC} from "react";
-import {Chip} from "@mui/material";
 import {formatDateDDMMYYYY} from "../../../utils/services";
 import {
     getCategoryTitleById,
-    getPriorityChipColor,
-    getPriorityTitleById,
 } from "../../machinery/utils/services";
 import {ITableColumn} from "../../../models/ITable";
 import BaseTable from "../../../components/common/BaseTable";
 import {useAppSelector} from "../../../hooks/redux";
 import {getCurrentMachineryOperatingTypeId} from "../../machinery/model/selectors";
-import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
-import BuildIcon from "@mui/icons-material/Build";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Box from "@mui/material/Box";
-import AssignmentIcon from "@mui/icons-material/Assignment";
 import {IMachineryProblem} from "../../../models/IMachineryProblems";
+import StatusIcon from "../../machinery_tasks/ui/StatusIcon";
+import PriorityChip from "../../machinery_tasks/ui/PriorityChip";
 
 interface IProps {
     rows: IMachineryProblem[] | null;
     onProblemClick: (problem: IMachineryProblem) => void;
+    isShowMachineryInfo: boolean;
     activeRowId?: number | null;
 }
 
-const ProblemsTable: FC<IProps> = ({rows, onProblemClick, activeRowId = null}) => {
+const ProblemsTable: FC<IProps> = ({
+                                       rows,
+                                       onProblemClick,
+                                       isShowMachineryInfo,
+                                       activeRowId = null,
+                                   }) => {
     const operatingTypeId = useAppSelector(getCurrentMachineryOperatingTypeId);
     if (!rows) return null;
     const rowClickHandler = (problem: IMachineryProblem) => {
@@ -35,10 +36,7 @@ const ProblemsTable: FC<IProps> = ({rows, onProblemClick, activeRowId = null}) =
             label: "Статус",
             getValue: (row) => (
                 <Box display="flex" alignItems="center" justifyContent="center">
-                    {row.status_id === 1 && <HourglassBottomIcon color="error"/>}
-                    {row.status_id === 2 && <AssignmentIcon color="warning"/>}
-                    {row.status_id === 3 && <BuildIcon color="primary"/>}
-                    {row.status_id === 4 && <CheckCircleIcon color="success"/>}
+                    <StatusIcon statusId={row.status_id}/>
                 </Box>
             ),
         },
@@ -68,14 +66,20 @@ const ProblemsTable: FC<IProps> = ({rows, onProblemClick, activeRowId = null}) =
         {
             key: "priority_id",
             label: "Приоритет",
-            getValue: (row) => {
-                const priorityColor = getPriorityChipColor(row.priority_id);
-                return <Chip label={getPriorityTitleById(row.priority_id)} color={priorityColor} sx={{width: "100%"}}/>;
-            },
+            getValue: (row) => (<PriorityChip priorityId={row.priority_id}/>),
         },
     ];
-
-    return <BaseTable rows={rows} columns={columns} onRowClick={rowClickHandler} activeRowId={activeRowId}/>;
+    if (isShowMachineryInfo) {
+        columns.splice(2, 0, {
+            key: "machinery",
+            label: "Техника",
+            getValue: (row) => `${row.machinery?.brand} ${row.machinery?.model}`,
+        });
+    }
+    return (<BaseTable rows={rows}
+                       columns={columns}
+                       onRowClick={rowClickHandler}
+                       activeRowId={activeRowId}/>);
 };
 
 export default ProblemsTable;

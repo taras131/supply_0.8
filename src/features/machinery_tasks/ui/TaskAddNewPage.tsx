@@ -13,7 +13,7 @@ import usePhotoManager from "../../../hooks/usePhotoManager";
 import {useAppDispatch} from "../../../hooks/redux";
 import Card from "@mui/material/Card";
 import {fetchAddMachineryTask} from "../model/actions";
-import {fetchGetMachineryById} from "../../machinery/model/actions";
+import {fetchGetAllMachinery} from "../../machinery/model/actions";
 
 const TaskAddNewPage = () => {
     const dispatch = useAppDispatch();
@@ -22,27 +22,21 @@ const TaskAddNewPage = () => {
     const location = useLocation();
     const problemId = location.state?.problemId;
     const taskTypeId = location.state?.taskTypeId;
-    const machineryId = useParams()?.machineryId;
+    const machineryId = useParams()?.machineryId || "-1";
     const {editedValue, errors, handleFieldChange, setEditedValue, resetValue} = useEditor<INewTask>({
         initialValue: JSON.parse(JSON.stringify(emptyTask)),
         validate: newTaskValidate,
     });
     useEffect(() => {
-        if (problemId) {
-            setEditedValue((prev) => ({...prev, problem_id: problemId, type_id: 2}));
-        }
-    }, [problemId]);
+        setEditedValue(prev => ({
+            ...prev,
+            problem_id: problemId ?? prev.problem_id,
+            type_id: taskTypeId ?? prev.type_id,
+            machinery_id: (machineryId !== "-1" ? machineryId : prev.machinery_id),
+        }));
+    }, [problemId, taskTypeId, machineryId]);
     useEffect(() => {
-        if (taskTypeId) {
-            setEditedValue((prev) => ({...prev, type_id: taskTypeId}));
-        }
-    }, [taskTypeId]);
-    useEffect(() => {
-        if(machineryId) {
-            dispatch(fetchGetMachineryById(machineryId));
-        }
-    }, [machineryId]);
-    useEffect(() => {
+        dispatch(fetchGetAllMachinery());
         const today = new Date();
         setEditedValue((prev) => ({
             ...prev,

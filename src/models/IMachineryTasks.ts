@@ -1,5 +1,4 @@
-import {IUser} from "./IUser";
-import {emptyUser} from "../features/auth/utils/const";
+import {defaultUser, IUser} from "./IUser";
 
 export interface ITaskStatus {
     id: number;
@@ -19,7 +18,7 @@ export interface INewTask {
     due_date: number;
     event_location: string;
     assigned_to_id?: string;
-    machinery_id?: string;
+    machinery_id: string;
     issue_photos: string[];
     problem_id?: string;
     type_id: number;
@@ -30,9 +29,10 @@ export interface INewTask {
 export interface ITask extends INewTask {
     id: string;
     author_id: string;
-    author?: IUser;
+    author: IUser;
     updated_author_id?: string | null;
     updated_author?: IUser | null;
+    assigned_to?: IUser;
     problem?: IProblem;
     result_date: number;
     result_photos: string[];
@@ -86,6 +86,7 @@ export const emptyTask: INewTask = {
 export const defaultTask: ITask = {
     ...emptyTask,
     author_id: "-1",
+    author: defaultUser,
     id: "0",
     result_date: 0,
     result_photos: [],

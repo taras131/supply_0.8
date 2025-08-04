@@ -1,6 +1,11 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IMachineryProblem} from "../../../models/IMachineryProblems";
-import {fetchAddMachineryProblem, fetchDeleteMachineryProblem, fetchUpdateMachineryProblem} from "./actions";
+import {
+    fetchAddMachineryProblem,
+    fetchDeleteMachineryProblem,
+    fetchGetAllMachineryProblem, fetchGetMachineryProblemById,
+    fetchUpdateMachineryProblem,
+} from "./actions";
 
 interface IMachineryProblemsState {
     list: IMachineryProblem[];
@@ -37,6 +42,16 @@ export const MachineryProblemsSlice = createSlice({
         builder
             .addCase(fetchAddMachineryProblem.fulfilled, (state, action: PayloadAction<IMachineryProblem>) => {
                 state.list = [...state.list, action.payload];
+                state.isLoading = false;
+            })
+            .addCase(fetchGetAllMachineryProblem.fulfilled, (state, action: PayloadAction<IMachineryProblem[]>) => {
+                state.list = action.payload.sort(
+                    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+                );
+                state.isLoading = false;
+            })
+            .addCase(fetchGetMachineryProblemById.fulfilled, (state, action: PayloadAction<IMachineryProblem>) => {
+                state.current = action.payload;
                 state.isLoading = false;
             })
             .addCase(fetchUpdateMachineryProblem.fulfilled, (state, action: PayloadAction<IMachineryProblem>) => {

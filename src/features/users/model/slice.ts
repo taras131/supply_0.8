@@ -38,7 +38,6 @@ const initialState: IUserState = {
 
 const userAsyncActions = [
     fetchUploadUserPhoto,
-    fetchUpdateUser,
     fetchRemoveUserPhoto,
 ];
 
@@ -66,7 +65,10 @@ export const UsersSlice = createSlice({
                 state.isLoading = false;
             });
         });
-
+        builder.addCase(fetchUpdateUser.fulfilled, (state, action: PayloadAction<IUserWithPassport>) => {
+            state.current = action.payload;
+            state.isLoading = false;
+        });
         builder.addCase(fetchGetAllUsers.fulfilled, (state, {payload}) => {
             state.list = payload;
             state.isLoading = false;

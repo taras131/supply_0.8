@@ -29,6 +29,7 @@ const UserAvatarDetails: FC<IProps> = ({user}) => {
         );
     };
     const photosPaths = user.avatar_path ? [`${nestServerPath}/static/${user.avatar_path}`] : [];
+    console.log(photosPaths);
     return (
         <Card sx={{
             position: "relative",

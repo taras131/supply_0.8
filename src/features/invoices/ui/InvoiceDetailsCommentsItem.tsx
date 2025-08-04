@@ -6,7 +6,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import {} from "utils/const";
 import { useAppSelector } from "hooks/redux";
-import { IComment } from "models/iComents";
+import { IComment } from "models/iComent";
 import { convertMillisecondsToDate } from "utils/services";
 import { CENTER, SECONDARY_TEXT_COLOR, SPACE_BETWEEN, START } from "styles/const";
 import { getUserById } from "../../users/model/selectors";

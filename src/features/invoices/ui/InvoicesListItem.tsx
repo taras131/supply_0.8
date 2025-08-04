@@ -38,7 +38,6 @@ import {
 } from "styles/const";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import UploadPayment from "features/invoices/ui/UploadPayment";
-import { selectCommentsByInvoiceId } from "store/reducers/coments";
 import { selectIsShipmentByInvoiceId } from "features/shipments/model/selectors";
 import {setMessage} from "../../messages/model/slice";
 

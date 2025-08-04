@@ -5,6 +5,7 @@ import {ILoginData, IRegisterData} from "../models/iAuth";
 import {INewCompany} from "../models/iCompanies";
 import {IUser} from "../models/IUser";
 import {INewMachineryDoc} from "../models/IMachineryDoc";
+import {INewMachineryComment} from "../models/IMachineryComment";
 
 export type ValidationErrors = { [key: string]: string | null };
 
@@ -46,6 +47,12 @@ export const docValidate = (doc: INewMachineryDoc) => {
     return errors;
 };
 
+export const machineryCommentValidate = (comment: INewMachineryComment) => {
+    const errors: ValidationErrors = {};
+    if (comment.text.length < 5) errors.text = "Должно быть не менее 5 символов";
+    return errors;
+};
+
 export const problemValidate = (problem: IProblem | INewProblem) => {
     const errors: ValidationErrors = {};
     if (problem.category_id < 0) errors.category_id = "Выберите категорию";
@@ -74,19 +81,16 @@ export const newTaskValidate = (task: INewTask) => {
     if (task.description.length > 400) errors.description = "Описание должно быть не длиннее 400 символов";
     if (task.priority_id < 0) errors.priority_id = "Выбирите приоритет";
     if (task.type_id < 0) errors.type_id = "Выбирите тип работ";
+    if (task.machinery_id === "-1") errors.machinery_id = "Выбирите технику";
+    if (task.type_id === 1 && !task.issue_odometer && !task.issue_operating) {
+        errors.issue_odometer = "Заполните наработку или пробег";
+        errors.issue_operating = "Заполните наработку или пробег";
+    }
     return errors;
 };
 
 export const taskValidate = (task: INewTask) => {
-    const errors: ValidationErrors = {};
-    if (task.title.length < 3) errors.title = "Не менее 3 символов";
-    if (task.title.length === 0) errors.title = "Заголовок должен быть";
-    if (task.title.length > 32) errors.title = "Не более 32 символов";
-    if (task.description.length === 0) errors.description = "Описание должно быть";
-    if (task.description.length < 3) errors.description = "Описание должно быть не менее 2 символов";
-    if (task.description.length > 400) errors.description = "Описание должно быть не длиннее 400 символов";
-    if (task.priority_id < 0) errors.priority_id = "Выбирите приоритет";
-    if (task.type_id < 0) errors.type_id = "Выбирите тип работ";
+    const errors: ValidationErrors = newTaskValidate(task);
     return errors;
 };
 

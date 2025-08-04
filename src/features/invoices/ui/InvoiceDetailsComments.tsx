@@ -14,11 +14,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { routes } from "utils/routes";
 import AccordionWithTitleCounterIcon from "components/AccordionWithTitleCounterIcon";
 import { getCommentsIsLoading } from "store/selectors/coments";
-import InvoiceDetailsCommentsItem from "features/invoices/ui/InvoiceDetailsCommentsItem";
-import { fetchAddComment } from "store/actionsCreators/comments";
 import Divider from "@mui/material/Divider";
 import { CENTER, FORM_CONTROL_HEIGHT_PX, PRIMARY, SECONDARY_TEXT_COLOR, START } from "styles/const";
-import { selectCommentsByInvoiceId } from "store/reducers/coments";
 import {selectCurrentUser} from "../../users/model/selectors";
 
 interface IProps {
@@ -33,12 +30,12 @@ const InvoiceDetailsComments: FC<IProps> = ({ invoiceId, expanded, handleExpande
   const dispatch = useAppDispatch();
   const [newCommentText, setNewCommentText] = useState(STRING_EMPTY);
   const [errorCommentText, setErrorCommentText] = useState(STRING_WITH_SPACE);
-  const comments = useAppSelector(selectCommentsByInvoiceId(invoiceId));
+ /* const comments = useAppSelector(selectCommentsByInvoiceId(invoiceId));*/
   const isLoading = useAppSelector((state) => getCommentsIsLoading(state));
   const user = useAppSelector(selectCurrentUser);
-  const commentsList = comments.map((comment) => (
+  /*const commentsList = comments.map((comment) => (
     <InvoiceDetailsCommentsItem key={comment.id} {...comment} userId={user.id} />
-  ));
+  ));*/
   const handleLoginClick = () => {
     navigate(routes.login, { state: { from: location.pathname } });
   };
@@ -50,21 +47,21 @@ const InvoiceDetailsComments: FC<IProps> = ({ invoiceId, expanded, handleExpande
     setNewCommentText(e.target.value);
   };
   const handleAddCommentClick = () => {
-    dispatch(
+    /*dispatch(
       fetchAddComment({
         authorId: user.id,
         invoiceId: invoiceId,
         text: newCommentText,
         dateCreation: getDateInMilliseconds(),
       }),
-    );
+    );*/
     setNewCommentText(STRING_EMPTY);
     setErrorCommentText(STRING_WITH_SPACE);
   };
   return (
     <AccordionWithTitleCounterIcon
       title={"Комментарии"}
-      count={comments.length}
+      count={3}
       expanded={expanded}
       panelId={commentPanelId}
       handleExpandedChange={handleExpandedChange}
@@ -114,7 +111,7 @@ const InvoiceDetailsComments: FC<IProps> = ({ invoiceId, expanded, handleExpande
           </FormControl>
         )}
         {isLoading && <Typography>...Загрузка</Typography>}
-        {commentsList.length > 0 ? commentsList : <Typography mt={5}>Комментариев пока нет</Typography>}
+        {/*{commentsList.length > 0 ? commentsList : <Typography mt={5}>Комментариев пока нет</Typography>}*/}
       </Stack>
     </AccordionWithTitleCounterIcon>
   );

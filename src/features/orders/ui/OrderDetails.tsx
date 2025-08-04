@@ -28,7 +28,6 @@ import {
 import { fetchAddOrder, fetchUpdateOrder } from "features/orders/model/actions";
 import OrderChangeCancelledButton from "features/orders/ui/OrderChangeCancelledButton";
 import {getUserFullNameById, selectCurrentUser} from "../../users/model/selectors";
-import MachineryTableRow from "../../machinery/ui/MachineryTableRow";
 
 const OrderDetails = () => {
   const [isValidate, setIsValidate] = useState(false);
@@ -43,13 +42,13 @@ const OrderDetails = () => {
   const authorFullName = useAppSelector((state) => getUserFullNameById(state, +currentOrder.author.userId));
   const user = useAppSelector(selectCurrentUser);
   const matches_700 = useMediaQuery("(min-width:700px)");
-  const machinery = useAppSelector((state) => {
+/*  const machinery = useAppSelector((state) => {
     if (order && order.machineryId) {
       return getMachineryById(state, order.machineryId);
     } else {
       return "";
     }
-  });
+  });*/
   const relatedInvoices = useAppSelector((state) => {
     if (isNewOrder) {
       return null;
@@ -148,7 +147,7 @@ const OrderDetails = () => {
         orderId={orderId}
         isSelectPositionMode={false}
       />
-      {machinery && !isEdit && (
+  {/*    {machinery && !isEdit && (
         <>
           <Box sx={{ width: "100%" }}>
             <Typography fontSize={matches_700 ? "18px" : "14px"} fontWeight={550}>
@@ -157,7 +156,7 @@ const OrderDetails = () => {
           </Box>
           <MachineryTableRow row={machinery} />
         </>
-      )}
+      )}*/}
       {relatedInvoices && relatedInvoices.length > 0 && !isEdit && (
         <>
           <Box sx={{ width: "100%" }}>

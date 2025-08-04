@@ -3,7 +3,6 @@ import {handlerError} from "../../../store/actionsCreators/handleError";
 import {ICurrentMachinery, IMachinery, INewMachinery} from "../../../models/iMachinery";
 import {machineryAPI} from "../api";
 import {MESSAGE_SEVERITY} from "../../../utils/const";
-import {IComment, INewComment} from "../../../models/iComents";
 import {filesAPI} from "../../files/api";
 import {thunkHandlers} from "../../../store/thunkHandlers";
 import {AppDispatch, RootState} from "../../../store";
@@ -12,6 +11,7 @@ import {setMessage} from "../../messages/model/slice";
 import {setDocs} from "../../machinery_docs/model/slice";
 import {setProblems} from "../../machinery_problems/model/slice";
 import {setTasks} from "../../machinery_tasks/model/slice";
+import {setComments} from "../../machinery_comments/model/slice";
 
 const messages = {
     addMachinery: {error: "Не удалось добавить машину.", success: "Машина добавлена"},
@@ -80,67 +80,13 @@ export const fetchGetMachineryById = createAsyncThunk(
     "fetch_get_machinery_by_id",
     async (machinery_id: string, {rejectWithValue, dispatch}) => {
         try {
-            const {docs, problems, tasks, ...machinery} = await machineryAPI.getById(machinery_id);
+            const {docs, problems, tasks, comments, ...machinery} = await machineryAPI.getById(machinery_id);
             dispatch(setDocs(docs));
             dispatch(setProblems(problems));
             dispatch(setTasks(tasks));
+            dispatch(setComments(comments));
             return machinery;
         } catch (e) {
-            return rejectWithValue(handlerError(e));
-        }
-    },
-);
-
-export const fetchAddMachineryComment = createAsyncThunk(
-    "fetch_add_machinery_comment",
-    async (comment: INewComment, {rejectWithValue, dispatch}) => {
-        try {
-            return await machineryAPI.addComment(comment);
-        } catch (e) {
-            const errorMessage = e instanceof Error ? e.message : "Неизвестная ошибка";
-            dispatch(
-                setMessage({
-                    severity: MESSAGE_SEVERITY.error,
-                    text: errorMessage || "Не удалось добавить заметку.",
-                }),
-            );
-            return rejectWithValue(handlerError(e));
-        }
-    },
-);
-
-export const fetchDeleteMachineryComment = createAsyncThunk(
-    "fetch_delete_machinery_comment",
-    async (comment_id: number, {rejectWithValue, dispatch}) => {
-        try {
-            await machineryAPI.deleteComment(comment_id);
-            return comment_id;
-        } catch (e) {
-            const errorMessage = e instanceof Error ? e.message : "Неизвестная ошибка";
-            dispatch(
-                setMessage({
-                    severity: MESSAGE_SEVERITY.error,
-                    text: errorMessage || "Не удалось удалить заметку.",
-                }),
-            );
-            return rejectWithValue(handlerError(e));
-        }
-    },
-);
-
-export const fetchUpdateMachineryComment = createAsyncThunk(
-    "fetch_update_machinery_comment",
-    async (comment: IComment, {rejectWithValue, dispatch}) => {
-        try {
-            return await machineryAPI.updateComment(comment);
-        } catch (e) {
-            const errorMessage = e instanceof Error ? e.message : "Неизвестная ошибка";
-            dispatch(
-                setMessage({
-                    severity: MESSAGE_SEVERITY.error,
-                    text: errorMessage || "Не удалось добавить машину.",
-                }),
-            );
             return rejectWithValue(handlerError(e));
         }
     },

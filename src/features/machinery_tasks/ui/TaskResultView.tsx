@@ -21,7 +21,7 @@ const TaskResultView: FC<IProps> = ({
                                     }) => {
     if (!task || !("result_description" in task) || !("result_spent_resources" in task)) return null;
     return (
-        <Stack direction="column" spacing={3}>
+        <Stack direction="column" spacing={2.5} mt={2}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
                 <FieldControl
                     label="Наработка (часы)"

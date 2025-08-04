@@ -9,9 +9,13 @@ import ProblemDetails from "./ProblemDetails";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {selectAllMachineryProblems} from "../model/selectors";
 import {IMachineryProblem} from "../../../models/IMachineryProblems";
-import {setCurrentProblem} from "../model/slice";
+import {fetchGetMachineryProblemById} from "../model/actions";
 
-const Problems: FC = () => {
+interface IProps {
+    isShowMachineryInfo?: boolean;
+}
+
+const Problems: FC<IProps> = ({isShowMachineryInfo = false}) => {
     const dispatch = useAppDispatch();
     const [isOpenAddDrawer, setIsOpenAddDrawer] = useState(false);
     const problems = useAppSelector(selectAllMachineryProblems);
@@ -19,7 +23,7 @@ const Problems: FC = () => {
         setIsOpenAddDrawer(prev => !prev);
     };
     const handleProblemClick = (problem: IMachineryProblem) => {
-        dispatch(setCurrentProblem(problem));
+        dispatch(fetchGetMachineryProblemById(problem.id));
     };
     return (
         <Stack spacing={4}>
@@ -29,8 +33,12 @@ const Problems: FC = () => {
                     Добавить
                 </Button>
             </Stack>
-            <ProblemsTable rows={problems} onProblemClick={handleProblemClick}/>
-            <ProblemAddNew isOpen={isOpenAddDrawer} onClose={toggleIsOpenAddDrawer}/>
+            <ProblemsTable rows={problems}
+                           onProblemClick={handleProblemClick}
+                           isShowMachineryInfo={isShowMachineryInfo}/>
+            <ProblemAddNew isOpen={isOpenAddDrawer}
+                           onClose={toggleIsOpenAddDrawer}
+                           isShowMachineryInfo={isShowMachineryInfo}/>
             <ProblemDetails/>
         </Stack>
     );

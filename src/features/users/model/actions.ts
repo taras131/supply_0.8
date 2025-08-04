@@ -4,6 +4,7 @@ import {thunkHandlers} from "../../../store/thunkHandlers";
 import {filesAPI} from "../../files/api";
 import {handlerError} from "../../../store/actionsCreators/handleError";
 import {userAPI} from "../api";
+import {RootState} from "../../../store";
 
 export const fetchGetAllUsers = createAsyncThunk(
     "fetch_get_all_users",
@@ -32,18 +33,22 @@ interface IUploadPhoto {
     file: File;
 }
 
-export const fetchUploadUserPhoto = createAsyncThunk(
+export const fetchUploadUserPhoto = createAsyncThunk<
+    IUser,
+    IUploadPhoto,
+    { state: RootState }
+>(
     "fetch_update_user_photo",
-    async (uploadData: IUploadPhoto, {rejectWithValue}) => {
+    async (uploadData: IUploadPhoto, {rejectWithValue, dispatch}) => {
         try {
             const {file, user} = uploadData;
-            if (user.avatar_path.length) {
+            if (user.avatar_path.length > 10) {
                 await filesAPI.delete(user.avatar_path);
             }
             const res = await filesAPI.upload(file);
             if (!res) return;
             const updatedUser = {...user, avatar_path: res};
-            return await userAPI.update(updatedUser);
+            return dispatch(fetchUpdateUser(updatedUser)).unwrap();
         } catch (e) {
             return rejectWithValue(handlerError(e));
         }

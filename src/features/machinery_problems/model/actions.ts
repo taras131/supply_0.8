@@ -8,7 +8,7 @@ import {selectCurrentMachineryId} from "../../machinery/model/selectors";
 import {selectCurrentProblem} from "./selectors";
 
 function cleanProblemForUpdate(problem: IMachineryProblem) {
-    const { author, updated_author, ...rest } = problem;
+    const {author, updated_author, ...rest} = problem;
     return rest;
 }
 
@@ -25,18 +25,41 @@ export const fetchAddMachineryProblem = createAsyncThunk<
     "machinery_problems/add",
     async (addProblemData: IAddProblem, {rejectWithValue, getState}) => {
         try {
-            console.log(addProblemData.newProblem);
             const {newProblem, files} = addProblemData;
             const problem_in = {...newProblem};
-            const currentMachineryId = selectCurrentMachineryId(getState());
+            const currentMachineryId = newProblem.machinery_id === "-1"
+                ? selectCurrentMachineryId(getState())
+                : newProblem.machinery_id;
             if (files.length > 0) {
                 for (const file of files) {
                     const uploadedFile = await filesAPI.upload(file);
                     problem_in.photos.push(uploadedFile);
                 }
             }
-            if(!currentMachineryId) return;
-            return await machineryProblemsAPI.add(currentMachineryId,problem_in);
+            if (!currentMachineryId) return;
+            return await machineryProblemsAPI.add(currentMachineryId, problem_in);
+        } catch (e) {
+            return rejectWithValue(handlerError(e));
+        }
+    },
+);
+
+export const fetchGetAllMachineryProblem = createAsyncThunk(
+    "machinery_problems/get_all",
+    async (_, {rejectWithValue}) => {
+        try {
+            return await machineryProblemsAPI.getAll();
+        } catch (e) {
+            return rejectWithValue(handlerError(e));
+        }
+    },
+);
+
+export const fetchGetMachineryProblemById = createAsyncThunk(
+    "machinery_problems/get_by_id",
+    async (problemId: string, {rejectWithValue}) => {
+        try {
+            return await machineryProblemsAPI.getById(problemId);
         } catch (e) {
             return rejectWithValue(handlerError(e));
         }
@@ -60,11 +83,11 @@ export const fetchUploadMachineryProblemPhoto = createAsyncThunk<
     { state: RootState }
 >(
     "machinery_problems/upload_photo",
-    async ( file: File, {rejectWithValue, dispatch, getState}) => {
+    async (file: File, {rejectWithValue, dispatch, getState}) => {
         try {
             const res = await filesAPI.upload(file);
             const problem = selectCurrentProblem(getState());
-            if(!problem) return;
+            if (!problem) return;
             const updatedProblem = {
                 ...problem,
                 photos: [...problem.photos, res],
@@ -85,7 +108,7 @@ export const fetchDeleteMachineryProblemPhoto = createAsyncThunk<
     async (deletePhotoName: string, {rejectWithValue, dispatch, getState}) => {
         try {
             const problem = selectCurrentProblem(getState());
-            if(!problem) return;
+            if (!problem) return;
             const updatedProblem = {
                 ...problem,
                 photos: [...problem.photos.filter(photo => photo !== deletePhotoName)],

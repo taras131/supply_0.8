@@ -7,7 +7,6 @@ import {MESSAGE_SEVERITY} from "../../../utils/const";
 import {INewTask, ITask} from "../../../models/IMachineryTasks";
 import {machineryTasksAPI} from "../api";
 import {selectCurrentTask} from "./selectors";
-import {selectCurrentMachineryId} from "../../machinery/model/selectors";
 
 export interface IAddTask {
     newTask: INewTask;
@@ -29,20 +28,8 @@ export const fetchAddMachineryTask = createAsyncThunk<
                     newTask.issue_photos.push(uploadedFile);
                 }
             }
-            const currentMachineryId = selectCurrentMachineryId(getState());
-            const res = await machineryTasksAPI.add({...newTask, machinery_id: currentMachineryId});
-            /*if (res.problem_id) {
-                const state = getState() as RootState;
-                const problem = getProblemById(state, res.problem_id);
-                if (problem) {
-                    const updatedProblem = {...problem, tasks_id: [...problem.tasks_id, res.id], status_id: 2};
-                    dispatch(fetchUpdateMachineryProblem(updatedProblem));
-                }
-            }*/
-            console.log(res);
-            return res;
+            return machineryTasksAPI.add(newTask);
         } catch (e) {
-            console.log(e);
             return rejectWithValue(handlerError(e));
         }
     },
@@ -74,16 +61,7 @@ export const fetchUpdateMachineryTask = createAsyncThunk(
     "machinery_tasks/update",
     async (task: ITask, {rejectWithValue, dispatch, getState}) => {
         try {
-            const res = await machineryTasksAPI.update(task);
-            /*   if (res.problem_id && res.status_id !== 3) {
-                   const state = getState() as RootState;
-                   const problem = getProblemById(state, res.problem_id);
-                   if (problem) {
-                       const updatedProblem = {...problem, status_id: res.status_id + 1};
-                       dispatch(fetchUpdateMachineryProblem(updatedProblem));
-                   }
-               }*/
-            return res;
+            return await machineryTasksAPI.update(task);
         } catch (e) {
             return rejectWithValue(handlerError(e));
         }

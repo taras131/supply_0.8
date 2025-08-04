@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import MachineryDetailsPhotos from "../MachineryDetailsPhotos";
 import MachineryReportSummary from "./MachineryReportSummary";
 import MachineryView from "../MachineryView";
+import MachineryReportMaintenance from "./MachineryReportMaintenance";
 
 const MachineryReport: FC = () => {
     return (
@@ -16,6 +17,7 @@ const MachineryReport: FC = () => {
         >
             <MachineryView/>
             <MachineryReportSummary/>
+            <MachineryReportMaintenance/>
             <MachineryDetailsPhotos/>
         </Box>
     );

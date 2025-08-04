@@ -106,8 +106,6 @@ const PhotosManager: FC<IProps> = ({
     const [activePhoto, setActivePhoto] = useState(0);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const isLoading = false;
-
-    // Для листания
     const goToPrevPhoto = () => {
         setActivePhoto((prev) => (prev - 1 + photosPaths.length) % photosPaths.length);
     };

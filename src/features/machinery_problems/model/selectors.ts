@@ -9,6 +9,11 @@ export const selectAllMachineryProblems = createSelector(
     (machineryProblemsState) => machineryProblemsState.list,
 );
 
+export const selectLastMachineryProblems = createSelector(
+    [selectMachineryProblemsState],
+    (machineryProblemsState) => machineryProblemsState.list.slice(0,3),
+);
+
 export const selectMachineryProblemsIsLoading = createSelector(
     [selectMachineryProblemsState],
     (machineryProblemsState) => machineryProblemsState.isLoading,

@@ -12,7 +12,11 @@ interface IProps {
 const ProblemDetailsHeader: FC<IProps> = ({currentProblem}) => {
     const dispatch = useAppDispatch();
     const statusChangeHandler = (statusId: number) => {
-        dispatch(fetchUpdateMachineryProblem({...currentProblem, status_id: statusId}));
+        let updatedProblem = {...currentProblem};
+        if (currentProblem.status_id === 3 && statusId < 3) {
+            updatedProblem = {...updatedProblem, result_date: 0};
+        }
+        dispatch(fetchUpdateMachineryProblem({...updatedProblem, status_id: statusId}));
     };
     return (
         <Stack direction="row" spacing={2} justifyContent={"space-between"} alignItems={"center"}>

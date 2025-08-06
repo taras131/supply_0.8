@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {Card, CardContent, CardActions, Stack, Typography, IconButton} from "@mui/material";
-import {ITask} from "../../../models/IMachineryTasks";
+import {getTaskTypeById, ITask} from "../../../models/IMachineryTasks";
 import {useDrag} from "react-dnd";
 import Box from "@mui/material/Box";
 import {routes} from "../../../utils/routes";
@@ -8,7 +8,6 @@ import {useNavigate} from "react-router-dom";
 import PriorityChip from "./PriorityChip";
 import DueDateChip from "./DueDateChip";
 import PerformerChip from "../../users/ui/PerformerChip";
-import {nestServerPath} from "../../../api";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 interface IProps {
@@ -43,6 +42,11 @@ const TaskCard: FC<IProps> = ({task}) => {
             <CardContent sx={{p: 2}}>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                     <DueDateChip due_date={task.due_date} isCompleted={task.status_id === 3}/>
+                    <Typography fontWeight={650}
+                                fontSize="14px"
+                                color={task.type_id === 1 ? "info.main" : "warning.main"}>
+                        {getTaskTypeById(task.type_id)}
+                    </Typography>
                     <PriorityChip priorityId={task.priority_id}/>
                 </Stack>
                 <Typography variant="h4" fontSize={"16px"} mt={1}>
@@ -59,7 +63,7 @@ const TaskCard: FC<IProps> = ({task}) => {
                        justifyContent="space-between">
                     {isITask(task) && task.assigned_to && (
                         <PerformerChip name={`${task.assigned_to.first_name} ${task.assigned_to.middle_name}`}
-                                       photo={`${nestServerPath}/static/${task.assigned_to.avatar_path}`}/>
+                                       photo={task.assigned_to.avatar_path}/>
                     )}
                     <IconButton onClick={handleNavigateToDetails}
                                 color="primary"

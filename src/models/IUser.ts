@@ -38,3 +38,21 @@ export const defaultUser: IUserWithPassport = {
     passport_issued_date: "",
     passport_issued_whom: "",
 };
+
+export const userRoles = [
+    {id: 1, title: "Директор"},
+    {id: 2, title: "Бухгалтер"},
+    {id: 3, title: "Снабженец"},
+    {id: 4, title: "Механик"},
+    {id: 5, title: "Слесарь"},
+    {id: 6, title: "Электрик"},
+    {id: 7, title: "Энергетик"},
+];
+
+export const userStatus = [
+    {id: 1, title: "Работает"},
+    {id: 2, title: "В отпуске"},
+    {id: 3, title: "На больничном"},
+    {id: 4, title: "Уволился"},
+];
+

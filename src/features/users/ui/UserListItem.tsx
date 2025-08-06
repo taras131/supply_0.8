@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { TableCell, TableRow, useMediaQuery } from "@mui/material";
-import { IUser } from "../../../models/IUser";
-import { userRoles } from "../model/slice";
+import {IUser, userRoles} from "../../../models/IUser";
 
 interface IProps {
   user: IUser;

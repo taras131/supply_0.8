@@ -1,6 +1,5 @@
 import {defaultUser, IUser} from "./IUser";
 import {IMachinery} from "./iMachinery";
-import {emptyUser} from "../features/auth/utils/const";
 import {ITask} from "./IMachineryTasks";
 
 export interface ISubCategory {
@@ -33,6 +32,7 @@ export interface IMachineryProblem extends INewMachineryProblem {
     updated_author_id?: string;
     updated_author?: IUser
     machinery?: IMachinery;
+    result_date: number;
     created_at: string;
     updated_at: string | null;
     company_id: string;
@@ -56,6 +56,7 @@ export const defaultProblem: IMachineryProblem = {
     ...emptyProblem,
     id: "0",
     author_id: "0",
+    result_date: 0,
     created_at: "0",
     updated_at: null,
     tasks_id: [],

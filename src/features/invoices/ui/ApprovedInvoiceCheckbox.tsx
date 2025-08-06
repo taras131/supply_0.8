@@ -4,7 +4,6 @@ import { IInvoice } from "models/iInvoices";
 import { getDateInMilliseconds } from "utils/services";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
 import MessageWindow from "features/messages/ui/MessageWindow";
-import { userRoles } from "utils/const";
 import { fetchUpdateInvoiceApproved } from "features/invoices/model/actions";
 import {selectCurrentUser} from "../../users/model/selectors";
 
@@ -24,7 +23,7 @@ const ApprovedInvoiceCheckbox: FC<IProps> = ({ invoice }) => {
     setIsOpenErrorMessageWindow((prev) => !prev);
   };
   const handleApprovedChange = () => {
-    if (user && user.role === userRoles.boss) {
+    if (user && user.role_id === 1) {
       dispatch(
         fetchUpdateInvoiceApproved({
           invoiceId: invoice.id,

@@ -1,4 +1,5 @@
 import {defaultUser, IUser} from "./IUser";
+import {IMachineryProblem} from "./IMachineryProblems";
 
 export interface ITaskStatus {
     id: number;
@@ -33,7 +34,7 @@ export interface ITask extends INewTask {
     updated_author_id?: string | null;
     updated_author?: IUser | null;
     assigned_to?: IUser;
-    problem?: IProblem;
+    problem?: IMachineryProblem;
     result_date: number;
     result_photos: string[];
     result_description: string;
@@ -66,6 +67,10 @@ export const taskTypes: ITaskStatus[] = [
     {id: 1, title: "Тех обслуживание"},
     {id: 2, title: "Ремонт"},
 ];
+
+export const getTaskTypeById = (id: number): string => {
+    return taskTypes.filter(type => type.id === id)[0].title;
+};
 
 export const emptyTask: INewTask = {
     title: "",

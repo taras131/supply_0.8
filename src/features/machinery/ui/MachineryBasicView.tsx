@@ -48,27 +48,23 @@ const MachineryBasicView: FC<IProps> = ({
                 isRequired
             />
             <FieldControl
-                label="Год производства"
-                name="year_manufacture"
-                id="year_manufacture"
-                value={`${editedMachinery.year_manufacture}`}
-                error={errors?.year_manufacture}
+                label="Наработка (час)"
+                name="operating"
+                id="operating"
+                value={`${editedMachinery.operating}`}
+                error={errors?.operating}
                 isEditMode={isEditMode}
                 onChange={machineryFieldChangeHandler}
-                options={yearOptions}
-                isRequired
             />
-            {/*      <FieldControl
-                label="Ед. измерения наработки"
-                name="operating_type_id"
-                id="operating_type_id"
-                value={editedMachinery.operating_type_id}
-                error={errors?.operating_type_id}
+            <FieldControl
+                label="Пробег (км)"
+                name="odometer"
+                id="odometer"
+                value={`${editedMachinery.odometer}`}
+                error={errors?.odometer}
                 isEditMode={isEditMode}
                 onChange={machineryFieldChangeHandler}
-                options={operatingTypes}
-                isRequired
-            />*/}
+            />
             <FieldControl
                 label="Марка"
                 name="brand"
@@ -87,6 +83,17 @@ const MachineryBasicView: FC<IProps> = ({
                 error={errors?.model}
                 isEditMode={isEditMode}
                 onChange={machineryFieldChangeHandler}
+                isRequired
+            />
+            <FieldControl
+                label="Год производства"
+                name="year_manufacture"
+                id="year_manufacture"
+                value={`${editedMachinery.year_manufacture}`}
+                error={errors?.year_manufacture}
+                isEditMode={isEditMode}
+                onChange={machineryFieldChangeHandler}
+                options={yearOptions}
                 isRequired
             />
             <FieldControl

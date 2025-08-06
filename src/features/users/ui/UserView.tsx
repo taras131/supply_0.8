@@ -2,8 +2,7 @@ import {ValidationErrors} from "../../../utils/validators";
 import React, {ChangeEvent, FC} from "react";
 import {SelectChangeEvent} from "@mui/material";
 import FieldControl from "../../../components/common/FieldControl";
-import {IUserWithPassport} from "../../../models/IUser";
-import {userRoles, userStatus} from "../model/slice";
+import {IUserWithPassport, userRoles, userStatus} from "../../../models/IUser";
 import {IRegisterData} from "../../../models/iAuth";
 
 function isUserWithPassport(user: IUserWithPassport | IRegisterData): user is IUserWithPassport {

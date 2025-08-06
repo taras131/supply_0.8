@@ -5,5 +5,9 @@ const selectMachineryCommentsState = (state: RootState) => state.machineryCommen
 
 export const selectAllMachineryComments = createSelector(
     [selectMachineryCommentsState],
-    (machineryCommentsState) => machineryCommentsState.list,
+    (machineryCommentsState) => {
+        const active = machineryCommentsState.list.filter(c => c.is_active !== false);
+        const inactive = machineryCommentsState.list.filter(c => c.is_active === false);
+        return [...active, ...inactive];
+    }
 );

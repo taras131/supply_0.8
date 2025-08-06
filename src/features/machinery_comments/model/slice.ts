@@ -32,17 +32,21 @@ export const MachineryCommentsSlice = createSlice({
     initialState,
     reducers: {
         setComments: (state, action: PayloadAction<IMachineryComment[]>) => {
-            state.list = action.payload;
+            state.list = action.payload.sort(
+                (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+            );
         },
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchAddMachineryComment.fulfilled, (state, action: PayloadAction<IMachineryComment>) => {
-                state.list = [...state.list, action.payload];
+                state.list = [action.payload, ...state.list];
                 state.isLoading = false;
             })
             .addCase(fetchGetAllMachineryComment.fulfilled, (state, action: PayloadAction<IMachineryComment []>) => {
-                state.list = action.payload;
+                state.list = action.payload.sort(
+                    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+                );
                 state.isLoading = false;
             })
             .addCase(fetchUpdateMachineryComment.fulfilled, (state, action: PayloadAction<IMachineryComment>) => {

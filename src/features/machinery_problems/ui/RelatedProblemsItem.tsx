@@ -1,13 +1,12 @@
 import React, {FC} from "react";
 import {useAppDispatch} from "../../../hooks/redux";
-import {ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import {formatDateDDMMYYYY} from "../../../utils/services";
+import {ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography} from "@mui/material";
 import ProblemDetails from "./ProblemDetails";
 import {IMachineryProblem} from "../../../models/IMachineryProblems";
 import {setCurrentProblem} from "../model/slice";
 import StatusIcon from "../../machinery_tasks/ui/StatusIcon";
-import PriorityChip from "../../machinery_tasks/ui/PriorityChip";
-import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import DueDateChip from "../../machinery_tasks/ui/DueDateChip";
 
 interface IProps {
     problem: IMachineryProblem
@@ -15,22 +14,37 @@ interface IProps {
 
 const RelatedProblemsItem: FC<IProps> = ({problem}) => {
     const dispatch = useAppDispatch();
+    console.log(problem.created_at)
     if (!problem) return null;
     const problemClickHandler = () => {
         dispatch(setCurrentProblem(problem));
     };
     return (
         <>
-            <ListItemButton onClick={problemClickHandler}>
-                <ListItemIcon>
-                    <StatusIcon statusId={problem.status_id}/>
-                </ListItemIcon>
-                <ListItemText
-                    primary={`${formatDateDDMMYYYY(problem.created_at ?? "")} - ${problem.title}`}/>
-                <Box sx={{width: "85px"}}>
-                    <PriorityChip priorityId={problem.priority_id}/>
-                </Box>
-            </ListItemButton>
+            <ListItem key={problem.id} disablePadding>
+                <ListItemButton onClick={(e) => {
+                    e.stopPropagation();
+                    problemClickHandler();
+                }}>
+                    <ListItemIcon>
+                        <StatusIcon statusId={problem.status_id}/>
+                    </ListItemIcon>
+                    <ListItemText
+                        primary={problem.title}/>
+                    <Divider orientation="vertical" flexItem sx={{mx: 1}}/>
+                    <Stack sx={{width: "65px"}}>
+                        <DueDateChip due_date={problem.status_id === 3
+                            ? +problem.result_date
+                            : new Date(problem.created_at).getTime()}
+                                     isCompleted={problem.status_id === 3}
+                                     isShowIcon={false}/>
+                        <Typography fontSize={"14px"}>{problem.operating
+                            ? `${problem.operating} ч.`
+                            : `${problem.odometer} км`}
+                        </Typography>
+                    </Stack>
+                </ListItemButton>
+            </ListItem>
             <ProblemDetails/>
         </>
     );

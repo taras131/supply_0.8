@@ -1,4 +1,5 @@
 import {IComment, INewComment} from "./iComent";
+import {IMachinery} from "./iMachinery";
 
 export interface INewMachineryComment extends INewComment {
     machinery_id: string;
@@ -8,6 +9,8 @@ export interface INewMachineryComment extends INewComment {
 
 export interface IMachineryComment extends IComment {
     machinery_id: string;
+    machinery?: IMachinery;
+    is_active?: boolean;
 }
 
 export const emptyMachineryComment: INewMachineryComment = {

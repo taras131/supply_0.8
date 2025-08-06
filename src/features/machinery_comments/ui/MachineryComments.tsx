@@ -1,20 +1,24 @@
-import React from "react";
+import React, {FC} from "react";
 import {useAppSelector} from "../../../hooks/redux";
 import {selectAllMachineryComments} from "../model/selectors";
 import MachineryCommentsItem from "./MachineryCommentsItem";
 import {List, Typography} from "@mui/material";
 import MachineryCommentsAddNew from "./MachineryCommentsAddNew";
 
-const MachineryComments = () => {
+interface IProps {
+    isShowMachineryInfo?: boolean;
+}
+
+const MachineryComments:FC<IProps> = ({isShowMachineryInfo = false}) => {
     const comments = useAppSelector(selectAllMachineryComments);
     const commentsList = comments?.map(comment => (<MachineryCommentsItem
             key={comment.id}
-            comment={comment}/>
+            comment={comment}
+            isShowMachineryInfo={isShowMachineryInfo}/>
     ));
     return (
         <div>
-            MachineryComments
-            <MachineryCommentsAddNew/>
+            <MachineryCommentsAddNew isShowMachineryInfo={isShowMachineryInfo}/>
             {comments
                 ? (<List>
                     {commentsList}

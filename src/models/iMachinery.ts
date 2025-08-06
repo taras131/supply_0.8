@@ -16,6 +16,8 @@ export interface INewMachinery {
     vin: string;
     state_number: string;
     status: MachineryStatusType;
+    operating: number;
+    odometer: number;
     photos: string[];
     traction_type_id: number;
     transmission_type_id: number;
@@ -35,6 +37,8 @@ export interface IMachinery extends INewMachinery {
     author_id: string;
     author?: IUser;
     updated_author?: IUser;
+    next_service_task?: ITask | null;
+    last_completed_service_task?: ITask | null;
     created_at: string;
     updated_at: string;
 }
@@ -60,6 +64,8 @@ export const emptyMachinery: INewMachinery = {
     vin: "",
     state_number: "",
     status: MachineryStatus.active,
+    operating: 0,
+    odometer: 0,
     photos: [],
     traction_type_id: -1,
     transmission_type_id: -1,

@@ -47,9 +47,10 @@ export const docValidate = (doc: INewMachineryDoc) => {
     return errors;
 };
 
-export const machineryCommentValidate = (comment: INewMachineryComment) => {
+export const machineryCommentValidate = (isShowMachineryInfo = false) => (comment: INewMachineryComment) => {
     const errors: ValidationErrors = {};
     if (comment.text.length < 5) errors.text = "Должно быть не менее 5 символов";
+    if (isShowMachineryInfo && comment.machinery_id === "-1") errors.machinery_id = "Выбирите технику";
     return errors;
 };
 

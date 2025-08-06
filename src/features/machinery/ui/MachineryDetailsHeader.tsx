@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import Button from "@mui/material/Button";
 import { Stack, Typography, useMediaQuery } from "@mui/material";
-import { routes } from "../../../utils/routes";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../hooks/redux";
 import { getCurrentMachineryTitle } from "../model/selectors";
@@ -11,7 +10,7 @@ const MachineryDetailsHeader: FC = () => {
   const navigate = useNavigate();
   const title = useAppSelector(getCurrentMachineryTitle);
   const handleBackClick = () => {
-    navigate(routes.machinery);
+    navigate(-1);
   };
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between">

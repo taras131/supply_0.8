@@ -132,7 +132,7 @@ const TaskIssueView: FC<IProps> = ({
                 />
             </Stack>
             {task.type_id === 1 && (
-                <Stack direction={"row"}>
+                <Stack direction={"row"} spacing={2}>
                     <FieldControl
                         label="Провести ТО при наработке (час)"
                         name="issue_operating"

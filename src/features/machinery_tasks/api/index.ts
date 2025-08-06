@@ -13,13 +13,11 @@ const prepareTaskDto = (dto: INewTask) => {
 export const machineryTasksAPI = {
     add: async (newTask: INewTask) => {
         const prepareTask = prepareTaskDto(newTask);
-        console.log(prepareTask);
         const res = await appAPI.post(machineryTasksPath, {
             ...prepareTask,
             issue_operating: Number(prepareTask.issue_operating),
             issue_odometer: Number(prepareTask.issue_odometer),
         });
-        console.log(res);
         return res.data;
     },
     getAll: async () => {

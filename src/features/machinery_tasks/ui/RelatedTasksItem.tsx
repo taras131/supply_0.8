@@ -1,10 +1,11 @@
 import React, {FC} from "react";
-import {ListItem, ListItemButton, ListItemIcon, ListItemText, Typography} from "@mui/material";
+import {ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography} from "@mui/material";
 import StatusIcon from "./StatusIcon";
-import {formatDateDDMMYYYY} from "../../../utils/services";
 import Box from "@mui/material/Box";
 import PriorityChip from "./PriorityChip";
 import {ITask} from "../../../models/IMachineryTasks";
+import Divider from "@mui/material/Divider";
+import DueDateChip from "./DueDateChip";
 
 interface IProps {
     task: ITask;
@@ -16,18 +17,22 @@ const RelatedTasksItem: FC<IProps> = ({task, taskClickHandler, isMaintenanceMode
     const maintenanceText = getMaintenanceText(task);
     return (
         <ListItem key={task.id} disablePadding>
-            <ListItemButton onClick={taskClickHandler}>
+            <ListItemButton onClick={(e) => {
+                e.stopPropagation();
+                taskClickHandler();
+            }}>
                 <ListItemIcon>
                     <StatusIcon statusId={task.status_id}/>
                 </ListItemIcon>
-                <ListItemText primary={`${formatDateDDMMYYYY(task.created_at ?? "")} - ${task.title}`}/>
-                {isMaintenanceMode ? (
-                    <Typography>{maintenanceText}</Typography>
-                ) : (
-                    <Box sx={{width: "85px"}}>
-                        <PriorityChip priorityId={task.priority_id}/>
-                    </Box>
-                )}
+                <ListItemText
+                    primary={task.title}/>
+                <Divider orientation="vertical" flexItem sx={{mx: 1}}/>
+                <Stack sx={{width: "65px"}}>
+                    <DueDateChip due_date={task.status_id === 3 ? +task.result_date : +task.due_date}
+                                 isCompleted={task.status_id === 3}
+                                 isShowIcon={false}/>
+                    <Typography fontSize={"14px"}>{maintenanceText}</Typography>
+                </Stack>
             </ListItemButton>
         </ListItem>
     );
@@ -38,10 +43,10 @@ export default RelatedTasksItem;
 const getMaintenanceText = (task: ITask) => {
     if (task.status_id === 3) {
         return task.result_operating
-            ? `проведено: ${task.result_operating} ч.`
-            : `проведено: ${task.result_operating} км.`;
+            ? `${task.result_operating} ч.`
+            : `${task.result_operating} км.`;
     }
     return task.issue_operating
-        ? `план: ${task.issue_operating} ч.`
-        : `план: ${task.issue_odometer} км.`;
+        ? `${task.issue_operating} ч.`
+        : `${task.issue_odometer} км.`;
 };

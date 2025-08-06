@@ -21,6 +21,8 @@ import LoginForm from "../features/auth/ui/LoginForm";
 import RegisterForm from "../features/auth/ui/RegisterForm";
 import ProblemsPage from "../features/machinery_problems/ui/ProblemsPage";
 import TasksPage from "../features/machinery_tasks/ui/TasksPage";
+import MachineryCommentsPage from "../features/machinery_comments/ui/MachineryCommentsPage";
+import MachineryMaintenancePage from "../features/machinery/ui/MachineryMaintenancePage";
 
 export interface IRouteConfig {
     path: string;
@@ -57,6 +59,12 @@ export const routesConfig: IRouteConfig[] = [
                 showInMenu: true,
             },
             {
+                path: routes.machineryMaintenance,
+                element: <MachineryMaintenancePage/>,
+                label: "Календарь ТО",
+                showInMenu: true,
+            },
+            {
                 path: routes.machineryProblems,
                 element: <ProblemsPage/>,
                 label: "Проблемы",
@@ -66,6 +74,12 @@ export const routesConfig: IRouteConfig[] = [
                 path: routes.machineryTasks,
                 element: <TasksPage/>,
                 label: "Задачи",
+                showInMenu: true,
+            },
+            {
+                path: routes.machineryComments,
+                element: <MachineryCommentsPage/>,
+                label: "Заметки",
                 showInMenu: true,
             },
         ],

@@ -21,5 +21,7 @@ export const routes = {
   machineryAddProblem: "/machinery/add_problem/:machineryId/",
   machineryTaskDetails: "/machinery/tasks/:taskId/",
   machineryAddTask: "/machinery/tasks/add_task/:machineryId/",
+  machineryComments: "/machinery/comments/",
+  machineryMaintenance: "/machinery/maintenance/",
 };
 

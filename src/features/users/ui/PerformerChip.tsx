@@ -1,5 +1,6 @@
 import {Avatar, Stack, Typography} from "@mui/material";
 import {FC} from "react";
+import {nestServerPath} from "../../../api";
 
 interface IProps {
     name: string;
@@ -12,7 +13,7 @@ const PerformerChip: FC<IProps> = ({name, role = "исполнитель", photo
         <Stack direction={"row"} alignItems={"center"} justifyContent={"center"} spacing={1}>
             <Avatar
                 alt={name}
-                src={photo}
+                src={`${nestServerPath}/static/${photo}`}
                 sx={{
                     width: 40,
                     height: 40,

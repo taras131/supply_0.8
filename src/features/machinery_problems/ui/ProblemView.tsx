@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FC} from "react";
 import FieldControl from "../../../components/common/FieldControl";
 import {problemCategories} from "../../machinery/utils/const";
-import {formatDateDDMMYYYY} from "../../../utils/services";
+import {convertMillisecondsToDate, formatDateDDMMYYYY} from "../../../utils/services";
 import {
     IMachineryProblem,
     INewMachineryProblem,
@@ -10,6 +10,7 @@ import {
 } from "../../../models/IMachineryProblems";
 import {ValidationErrors} from "../../../utils/validators";
 import {SelectChangeEvent, Stack} from "@mui/material";
+import TitleWithValue from "../../../components/TitleWithValue";
 
 interface IProps {
     problem: INewMachineryProblem | IMachineryProblem | null;
@@ -96,7 +97,9 @@ const ProblemView: FC<IProps> = ({
                     height: "100%",
                 }}
             />
-
+            {problem && problem.status_id === 3 && "result_date" in problem && (
+                <TitleWithValue title={"Закрыта"} value={convertMillisecondsToDate(+problem.result_date)}/>
+            )}
         </>
     );
 };

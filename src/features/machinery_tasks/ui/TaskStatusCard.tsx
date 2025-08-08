@@ -7,6 +7,8 @@ import {useAppSelector} from "../../../hooks/redux";
 import {selectCurrentMachineryTitle} from "../../machinery/model/selectors";
 import DueDateChip from "./DueDateChip";
 import {convertMillisecondsToDate} from "../../../utils/services";
+import {Link} from "react-router-dom";
+import {routes} from "../../../utils/routes";
 
 interface IProps {
     currentTask: ITask;
@@ -28,8 +30,10 @@ const TaskStatusCard: FC<IProps> = ({currentTask}) => {
                 <TitleWithValue title={"Завершена:"}
                                 value={convertMillisecondsToDate(+currentTask.result_date)}/>
             )}
-            <TitleWithValue title={"Техника:"}
-                            value={currentMachineryTitle}/>
+            <Link to={routes.machineryDetails.replace(":machineryId", currentTask.machinery_id)}>
+                <TitleWithValue title={"Техника:"}
+                                value={currentMachineryTitle}/>
+            </Link>
             <CreateUpdateUserInfo author={currentTask.author}
                                   createdAT={currentTask.created_at}
                                   updatedAuthor={currentTask.updated_author ?? null}

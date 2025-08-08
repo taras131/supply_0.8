@@ -1,5 +1,5 @@
 import {appAPI, nestServerPath} from "../../../api";
-import {INewMachineryProblem} from "../../../models/IMachineryProblems";
+import {IMachineryProblem, INewMachineryProblem} from "../../../models/IMachineryProblems";
 
 const machineryProblemsPath = `${nestServerPath}/machinery-problem`;
 
@@ -17,8 +17,8 @@ export const machineryProblemsAPI = {
         const res = await appAPI.get(`${machineryProblemsPath}/${problemId}`);
         return await res.data;
     },
-    update: async (problem: INewMachineryProblem) => {
-        const res = await appAPI.put(machineryProblemsPath, problem);
+    update: async (problem: IMachineryProblem) => {
+        const res = await appAPI.put(machineryProblemsPath, {...problem, result_date: +problem.result_date });
         return await res.data;
     },
     delete: async (problemId: string) => {

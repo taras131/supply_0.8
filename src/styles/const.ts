@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { Badge, BadgeProps, TableCell, tableCellClasses, TableRow, TextField } from "@mui/material";
+import {Badge, BadgeProps, ListItemButton, TableCell, tableCellClasses, TableRow, TextField} from "@mui/material";
 
 export const APPROVED_GRADIENT = "linear-gradient(90deg, rgba(141,176,227,1) 0%, rgba(121,151,193,1) 48%)";
 export const SUCCESS_GRADIENT = "linear-gradient(90deg, rgba(139,196,143,1) 0%, rgba(107,164,114,1) 48%)";
@@ -76,5 +76,15 @@ export const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
     border: `2px solid ${theme.palette.background.paper}`,
     padding: "0 4px",
     marginLeft: "15px",
+  },
+}));
+
+const baseColor = "#e3f2fd";      // очень мягкий голубой (MUI blue[50])
+const hoverColor = "#bbdefb";     // чуть насыщеннее (MUI blue[100])
+export const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
+  backgroundColor: baseColor,
+  transition: "background-color 0.2s",
+  "&:hover": {
+    backgroundColor: hoverColor,
   },
 }));

@@ -7,6 +7,7 @@ import {setCurrentProblem} from "../model/slice";
 import StatusIcon from "../../machinery_tasks/ui/StatusIcon";
 import Divider from "@mui/material/Divider";
 import DueDateChip from "../../machinery_tasks/ui/DueDateChip";
+import {StyledListItemButton} from "../../../styles/const";
 
 interface IProps {
     problem: IMachineryProblem
@@ -14,7 +15,6 @@ interface IProps {
 
 const RelatedProblemsItem: FC<IProps> = ({problem}) => {
     const dispatch = useAppDispatch();
-    console.log(problem.created_at)
     if (!problem) return null;
     const problemClickHandler = () => {
         dispatch(setCurrentProblem(problem));
@@ -22,7 +22,7 @@ const RelatedProblemsItem: FC<IProps> = ({problem}) => {
     return (
         <>
             <ListItem key={problem.id} disablePadding>
-                <ListItemButton onClick={(e) => {
+                <StyledListItemButton onClick={(e) => {
                     e.stopPropagation();
                     problemClickHandler();
                 }}>
@@ -43,7 +43,7 @@ const RelatedProblemsItem: FC<IProps> = ({problem}) => {
                             : `${problem.odometer} км`}
                         </Typography>
                     </Stack>
-                </ListItemButton>
+                </StyledListItemButton>
             </ListItem>
             <ProblemDetails/>
         </>

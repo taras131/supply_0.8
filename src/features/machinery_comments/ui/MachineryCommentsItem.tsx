@@ -101,16 +101,16 @@ const MachineryCommentsItem: FC<IProps> = ({comment, isShowMachineryInfo}) => {
                             </Stack>
                         )}
                 </CardContent>
-                {currenUserId === comment.author_id && (
-                    <CardActions>
+                <CardActions>
+                    {currenUserId === comment.author_id && (
                         <CommentActions comment={editedValue}
                                         isEdit={isEdit}
                                         toggleIsEdit={toggleIsEdit}
                                         disabled={editedValue.text === comment.text
                                             || Object.keys(errors).length > 0}
                                         setEditedValue={setEditedValue}/>
-                    </CardActions>
-                )}
+                    )}
+                </CardActions>
             </Card>
         </ListItem>
     );

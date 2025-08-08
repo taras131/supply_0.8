@@ -20,7 +20,7 @@ interface IProps {
     isShowIcon?: boolean;
 }
 
-const DueDateChip: FC<IProps> = ({due_date, isCompleted, isShowIcon}) => {
+const DueDateChip: FC<IProps> = ({due_date, isCompleted, isShowIcon = true}) => {
     const {icon, text} = getDueDateColors(+due_date, isCompleted);
     return (
         <Stack direction="row" alignItems="center" spacing={0.5}>

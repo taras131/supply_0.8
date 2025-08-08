@@ -1,11 +1,10 @@
 import React, {FC} from "react";
 import {ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography} from "@mui/material";
 import StatusIcon from "./StatusIcon";
-import Box from "@mui/material/Box";
-import PriorityChip from "./PriorityChip";
 import {ITask} from "../../../models/IMachineryTasks";
 import Divider from "@mui/material/Divider";
 import DueDateChip from "./DueDateChip";
+import {StyledListItemButton} from "../../../styles/const";
 
 interface IProps {
     task: ITask;
@@ -17,7 +16,7 @@ const RelatedTasksItem: FC<IProps> = ({task, taskClickHandler, isMaintenanceMode
     const maintenanceText = getMaintenanceText(task);
     return (
         <ListItem key={task.id} disablePadding>
-            <ListItemButton onClick={(e) => {
+            <StyledListItemButton onClick={(e) => {
                 e.stopPropagation();
                 taskClickHandler();
             }}>
@@ -33,7 +32,7 @@ const RelatedTasksItem: FC<IProps> = ({task, taskClickHandler, isMaintenanceMode
                                  isShowIcon={false}/>
                     <Typography fontSize={"14px"}>{maintenanceText}</Typography>
                 </Stack>
-            </ListItemButton>
+            </StyledListItemButton>
         </ListItem>
     );
 };

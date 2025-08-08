@@ -1,5 +1,6 @@
 import {defaultUser, IUser} from "./IUser";
 import {IMachineryProblem} from "./IMachineryProblems";
+import {IMachinery} from "./iMachinery";
 
 export interface ITaskStatus {
     id: number;
@@ -43,6 +44,7 @@ export interface ITask extends INewTask {
     result_spent_resources: string;
     created_at: string;
     updated_at?: string;
+    machinery?: IMachinery;
 }
 
 

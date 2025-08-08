@@ -16,6 +16,9 @@ import RelatedTasks from "../../machinery_tasks/ui/RelatedTasks";
 import Button from "@mui/material/Button";
 import TitleWithValue from "../../../components/TitleWithValue";
 import ProblemDetailsHeader from "./ProblemDetailsHeader";
+import {AddLink} from "@mui/icons-material";
+import {Link} from "react-router-dom";
+import {routes} from "../../../utils/routes";
 
 const ProblemDetails: FC = () => {
     const dispatch = useAppDispatch();
@@ -85,8 +88,10 @@ const ProblemDetails: FC = () => {
                         />
                         <Stack spacing={1}>
                             {currentProblem.machinery && (
-                                <TitleWithValue title={"Техника:"}
-                                                value={`${currentProblem.machinery.brand} ${currentProblem.machinery.model}`}/>
+                                <Link to={routes.machineryDetails.replace(":machineryId", currentProblem.machinery.id)}>
+                                    <TitleWithValue title={"Техника:"}
+                                                    value={`${currentProblem.machinery.brand} ${currentProblem.machinery.model}`}/>
+                                </Link>
                             )}
                             <CreateUpdateUserInfo
                                 author={currentProblem.author}

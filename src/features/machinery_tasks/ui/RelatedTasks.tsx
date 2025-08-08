@@ -12,6 +12,7 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import {useAppDispatch} from "../../../hooks/redux";
 import {setCurrentProblem} from "../../machinery_problems/model/slice";
 import RelatedTasksItem from "./RelatedTasksItem";
+import Divider from "@mui/material/Divider";
 
 interface IProps {
     machineryId: string;
@@ -33,10 +34,13 @@ const RelatedTasks: FC<IProps> = ({tasks, machineryId, problemId, title, isMaint
             state: {problemId: problemId ?? "-1", taskTypeId: isMaintenanceMode ? 1 : "-1"},
         });
     };
-    const tasksList = tasks?.map(task => <RelatedTasksItem key={task.id}
-                                                           task={task}
-                                                           isMaintenanceMode={isMaintenanceMode}
-                                                           taskClickHandler={taskClickHandler(task.id)}/>);
+    const tasksList = tasks?.map(task => (<>
+        <RelatedTasksItem key={task.id}
+                          task={task}
+                          isMaintenanceMode={isMaintenanceMode}
+                          taskClickHandler={taskClickHandler(task.id)}/>
+        <Divider color={"white"} component="li"/>
+    </>));
     return (
         <Stack>
             <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
@@ -50,7 +54,19 @@ const RelatedTasks: FC<IProps> = ({tasks, machineryId, problemId, title, isMaint
                 </IconButton>
             </Stack>
             {tasksList && tasksList.length > 0
-                ? (<List> {tasksList} </List>)
+                ? (<List>
+                    {tasksList.map((item, i) => (
+                        <React.Fragment key={item.key || i}>
+                            {item}
+                            {i < tasksList.length - 1 && (
+                                <Divider
+                                    component="li"
+                                    sx={{ borderColor: "white", borderWidth: 1 }} // 1px разделитель, светло-серый
+                                />
+                            )}
+                        </React.Fragment>
+                    ))}
+                </List>)
                 : (<Typography variant={"subtitle2"}>
                     {isMaintenanceMode
                         ? " Нет связанных ТО."

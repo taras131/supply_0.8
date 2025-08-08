@@ -7,7 +7,11 @@ import {fetchUpdateMachineryTask} from "../model/actions";
 import {selectAllMachineryTasks} from "../model/selectors";
 import {taskStatus} from "../../../models/IMachineryTasks";
 
-export const TaskList: FC = () => {
+interface IProps {
+    isShowMachineryInformation?: boolean;
+}
+
+export const TaskList: FC<IProps> = ({isShowMachineryInformation}) => {
   const dispatch = useAppDispatch();
   const tasks = useAppSelector(selectAllMachineryTasks);
   const moveTask = (taskId: string, newStatusId: number) => {
@@ -33,6 +37,7 @@ export const TaskList: FC = () => {
             status={status}
             tasks={tasks.filter((task) => task.status_id === status.id)}
             moveTask={moveTask}
+            isShowMachineryInformation={isShowMachineryInformation}
           />
         ))}
       </div>

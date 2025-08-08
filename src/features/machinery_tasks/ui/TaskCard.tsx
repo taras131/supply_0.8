@@ -9,12 +9,14 @@ import PriorityChip from "./PriorityChip";
 import DueDateChip from "./DueDateChip";
 import PerformerChip from "../../users/ui/PerformerChip";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Divider from "@mui/material/Divider";
 
 interface IProps {
     task: ITask;
+    isShowMachineryInformation?: boolean
 }
 
-const TaskCard: FC<IProps> = ({task}) => {
+const TaskCard: FC<IProps> = ({task, isShowMachineryInformation = false}) => {
     const navigate = useNavigate();
     const [{isDragging}, drag] = useDrag({
         type: "TASK",
@@ -47,12 +49,26 @@ const TaskCard: FC<IProps> = ({task}) => {
                                 color={task.type_id === 1 ? "info.main" : "warning.main"}>
                         {getTaskTypeById(task.type_id)}
                     </Typography>
-                    <PriorityChip priorityId={task.priority_id}/>
+                    <IconButton onClick={handleNavigateToDetails}
+                                color="info"
+                                aria-label="show more">
+                        <MoreVertIcon/>
+                    </IconButton>
                 </Stack>
-                <Typography variant="h4" fontSize={"16px"} mt={1}>
-                    {task.title}
-                </Typography>
-                <Box sx={{height: "60px", overflowY: "hidden", marginTop: 1}}>
+                <Stack direction={"row"} justifyContent={"space-between"} mt={2} alignItems={"center"}>
+                    <Typography variant="h4" fontSize={"16px"}>
+                        {task.title}
+                    </Typography>
+                    {task.machinery && isShowMachineryInformation && (
+                        <Stack direction="row" alignItems={"center"}>
+                            <Divider orientation="vertical" flexItem sx={{mx: 1}}/>
+                            <Typography variant={"subtitle2"} fontSize={"14px"}>
+                                {`${task.machinery.brand} ${task.machinery.model}`}
+                            </Typography>
+                        </Stack>
+                    )}
+                </Stack>
+                <Box sx={{height: "60px", overflowY: "hidden", marginTop: 1.5}}>
                     <Typography fontWeight={400} variant="body2">{task.description}</Typography>
                 </Box>
             </CardContent>
@@ -65,11 +81,7 @@ const TaskCard: FC<IProps> = ({task}) => {
                         <PerformerChip name={`${task.assigned_to.first_name} ${task.assigned_to.middle_name}`}
                                        photo={task.assigned_to.avatar_path}/>
                     )}
-                    <IconButton onClick={handleNavigateToDetails}
-                                color="primary"
-                                aria-label="show more">
-                        <MoreVertIcon/>
-                    </IconButton>
+                    <PriorityChip priorityId={task.priority_id}/>
                 </Stack>
             </CardActions>
         </Card>

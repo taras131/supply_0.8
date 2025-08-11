@@ -14,6 +14,7 @@ import {
 import UserList from "./UserList";
 import {selectAllUsers, selectIsUsersLoading} from "../model/selectors";
 import Preloader from "../../../components/Preloader";
+import AUsersMigration from "./AUsersMigration";
 
 const UsersPage = () => {
     const matches_650 = useMediaQuery("(min-width:500px)");
@@ -59,6 +60,7 @@ const UsersPage = () => {
                     <UserList users={users}/>
                 </Table>
             </TableContainer>
+            <AUsersMigration/>
         </Stack>
     );
 };

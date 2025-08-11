@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {Button} from "@mui/material";
 import {collection, onSnapshot, query} from "firebase/firestore";
 import {db} from "../../../firebase";
@@ -27,7 +27,11 @@ const ASuppliersMigration = () => {
                 if (index >= items.length) return;
                 const res = await fetchCompanyDataByInn(+items[index].INN);
                 if (res && res[0]) {
-                    dispatch(fetchAddSupplier({...setSupplierDate(res[0]), INN: items[index].INN}));
+                    dispatch(fetchAddSupplier({
+                        ...setSupplierDate(res[0]),
+                        INN: items[index].INN,
+                        firebase_id: items[index].id,
+                    }));
 
                 }
                 setTimeout(() => {

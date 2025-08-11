@@ -12,6 +12,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import BaseTable from "../../../components/common/BaseTable";
 import {useAppDispatch} from "../../../hooks/redux";
 import {styled} from "@mui/material/styles";
+import MachineryStatusChip from "./MachineryStatusChip";
 
 const StyledImage = styled("img")({
     width: "100%",
@@ -80,6 +81,11 @@ const MachineryTable: FC<IProps> = ({rows, machineryClickHandler, activeRowId}) 
                     {row.vin}
                 </Stack>);
             },
+        },
+        {
+            key: "status",
+            label: "Статус",
+            getValue: (row) => (<MachineryStatusChip status={row.status}/>),
         },
     ];
     return (<BaseTable rows={rows}

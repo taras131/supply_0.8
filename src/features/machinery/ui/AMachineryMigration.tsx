@@ -4,14 +4,14 @@ import {useAppDispatch} from "../../../hooks/redux";
 import {collection, onSnapshot, query} from "firebase/firestore";
 import {db} from "../../../firebase";
 import {fetchAddMachinery} from "../model/actions";
-import {emptyMachinery, IMachinery} from "../../../models/iMachinery";
+import {emptyMachinery, INewMachinery} from "../../../models/iMachinery";
 
 const AMachineryMigration = () => {
     const dispatch = useAppDispatch();
 
     const clickHandler = () => {
         const q = query(collection(db, "machinery"));
-        const arr: IMachinery[] = [];
+        const arr: INewMachinery[] = [];
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             querySnapshot.forEach((doc: any) => {
                 const data = doc.data();
@@ -29,7 +29,7 @@ const AMachineryMigration = () => {
                 };
                 arr.push(machinery);
             });
-            const dispatchWithDelay = (items: IMachinery[], index = 0) => {
+            const dispatchWithDelay = (items: INewMachinery[], index = 0) => {
                 console.log(items[index]);
                 if (index >= items.length) return;
                 dispatch(fetchAddMachinery({newMachinery: {...items[index]}, files: [] }));

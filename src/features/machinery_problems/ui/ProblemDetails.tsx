@@ -1,11 +1,11 @@
 import React, {FC, useEffect, useState} from "react";
-import {ButtonGroup, Drawer, Stack, Typography} from "@mui/material";
+import {Drawer, Stack} from "@mui/material";
 import Box from "@mui/material/Box";
 import {useEditor} from "../../../hooks/useEditor";
 import {problemValidate} from "../../../utils/validators";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {fetchUpdateMachineryProblem} from "../model/actions";
-import {defaultProblem, IMachineryProblem, problemStatus} from "../../../models/IMachineryProblems";
+import {defaultProblem, IMachineryProblem} from "../../../models/IMachineryProblems";
 import {setCurrentProblem} from "../model/slice";
 import {selectCurrentProblem} from "../model/selectors";
 import ProblemView from "./ProblemView";
@@ -13,10 +13,8 @@ import ButtonsEditCancelSave from "../../../components/common/ButtonsEditCancelS
 import ProblemDetailsPhotos from "./ProblemDetailsPhotos";
 import CreateUpdateUserInfo from "../../../components/common/CreateUpdateUserInfo";
 import RelatedTasks from "../../machinery_tasks/ui/RelatedTasks";
-import Button from "@mui/material/Button";
 import TitleWithValue from "../../../components/TitleWithValue";
 import ProblemDetailsHeader from "./ProblemDetailsHeader";
-import {AddLink} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 import {routes} from "../../../utils/routes";
 

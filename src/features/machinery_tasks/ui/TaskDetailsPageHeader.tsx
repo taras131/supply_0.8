@@ -15,11 +15,7 @@ const TaskDetailsPageHeader: FC<IProps> = ({currentTask}) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const statusChangeHandler = (statusId: number) => {
-        let updatedTask = {...currentTask};
-        if (currentTask.status_id === 3 && statusId < 3) {
-            updatedTask = {...updatedTask, result_date: 0};
-        }
-        dispatch(fetchUpdateMachineryTask({...updatedTask, status_id: statusId}));
+        dispatch(fetchUpdateMachineryTask({...currentTask, status_id: statusId}));
     };
     return (
         <Stack direction="row" alignItems="center" justifyContent="space-between">

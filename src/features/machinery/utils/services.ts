@@ -1,6 +1,7 @@
 import {problemCategories} from "./const";
 import {problemPriority, problemStatus} from "../../../models/IMachineryProblems";
 import {IMachinery} from "../../../models/iMachinery";
+import {MachineryStatus} from "../../../utils/const";
 
 export const getCategoryTitleById = (id: number): string | undefined => {
     return problemCategories.find((category) => category.id === id)?.title;
@@ -23,6 +24,19 @@ export const getPriorityChipColor = (priorityId: number): "primary" | "error" | 
         case 3: // Ждёт
             return "error";
         default: // Подстраховка от некорректных данных
+            return "warning";
+    }
+};
+
+export const getStatusChipColor = (status: MachineryStatus): "error" | "warning" | "success" => {
+    switch (status) {
+        case MachineryStatus.disActive:
+            return "error";
+        case MachineryStatus.repair:
+            return "warning";
+        case MachineryStatus.active:
+            return "success";
+        default:
             return "warning";
     }
 };

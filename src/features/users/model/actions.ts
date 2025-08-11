@@ -42,10 +42,12 @@ export const fetchUploadUserPhoto = createAsyncThunk<
     async (uploadData: IUploadPhoto, {rejectWithValue, dispatch}) => {
         try {
             const {file, user} = uploadData;
-            if (user.avatar_path.length > 10) {
+            console.log(user);
+            if (user.avatar_path) {
                 await filesAPI.delete(user.avatar_path);
             }
             const res = await filesAPI.upload(file);
+            console.log(res);
             if (!res) return;
             const updatedUser = {...user, avatar_path: res};
             return dispatch(fetchUpdateUser(updatedUser)).unwrap();

@@ -18,8 +18,10 @@ const MessageWindow: FC = () => {
         <ModalWindow handleToggleOpen={handleOkClick}
                      isOpenModal={isOpen}
                      title={"Внимание"}>
-            <Stack spacing={2}>
-                <Typography fontSize="20px">{message}</Typography>
+            <Stack spacing={6}>
+                <Typography fontSize="20px" textAlign="center">
+                    {message}
+                </Typography>
                 <Button onClick={handleOkClick}>Хорошо</Button>
             </Stack>
         </ModalWindow>

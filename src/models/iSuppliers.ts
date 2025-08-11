@@ -1,6 +1,7 @@
 import {emptyCompany, INewCompany} from "./iCompanies";
 
 export interface INewSupplier extends INewCompany {
+    id?: string;
     phone: string;
     manager_email: string;
     accounts_department_email: string;

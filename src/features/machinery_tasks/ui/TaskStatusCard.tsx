@@ -24,7 +24,8 @@ const TaskStatusCard: FC<IProps> = ({currentTask}) => {
             gap: "24px",
         }}>
             <TitleWithValue title={"Срок выполнения:"}>
-                <DueDateChip due_date={currentTask.due_date} isCompleted={!!currentTask.result_date}/>
+                <DueDateChip due_date={+currentTask.due_date}
+                             isCompleted={!!Number(currentTask.result_date)}/>
             </TitleWithValue>
             {currentTask.status_id === 3 && currentTask.result_date && (
                 <TitleWithValue title={"Завершена:"}

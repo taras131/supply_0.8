@@ -37,7 +37,7 @@ const RelatedProblemsItem: FC<IProps> = ({problem}) => {
                             ? +problem.result_date
                             : new Date(problem.created_at).getTime()}
                                      isCompleted={problem.status_id === 3}
-
+                                     isShowIcon={false}
                         />
                         <Typography fontSize={"14px"}>
                             {problem.operating

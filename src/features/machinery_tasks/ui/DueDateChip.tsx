@@ -27,7 +27,9 @@ const DueDateChip: FC<IProps> = ({due_date, isCompleted, isShowIcon = true}) => 
         <Stack direction="row" alignItems="center" spacing={0.5}>
             {isShowIcon && (
                 <>
-                    {isCompleted ? (<CheckCircleIcon color={icon as any}/>) : (<AccessTimeIcon color={icon as any}/>)}
+                    {isCompleted
+                        ? (<CheckCircleIcon color={icon as any}/>)
+                        : (<AccessTimeIcon color={icon as any}/>)}
                 </>
             )}
             <Typography fontWeight={650} fontSize="14px" sx={{color: text}}>

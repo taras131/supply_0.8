@@ -19,13 +19,17 @@ const modalStyle = {
     transform: "translate(-50%, -50%)",
     width: 400,
     bgcolor: "background.paper",
-    border: "2px solid #000",
     boxShadow: 24,
     p: 2,
     borderRadius: "6px",
 };
 
-const ModalWindow: FC<IProps> = ({isOpenModal, title, handleToggleOpen, children}) => {
+const ModalWindow: FC<IProps> = ({
+                                     isOpenModal,
+                                     title,
+                                     handleToggleOpen,
+                                     children,
+                                 }) => {
     return (
         <Modal
             open={isOpenModal}
@@ -42,7 +46,14 @@ const ModalWindow: FC<IProps> = ({isOpenModal, title, handleToggleOpen, children
                         <CloseIcon/>
                     </IconButton>
                 </Grid>
-                {children}
+                <Box sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "36px",
+                }}>
+                    {children}
+                </Box>
             </Box>
         </Modal>
     );

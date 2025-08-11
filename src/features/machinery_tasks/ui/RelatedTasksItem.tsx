@@ -29,7 +29,8 @@ const RelatedTasksItem: FC<IProps> = ({task, taskClickHandler, isMaintenanceMode
                 <Stack sx={{width: "65px", alignItems: "end"}}>
                     <DueDateChip due_date={task.status_id === 3 ? +task.result_date : +task.due_date}
                                  isCompleted={task.status_id === 3}
-                                 isShowIcon={task.status_id !== 3}/>
+                                 isShowIcon={false}
+                                 />
                     <Typography fontSize={"14px"}>{maintenanceText}</Typography>
                 </Stack>
             </StyledListItemButton>

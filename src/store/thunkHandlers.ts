@@ -5,14 +5,17 @@ import {setMessage, setModalMessage} from "../features/messages/model/slice";
 export const handlerError = (e: unknown): string => {
     if (e instanceof Error) return e.message;
     if (typeof e === "string") return e;
+    if (typeof e === "object" && e !== null && "message" in e && typeof (e as any).message === "string") {
+        return (e as any).message;
+    }
     return "неизвестная ошибка";
 };
 
 export const thunkHandlers = {
     error: (e: unknown, dispatch: any) => {
-        const errorMessage = e instanceof Error ? e.message : "Неизвестная ошибка";
+        const errorMessage = handlerError(e);
         dispatch(setModalMessage(errorMessage));
-        return handlerError(e);
+        return errorMessage;
     },
     success: (message: string, dispatch: AppDispatch) => {
         dispatch(

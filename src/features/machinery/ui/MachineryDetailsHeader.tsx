@@ -4,6 +4,7 @@ import { Stack, Typography, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../hooks/redux";
 import { getCurrentMachineryTitle } from "../model/selectors";
+import MachineryStatusButtons from "./MachineryStatusButtons";
 
 const MachineryDetailsHeader: FC = () => {
   const matches_700 = useMediaQuery("(min-width:700px)");
@@ -25,6 +26,7 @@ const MachineryDetailsHeader: FC = () => {
       >
         {title}
       </Typography>
+        <MachineryStatusButtons/>
     </Stack>
   );
 };

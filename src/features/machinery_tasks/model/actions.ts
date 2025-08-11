@@ -7,6 +7,7 @@ import {MESSAGE_SEVERITY} from "../../../utils/const";
 import {INewTask, ITask} from "../../../models/IMachineryTasks";
 import {machineryTasksAPI} from "../api";
 import {selectCurrentTask} from "./selectors";
+import {addRelatedTaskToCurrentProblem} from "../../machinery_problems/model/slice";
 
 export interface IAddTask {
     newTask: INewTask;
@@ -28,7 +29,9 @@ export const fetchAddMachineryTask = createAsyncThunk<
                     newTask.issue_photos.push(uploadedFile);
                 }
             }
-            return machineryTasksAPI.add(newTask);
+            const res = await machineryTasksAPI.add(newTask);
+            dispatch(addRelatedTaskToCurrentProblem(res));
+            return res;
         } catch (e) {
             return rejectWithValue(handlerError(e));
         }

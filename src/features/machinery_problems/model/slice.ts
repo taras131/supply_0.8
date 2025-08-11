@@ -6,6 +6,7 @@ import {
     fetchGetAllMachineryProblem, fetchGetMachineryProblemById,
     fetchUpdateMachineryProblem,
 } from "./actions";
+import {ITask} from "../../../models/IMachineryTasks";
 
 interface IMachineryProblemsState {
     list: IMachineryProblem[];
@@ -36,6 +37,19 @@ export const MachineryProblemsSlice = createSlice({
         },
         setCurrentProblem: (state, action: PayloadAction<IMachineryProblem | null>) => {
             state.current = action.payload;
+        },
+        addRelatedTaskToCurrentProblem: (state, action: PayloadAction<ITask>) => {
+            if (state.current && action.payload.problem_id === state.current.id) {
+                state.current = {
+                    ...state.current,
+                    tasks: state.current.tasks
+                        ? [...state.current.tasks, action.payload]
+                        : [action.payload],
+                    status_id: state.current.status_id === 1
+                        ? 2
+                        : state.current.status_id,
+                };
+            }
         },
     },
     extraReducers: (builder) => {
@@ -72,5 +86,5 @@ export const MachineryProblemsSlice = createSlice({
     },
 });
 
-export const {setProblems, setCurrentProblem} = MachineryProblemsSlice.actions;
+export const {setProblems, setCurrentProblem, addRelatedTaskToCurrentProblem} = MachineryProblemsSlice.actions;
 export default MachineryProblemsSlice.reducer;

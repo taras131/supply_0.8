@@ -15,7 +15,12 @@ interface TasksColumnProps {
     isShowMachineryInformation?: boolean;
 }
 
-const TasksColumn: React.FC<TasksColumnProps> = ({status, tasks, moveTask, isShowMachineryInformation}) => {
+const TasksColumn: React.FC<TasksColumnProps> = ({
+                                                     status,
+                                                     tasks,
+                                                     moveTask,
+                                                     isShowMachineryInformation,
+                                                 }) => {
     const machineryId = useParams().machineryId || "-1";
     const [, drop] = useDrop({
         accept: "TASK",
@@ -49,7 +54,9 @@ const TasksColumn: React.FC<TasksColumnProps> = ({status, tasks, moveTask, isSho
                 )}
             </Stack>
             {tasks.map((task) => (
-                <TaskCard key={task.id} task={task} isShowMachineryInformation={isShowMachineryInformation}/>
+                <TaskCard key={task.id}
+                          task={task}
+                          isShowMachineryInformation={isShowMachineryInformation}/>
             ))}
         </Stack>
     );

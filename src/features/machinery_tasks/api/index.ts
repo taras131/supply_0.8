@@ -1,5 +1,6 @@
 import {appAPI, nestServerPath} from "../../../api";
 import {INewTask, ITask} from "../../../models/IMachineryTasks";
+import {logger} from "../../../lib/default-logger";
 
 const machineryTasksPath = `${nestServerPath}/machinery-task`;
 
@@ -13,6 +14,7 @@ const prepareTaskDto = (dto: INewTask) => {
 export const machineryTasksAPI = {
     add: async (newTask: INewTask) => {
         const prepareTask = prepareTaskDto(newTask);
+        console.log(prepareTask);
         const res = await appAPI.post(machineryTasksPath, {
             ...prepareTask,
             issue_operating: Number(prepareTask.issue_operating),

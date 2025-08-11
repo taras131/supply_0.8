@@ -3,7 +3,6 @@ import { Chip, IconButton, Stack, TableCell, TableRow, Tooltip, Typography, useM
 import { IInvoice } from "models/iInvoices";
 import { convertMillisecondsToDate, deleteYearFromString, extractAllText } from "utils/services";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
-import { getSupplierINNById, getSupplierNameById } from "store/selectors/suppliers";
 import DownloadIcon from "@mui/icons-material/Download";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -36,10 +35,10 @@ import {
   SUCCESS_GRADIENT,
   WHITE_COLOR,
 } from "styles/const";
-import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import UploadPayment from "features/invoices/ui/UploadPayment";
 import { selectIsShipmentByInvoiceId } from "features/shipments/model/selectors";
 import {setMessage} from "../../messages/model/slice";
+import {selectSupplierINNById, selectSupplierNameById} from "../../suppliers/model/selectors";
 
 interface IProps {
   invoice: IInvoice;
@@ -55,9 +54,9 @@ const InvoicesListItem: FC<IProps> = ({ invoice, forShipmentMode }) => {
   const matches_1050 = useMediaQuery("(min-width:1050px)");
   const matches_700 = useMediaQuery("(min-width:700px)");
   const matches_470 = useMediaQuery("(min-width:470px)");
-  const comments = useAppSelector(selectCommentsByInvoiceId(invoice.id));
-  const supplierName = useAppSelector((state) => getSupplierNameById(state, invoice.supplierId));
-  const supplierINN = useAppSelector((state) => getSupplierINNById(state, invoice.supplierId));
+ // const comments = useAppSelector(selectCommentsByInvoiceId(invoice.id));
+  const supplierName = useAppSelector((state) => selectSupplierNameById(state, invoice.supplierId));
+  const supplierINN = useAppSelector((state) => selectSupplierINNById(state, invoice.supplierId));
   const [backgroundGradient, setBackgroundGradient] = useState(WHITE_COLOR);
   const [textColor, setTextColor] = useState(BLACK_COLOR);
   const invoiceCreatedDate = convertMillisecondsToDate(invoice.author.date);
@@ -81,10 +80,10 @@ const InvoicesListItem: FC<IProps> = ({ invoice, forShipmentMode }) => {
     navigator.clipboard.writeText(supplierINN);
     dispatch(setMessage({ text: INN_COPY_TEXT, severity: MESSAGE_SEVERITY.success }));
   };
-  const handleAmountClick = () => {
+/*  const handleAmountClick = () => {
     navigator.clipboard.writeText(invoice.amount);
     dispatch(setMessage({ text: AMOUNT_COPY_TEXT, severity: MESSAGE_SEVERITY.success }));
-  };
+  };*/
   const handleCommentClick = () => {
     navigate(`${routes.invoices}/${invoice.id}`, {
       state: {
@@ -139,7 +138,7 @@ const InvoicesListItem: FC<IProps> = ({ invoice, forShipmentMode }) => {
       <TableCell
         sx={{ cursor: CURSOR_POINTER, color: INHERIT, padding: matches_1050 ? "8px" : 0 }}
         align={RIGHT}
-        onClick={handleAmountClick}
+     /*   onClick={handleAmountClick}*/
       >
         <Tooltip title={COPY_TEXT}>
           <Stack sx={{ width: "100%" }} direction={ROW} alignItems={CENTER} justifyContent={END} spacing={1}>
@@ -215,11 +214,11 @@ const InvoicesListItem: FC<IProps> = ({ invoice, forShipmentMode }) => {
                   <LocalShippingIcon color={SUCCESS} />
                 </IconButton>
               )}
-              {!isShipment && comments.length > 0 && (
+        {/*      {!isShipment && comments.length > 0 && (
                 <IconButton aria-label="show comments" onClick={handleCommentClick} color={SUCCESS}>
                   <ChatBubbleIcon color={SUCCESS} />
                 </IconButton>
-              )}
+              )}*/}
             </TableCell>
           )}
         </>

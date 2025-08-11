@@ -5,7 +5,6 @@ import Invoices from "../features/invoices/ui/Invoices";
 import {Navigate} from "react-router-dom";
 import InvoiceDetails from "../features/invoices/ui/InvoiceDetails";
 import InvoicesAddNew from "../features/invoices/ui/InvoicesAddNew";
-import Suppliers from "../pages/Suppliers";
 import Shipments from "../features/shipments/ui/Shipments";
 import ShipmentsAddNew from "../features/shipments/ui/ShipmentsAddNew";
 import Orders from "../features/orders/ui/Orders";
@@ -23,6 +22,7 @@ import ProblemsPage from "../features/machinery_problems/ui/ProblemsPage";
 import TasksPage from "../features/machinery_tasks/ui/TasksPage";
 import MachineryCommentsPage from "../features/machinery_comments/ui/MachineryCommentsPage";
 import MachineryMaintenancePage from "../features/machinery/ui/MachineryMaintenancePage";
+import SuppliersPage from "../features/suppliers/ui/SuppliersPage";
 
 export interface IRouteConfig {
     path: string;
@@ -37,7 +37,7 @@ export const routesConfig: IRouteConfig[] = [
     {path: routes.invoices, element: <Invoices/>, label: "Счета", showInMenu: true},
     {path: routes.invoicesDetails, element: <InvoiceDetails/>, label: "Подробности", showInMenu: false},
     {path: routes.invoicesAddNew, element: <InvoicesAddNew/>, label: "Новый счёт", showInMenu: false},
-    {path: routes.suppliers, element: <Suppliers/>, label: "Поставщики", showInMenu: true},
+    {path: routes.suppliers, element: <SuppliersPage/>, label: "Поставщики", showInMenu: true},
     {path: routes.shipments, element: <Shipments/>, label: "Отгрузки", showInMenu: true},
     {path: routes.addNewShipments, element: <ShipmentsAddNew/>, label: "Новая отгрузка", showInMenu: false},
     {path: routes.orders, element: <Orders/>, label: "Заявки", showInMenu: true},

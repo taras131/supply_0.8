@@ -14,13 +14,16 @@ export interface INewCompany {
     ogrn: string;
     okpo: string;
     okato: string;
+    firebase_id?: string,
 }
 
 export interface ICompany extends INewCompany {
     id: string;
+    created_at: string;
+    updated_at: string;
 }
 
-export const defaultCompany: INewCompany = {
+export const emptyCompany: INewCompany = {
     name: "",
     logo_path: "",
     owner_email: "",
@@ -36,4 +39,11 @@ export const defaultCompany: INewCompany = {
     ogrn: "",
     okpo: "",
     okato: "",
+};
+
+export const defaultCompany: ICompany = {
+    ...emptyCompany,
+    id: "",
+    created_at: "",
+    updated_at: "",
 };

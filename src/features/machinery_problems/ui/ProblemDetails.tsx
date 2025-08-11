@@ -45,7 +45,6 @@ const ProblemDetails: FC = () => {
         dispatch(fetchUpdateMachineryProblem(editedValue));
         toggleIsEditMode();
     };
-
     return (
         <Drawer anchor="right" open={!!currentProblem} onClose={onClose}>
             <Box

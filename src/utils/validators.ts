@@ -6,6 +6,7 @@ import {INewCompany} from "../models/iCompanies";
 import {IUser} from "../models/IUser";
 import {INewMachineryDoc} from "../models/IMachineryDoc";
 import {INewMachineryComment} from "../models/IMachineryComment";
+import {INewSupplier, ISupplier} from "../models/iSuppliers";
 
 export type ValidationErrors = { [key: string]: string | null };
 
@@ -154,5 +155,16 @@ export const userUpdateValidate = (user: IUser) => {
     if (user.email.length === 0) errors.email = "email должен быть";
     // if (user.role_id < 0) errors.role_id = "Выберите роль";
 
+    return errors;
+};
+
+export const supplierValidate = (supplier: ISupplier | INewSupplier) => {
+    const errors: ValidationErrors = {};
+    if (supplier.name.length === 0) errors.name = "Наименование должно быть должен быть";
+    if (supplier.name.length < 4) errors.name = "Наименование слишком короткое";
+    if (supplier.name.length > 63) errors.name = "Наименование слишком длинное";
+    if (supplier.INN.length === 0) errors.INN = "ИНН должен быть";
+    if (`${supplier.INN}`.length < 10) errors.INN = "ИНН слишком короткий";
+    if (`${supplier.INN}`.length > 28) errors.INN = "ИНН слишком длинный";
     return errors;
 };

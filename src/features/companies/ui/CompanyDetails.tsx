@@ -9,7 +9,6 @@ import {fetchUpdateCompany} from "../model/actions";
 import CompanyView from "./CompanyView";
 import {selectCurrentUserEmail} from "../../users/model/selectors";
 import ViewCardPattern from "../../../components/common/ViewCardPattern";
-import Box from "@mui/material/Box";
 
 interface IProps {
     company: ICompany;

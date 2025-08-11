@@ -17,8 +17,8 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import Typography from "@mui/material/Typography";
-import { selectSuppliers } from "store/reducers/suppliers";
 import { useAppSelector } from "hooks/redux";
+import {selectSuppliers} from "../../suppliers/model/selectors";
 
 interface IInputValue {
   amount: number;
@@ -67,7 +67,7 @@ const InvoicesAddNewInputFields: FC<IProps> = ({
     setSelectedSupplierId(e.target.value as string);
   };
   const handleIsWithVATSelected = () => {
-    setIsWithVAT((prev) => !prev);
+    setIsWithVAT(prev => !prev);
   };
   return (
     <Stack spacing={2} sx={{ width: "100%", paddingLeft: "-12px", paddingRight: "-12px" }}>
@@ -84,6 +84,7 @@ const InvoicesAddNewInputFields: FC<IProps> = ({
               label={"Поставщик"}
               onChange={handleSupplierChange}
               sx={{ overflow: "hidden" }}
+              variant={"filled"}
             >
               {suppliersList}
             </Select>

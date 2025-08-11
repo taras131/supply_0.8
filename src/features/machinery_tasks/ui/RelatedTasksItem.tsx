@@ -26,10 +26,10 @@ const RelatedTasksItem: FC<IProps> = ({task, taskClickHandler, isMaintenanceMode
                 <ListItemText
                     primary={task.title}/>
                 <Divider orientation="vertical" flexItem sx={{mx: 1}}/>
-                <Stack sx={{width: "65px"}}>
+                <Stack sx={{width: "65px", alignItems: "end"}}>
                     <DueDateChip due_date={task.status_id === 3 ? +task.result_date : +task.due_date}
                                  isCompleted={task.status_id === 3}
-                                 isShowIcon={false}/>
+                                 isShowIcon={task.status_id !== 3}/>
                     <Typography fontSize={"14px"}>{maintenanceText}</Typography>
                 </Stack>
             </StyledListItemButton>

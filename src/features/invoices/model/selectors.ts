@@ -3,7 +3,7 @@ import { ISelectedOrderPosition } from "models/iOrders";
 import { IShipmentsInvoice } from "models/iShipments";
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "store";
-import { getSupplierNameById } from "store/selectors/suppliers";
+import {selectSupplierNameById} from "../../suppliers/model/selectors";
 
 /*export const getInvoices = (state: RootState,): IInvoice[] => {
     const arr = [...state.invoices.list];
@@ -70,7 +70,7 @@ export const getIsPositionSelected = (state: RootState, orderId: string, positio
 export const getSupplierNameByInvoiceId = (state: RootState, invoiceId: string) => {
   const invoice = state.invoices.list.find((invoice) => invoice.id === invoiceId);
   if (invoice && invoice.supplierId) {
-    return getSupplierNameById(state, invoice.supplierId);
+    return selectSupplierNameById(state, invoice.supplierId);
   } else {
     return "";
   }

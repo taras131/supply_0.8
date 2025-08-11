@@ -4,14 +4,10 @@ import {useAppDispatch, useAppSelector} from "hooks/redux";
 import {useEffect, useState} from "react";
 import {collection, onSnapshot, query} from "firebase/firestore";
 import {db} from "../firebase";
-import {ISupplier} from "models/iSuppliers";
-import {setSuppliers} from "store/reducers/suppliers";
 import {IInvoice} from "models/iInvoices";
-import {IComment} from "models/iComent";
 import {setShipments, setShipmentsLoading} from "features/shipments/model/slice";
 import {setOrders, setOrdersLoading} from "features/orders/model/slice";
 import {IOrder} from "models/iOrders";
-import {getSuppliersIsLoading} from "store/selectors/suppliers";
 import Preloader from "./Preloader";
 import {setInvoices} from "features/invoices/model/slice";
 import {fetchCheckAuth} from "../features/auth/model/actions";
@@ -21,6 +17,7 @@ import {IShipments} from "../models/iShipments";
 import MessageWindow from "../features/messages/ui/MessageWindow";
 import Message from "../features/messages/ui/Message";
 import {fetchGetAllUsers} from "../features/users/model/actions";
+import {selectSuppliersIsLoading} from "../features/suppliers/model/selectors";
 
 const renderRoute = (routes: IRouteConfig[]) => {
     const routeArr: any = [];
@@ -37,8 +34,8 @@ const renderRoute = (routes: IRouteConfig[]) => {
 };
 
 function App() {
-    const [isLoading, setIsLoading] = useState(true);
-    const supplierIsLoading = useAppSelector((state) => getSuppliersIsLoading(state));
+    const [isLoading, setIsLoading] = useState(false);
+    const supplierIsLoading = useAppSelector(selectSuppliersIsLoading);
     const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch(fetchCheckAuth());
@@ -61,7 +58,7 @@ function App() {
         });
     }, []);
 
-    useEffect(() => {
+  /*  useEffect(() => {
         const q = query(collection(db, "suppliers"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             try {
@@ -76,7 +73,7 @@ function App() {
             }
             return () => unsubscribe();
         });
-    }, []);
+    }, []);*/
   /*  useEffect(() => {
         const q = query(collection(db, "comments"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -131,7 +128,7 @@ function App() {
             return () => unsubscribe();
         });
     }, []);
-    if (isLoading || supplierIsLoading) {
+    if (isLoading) {
         return <Preloader/>;
     }
     return (

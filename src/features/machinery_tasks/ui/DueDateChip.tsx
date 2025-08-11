@@ -1,6 +1,7 @@
 import React, {FC} from "react";
 import {Stack, Typography} from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import {convertMillisecondsToDateWithTextMonths} from "../../../utils/services";
 import dayjs from "dayjs";
 
@@ -25,7 +26,9 @@ const DueDateChip: FC<IProps> = ({due_date, isCompleted, isShowIcon = true}) => 
     return (
         <Stack direction="row" alignItems="center" spacing={0.5}>
             {isShowIcon && (
-                <AccessTimeIcon color={icon as any}/>
+                <>
+                    {isCompleted ? (<CheckCircleIcon color={icon as any}/>) : (<AccessTimeIcon color={icon as any}/>)}
+                </>
             )}
             <Typography fontWeight={650} fontSize="14px" sx={{color: text}}>
                 {convertMillisecondsToDateWithTextMonths(+due_date)}
